@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Main Card Box Wrapper (.search-card)
+   ========================================================================== */
+.search-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ==========================================================================
+   Heading Text Styling (.search-title)
+   ========================================================================== */
+.search-title {
+  color: #27ae60;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 18px;
+  letter-spacing: -0.3px;
+}
+
+/* ==========================================================================
+   Input and Button Container (.search-flex-container)
+   ========================================================================== */
+.search-flex-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Numerical search field styling (.search-input) */
+.search-input {
+  flex: 1;
+  max-width: 340px;
+  padding: 11px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1e293b;
+  outline: none;
+  background-color: #f8fafc;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Active glowing green outline when you click inside (.search-input:focus) */
+.search-input:focus {
+  border-color: #2ecc71;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+}
+
+/* Main Search Button styling (.search-btn) */
+.search-btn {
+  background-color: #2ecc71;
+  color: #ffffff;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-btn:hover {
+  background-color: #27ae60;
+}
+
+/* ==========================================================================
+   Student Profile Result Card (.profile-result)
+   ========================================================================== */
+.profile-result {
+  margin-top: 24px;
+  background-color: #f0fdf4;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 5px solid #2ecc71;
+  box-shadow: 0 2px 6px rgba(46, 204, 113, 0.05);
+  animation: slideDownFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-result p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.5;
+}
+
+/* Fixes horizontal alignment so labels (ID, Name, Email) align cleanly */
+.profile-result strong {
+  color: #1e293b;
+  font-weight: 600;
+  display: inline-block;
+  width: 140px; 
+}
+
+/* Close/Clear card button style (.clear-btn) */
+.clear-btn {
+  background-color: #64748b;
+  color: #ffffff;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background-color 0.2s;
+}
+
+.clear-btn:hover {
+  background-color: #475569;
+}
+
+/* ==========================================================================
+   Smooth Slide Animation Framework
+   ========================================================================== */
+@keyframes slideDownFadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-8px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
