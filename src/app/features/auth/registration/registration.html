@@ -1,0 +1,133 @@
+
+
+
+<div class="login-container">
+    <div class="login-card">
+        <h1>Registration</h1>
+        <form [formGroup]=" registrationForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" type="text" id="username" placeholder="Enter username" formControlName="username" />
+
+                @if(registrationForm.get('username')?.touched && registrationForm.get('username')?.hasError('required')){
+
+                <small class="error">
+                     Username is required.
+                </small>
+                       }
+
+                @if(registrationForm.get('username')?.touched && registrationForm.get('username')?.hasError('minlength')){
+
+                <small class="error">
+                      Username must be at least 3 characters.
+                                    </small>
+                                        } </div>
+
+
+                <div class="form-group">
+                  <label for="email">Email</label>  
+                  <input class="form-control" type="email" id="email" placeholder="Enter email" formControlName="email" />
+                     @if(registrationForm.get('email')?.touched &&
+                    registrationForm.get('email')?.hasError('required')){
+
+                    <small class="error">
+                        Email is required.
+                    </small>
+
+                }
+
+                @if(registrationForm.get('email')?.touched &&
+                    registrationForm.get('email')?.hasError('email')){
+
+                    <small class="error">
+                        Enter a valid email.
+                    </small>
+                    }
+            </div>
+
+              <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    class="form-control"
+                    formControlName="password"
+                    placeholder="Enter your password">
+
+                @if(registrationForm.get('password')?.touched &&
+                    registrationForm.get('password')?.hasError('required')){
+
+                    <small class="error">
+                        Password is required.
+                    </small>
+
+                }
+
+                @if(registrationForm.get('password')?.touched &&
+                 registrationForm.get('password')?.hasError('minlength')){
+
+                    <small class="error">
+                        Password must be at least 6 characters.
+                    </small>
+
+                }
+              </div>
+
+               <div class="form-group">
+
+                <label>Confirm Password</label>
+
+                <input
+                    type="password"
+                    class="form-control"
+                    formControlName="confirmPassword"
+                    placeholder="Enter your password">
+
+                @if(registrationForm.get('confirmPassword')?.touched &&
+                    registrationForm.get('confirmPassword')?.hasError('required')){
+
+                    <small class="error">
+                    Confirm Password is required
+                    </small>
+
+                }
+
+                @if(registrationForm.hasError('passwordMismatch') && registrationForm.get('confirmPassword')?.touched){
+
+             <small class="error">
+               Password and Confirm Password do not match.
+                 </small>
+
+                   }
+               </div>
+
+               @if (successMessage()) {
+  <small style="display:block; text-align:center; margin-top:10px; color: green;">
+    {{ successMessage() }}
+  </small>
+}
+
+@if (errorMessage()) {
+  <small class="error" style="display:block; text-align:center; margin-top:10px;">
+    {{ errorMessage() }}
+  </small>
+}
+               <button
+                   type="button"
+                   class="login-btn"
+                   (click)="register()">
+
+                              Register
+
+                               </button>
+                               <p class="link-text">
+                                  Already have an account?
+                                   <a routerLink="/login">Login</a>
+                                         </p>
+
+                               
+        </form>
+
+    </div>
+</div>

@@ -6,6 +6,7 @@ export const ENDPOINTS = {
     updateStudent:'/api/students/:id',
     deleteStudent:'/api/students/:id',
     getStudentById:'/api/students/:id'
+    
    }
 }
  
