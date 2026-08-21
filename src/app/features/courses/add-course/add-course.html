@@ -1,0 +1,57 @@
+<div class="form-container">
+  <h3>Add New Course</h3>
+
+  <form [formGroup]="courseForm">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" formControlName="title" class="form-control" />
+      @if (courseForm.get('title')?.touched && courseForm.get('title')?.hasError('required')) {
+        <small class="error">Title is required.</small>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" id="description" formControlName="description" class="form-control" />
+      @if (courseForm.get('description')?.touched && courseForm.get('description')?.hasError('required')) {
+        <small class="error">Description is required.</small>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="courseCode">Course Code</label>
+      <input type="text" id="courseCode" formControlName="courseCode" class="form-control" placeholder="e.g. CS-201" />
+      @if (courseForm.get('courseCode')?.touched && courseForm.get('courseCode')?.hasError('required')) {
+        <small class="error">Course code is required.</small>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="creditHours">Credit Hours</label>
+      <input type="number" id="creditHours" formControlName="creditHours" class="form-control" />
+      @if (courseForm.get('creditHours')?.touched && courseForm.get('creditHours')?.hasError('min')) {
+        <small class="error">Credit hours must be at least 1.</small>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status" class="form-control">
+        <option value="ACTIVE">Active</option>
+        <option value="INACTIVE">Inactive</option>
+        <option value="UPCOMING">Upcoming</option>
+      </select>
+    </div>
+
+    @if (successMessage()) {
+      <small style="color: green; display: block; margin-top: 10px;">{{ successMessage() }}</small>
+    }
+    @if (errorMessage()) {
+      <small class="error" style="display: block; margin-top: 10px;">{{ errorMessage() }}</small>
+    }
+
+    <button type="button" (click)="save()" [disabled]="isLoading()" class="save-btn">
+      {{ isLoading() ? 'Saving...' : 'Save Course' }}
+    </button>
+  </form>
+</div>

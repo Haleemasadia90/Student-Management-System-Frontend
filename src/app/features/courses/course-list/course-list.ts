@@ -1,18 +1,30 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CourseService } from '../course-service';
 import { Course } from '../../../models/course.model';
+import { AddCourse } from '../add-course/add-course';
 
 @Component({
   selector: 'app-course-list',
-  imports: [CommonModule],
+  imports: [CommonModule,AddCourse],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })
-export class CourseList {
+export class CourseList implements OnInit{
   readonly courseService = inject(CourseService);
 
   courses = signal<Course[]>([]);
+
+  showAddForm = false;
+  
+  toggleAddForm(): void{
+    this.showAddForm = !this.showAddForm;
+  }
+
+  onCourseAdded(): void{
+    this.showAddForm = false;
+    this.getCourses();
+  }
 
   ngOnInit():void{
     this.getCourses();
