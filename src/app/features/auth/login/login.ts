@@ -43,11 +43,11 @@ this.authService.login(this.loginForm.getRawValue()).subscribe({
         console.log('Login successful!', response);
 
 
-        // if (response.role === 'ADMIN') {
-        //   this.router.navigate(['/admin/dashboard']);
-        // } else {
-        //   this.router.navigate(['/student/dashboard']);
-        // }
+         if (response.role === 'ADMIN') {
+          this.router.navigate(['/admin/dashboard']);
+         } else {
+         this.router.navigate(['/student/dashboard']);
+         }
 
 
         
