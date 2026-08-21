@@ -1,7 +1,17 @@
 <div class="list-section">
   <div class="list-header">
     <h3 class="list-title">COURSES</h3>
+
+    <button (click)="toggleAddForm()" class="add-btn">
+    {{ showAddForm ? 'Cancel' : 'Add Course' }}
+  </button>
+
   </div>
+
+  @if (showAddForm) {
+<app-add-course (courseAdded)="onCourseAdded()"></app-add-course>
+}
+
 
   <table class="data-table">
     <thead>
@@ -36,3 +46,5 @@
     </tbody>
   </table>
 </div>
+
+

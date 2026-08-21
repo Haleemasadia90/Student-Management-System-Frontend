@@ -10,7 +10,20 @@
         <p><strong>Username:</strong> {{myRecord()?.username}}</p>
         <p><strong>Email:</strong> {{myRecord()?.email}}</p>
     </div>
-}
-@else {
-    <p>Loading your record...</p>
+
+    <div class="courses-card">
+    <h3>My Courses</h3>
+    @if (myRecord()?.courseTitles && myRecord()!.courseTitles.length > 0) {
+      <ul class="course-list">
+        @for (course of myRecord()!.courseTitles; track course) {
+          <li>{{ course }}</li>
+        }
+      </ul>
+    } @else {
+      <p class="empty-text">You are not enrolled in any courses yet.</p>
+    }
+  </div>
+
+} @else {
+  <p class="loading-text">Loading your record...</p>
 }
