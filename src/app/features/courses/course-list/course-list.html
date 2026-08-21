@@ -1,0 +1,38 @@
+<div class="list-section">
+  <div class="list-header">
+    <h3 class="list-title">COURSES</h3>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Course Code</th>
+        <th>Credit Hours</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (courses().length > 0) {
+        @for (c of courses(); track c.id) {
+          <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.title }}</td>
+            <td>{{ c.courseCode }}</td>
+            <td>{{ c.creditHours }}</td>
+            <td>{{ c.status }}</td>
+            <td>
+              <button (click)="deleteCourse(c.id)" class="delete-btn">Delete</button>
+            </td>
+          </tr>
+        }
+      } @else {
+        <tr>
+          <td colspan="6" class="empty-row">No courses found.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
