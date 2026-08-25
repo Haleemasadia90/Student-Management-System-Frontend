@@ -1,12 +1,40 @@
 <div class="dashboard-header">
-  <h2>Welcome, {{ username }} (Admin)</h2>
-  <button (click)="logout()" class="logout-btn">Logout</button>
+  <h2>Welcome, {{ username }} </h2>
 </div>
 
-<div class="dashboard-section">
-  <app-student-list></app-student-list>
-</div>
+<div class="dashboard-cards">
 
-<div class="dashboard-section">
-  <app-course-list></app-course-list>
+  <div class="dashboard-card">
+    <div class="card-icon">
+      👨‍🎓
+    </div>
+
+    <div>
+      <p>Total Students</p>
+      <h3>{{ totalStudents() }}</h3>
+    </div>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="card-icon">
+      📚
+    </div>
+
+    <div>
+      <p>Total Courses</p>
+      <h3>{{ totalCourses() }}</h3>
+    </div>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="card-icon">
+      💰
+    </div>
+
+    <div>
+      <p>Pending Fees</p>
+      <h3>--</h3>
+    </div>
+  </div>
+
 </div>

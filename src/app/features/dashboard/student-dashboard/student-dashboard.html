@@ -24,6 +24,29 @@
     }
   </div>
 
+  <div class="fee-card">
+    <h3>My Fee</h3>
+    @if(myFees().length>0){
+      @for (fee of myFees(); track fee.id) {
+         <div class="fee-item">
+          <div class="fee-item-header">
+            <span class="fee-semester">{{ fee.semester }}</span>
+            <span class="fee-status" [class]="'status-' + fee.status.toLowerCase()">{{ fee.status }}</span>
+          </div>
+          <div class="fee-item-body">
+            <p>Total: {{ fee.totalFee }}</p>
+            <p>Paid: {{ fee.paidFee }}</p>
+            <p>Due: {{ fee.dueAmount }}</p>
+          </div>
+        </div>
+      }
+    }
+    @else {
+      <p class="empty-text">No fee records found.</p>
+    }
+  </div>
+
+
 } @else {
   <p class="loading-text">Loading your record...</p>
 }

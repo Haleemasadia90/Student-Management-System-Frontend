@@ -1,0 +1,102 @@
+.fee-manager {
+  margin-top: 12px;
+  padding: 14px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.fee-manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.fee-manager-header h4 {
+  margin: 0;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.add-btn-small {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.fee-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.fee-table th {
+  text-align: left;
+  padding: 8px;
+  color: #64748b;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.fee-table td {
+  padding: 8px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.fee-status {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.status-paid { background: #dcfce7; color: #16a34a; }
+.status-pending { background: #fef9c3; color: #ca8a04; }
+.status-overdue { background: #fee2e2; color: #dc2626; }
+
+.edit-btn-small, .delete-btn-small, .save-btn-small, .cancel-btn-small {
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.edit-btn-small { background: #fef3c7; color: #92400e; }
+.delete-btn-small { background: #fee2e2; color: #dc2626; }
+.save-btn-small { background: #0d6efd; color: white; }
+.cancel-btn-small { background: #e2e8f0; color: #334155; }
+
+.fee-form {
+  margin-top: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.form-control {
+  flex: 1;
+  min-width: 120px;
+  padding: 7px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.empty-text {
+  color: #94a3b8;
+  font-size: 13px;
+}

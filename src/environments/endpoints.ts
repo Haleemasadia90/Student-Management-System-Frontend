@@ -18,6 +18,14 @@ export const ENDPOINTS = {
       deleteCourse:'/api/courses/:id',
       
 
+   },
+
+   fee:{
+      createFee: '/api/fee/:studentId',
+      getFeesByStudentId: '/api/fee/student/:studentId',
+      getMyFees:'/api/fee/me',
+      updateFee:'/api/fee/:feeId',
+      deleteFee:'/api/fee/:feeId'
    }
-}
+};
  

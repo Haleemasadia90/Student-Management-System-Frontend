@@ -135,13 +135,13 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Student } from '../../../models/student.model';
 import { CommonModule } from '@angular/common';
 import { StudentService } from '../student-service';
-
+import { FeeManager } from '../../../fee/fee-manager/fee-manager';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FeeManager],
   templateUrl: './student-list.html',
   styleUrl: './student-list.css',
 })
@@ -151,6 +151,7 @@ export class StudentList implements OnInit {
 
 
   students = signal<Student[]>([]);
+  expandedStudentId = signal<number | null>(null);
 
   // isEditMode = false;
   // showAddForm = false;
@@ -187,6 +188,10 @@ export class StudentList implements OnInit {
   //   this.isEditMode = true;
   //   this.showAddForm = true;
   // }
+
+  toggleFeeManager(id:number):void{
+    this.expandedStudentId.set(this.expandedStudentId() === id ? null : id);
+  }
 
   deleteStudent(id: number): void {
     const confirmDelete = confirm("Are you sure you want to delete this student?");

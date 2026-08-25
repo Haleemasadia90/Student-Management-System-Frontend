@@ -138,10 +138,20 @@
       <td>
         <div class="button-group">
           <!-- <button (click)="openEditForm(s)" class="edit-btn">Edit</button> -->
+          <button (click)="toggleFeeManager(s.id)" class="fee-btn">
+                  {{ expandedStudentId() === s.id ? 'Hide Fee' : 'Manage Fee' }}
+                </button>
           <button (click)="deleteStudent(s.id)" class="delete-btn">Delete</button>
         </div>
       </td>
     </tr>
+    @if (expandedStudentId() === s.id) {
+    <tr>
+      <td colspan="4">
+        <app-fee-manager [studentId]="s.id"></app-fee-manager>
+      </td>
+    </tr>
+  }
   }
 } @else {
   <tr>

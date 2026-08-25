@@ -1,0 +1,61 @@
+<div class="fee-manager">
+  <div class="fee-manager-header">
+    <h4>Fee Records</h4>
+    <button (click)="openAddForm()" class="add-btn-small">+ Add Fee</button>
+  </div>
+
+  @if (fees().length > 0) {
+    <table class="fee-table">
+      <thead>
+        <tr>
+          <th>Semester</th>
+          <th>Total</th>
+          <th>Paid</th>
+          <th>Due</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (fee of fees(); track fee.id) {
+          <tr>
+            <td>{{ fee.semester }}</td>
+            <td>{{ fee.totalFee }}</td>
+            <td>{{ fee.paidFee }}</td>
+            <td>{{ fee.dueAmount }}</td>
+            <td>
+              <span class="fee-status" [class]="'status-' + fee.status.toLowerCase()">{{ fee.status }}</span>
+            </td>
+            <td>
+              <button (click)="openEditForm(fee)" class="edit-btn-small">Edit</button>
+              <button (click)="deleteFee(fee.id)" class="delete-btn-small">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <p class="empty-text">No fee records yet.</p>
+  }
+
+  @if (showAddForm) {
+    <div class="fee-form">
+      <form [formGroup]="feeForm">
+        <div class="form-row">
+          <input type="text" formControlName="semester" placeholder="Semester (e.g. Fall 2026)" class="form-control" />
+          <input type="number" formControlName="totalFee" placeholder="Total Fee" class="form-control" />
+          <input type="number" formControlName="paidFee" placeholder="Paid Fee" class="form-control" />
+          <select formControlName="status" class="form-control">
+            <option value="PENDING">Pending</option>
+            <option value="PAID">Paid</option>
+            <option value="OVERDUE">Overdue</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" (click)="save()" class="save-btn-small">Save</button>
+          <button type="button" (click)="closeForm()" class="cancel-btn-small">Cancel</button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

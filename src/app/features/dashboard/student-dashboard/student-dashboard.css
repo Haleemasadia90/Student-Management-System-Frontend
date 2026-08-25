@@ -106,3 +106,74 @@
   font-size: 14px;
   margin-top: 40px;
 }
+
+
+.fee-card {
+  max-width: 480px;
+  margin: 0 auto 24px;
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.fee-card h3 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  color: #1e293b;
+  border-left: 4px solid #0d6efd;
+  padding-left: 10px;
+}
+
+.fee-item {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+
+.fee-item:last-child {
+  margin-bottom: 0;
+}
+
+.fee-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.fee-semester {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.fee-status {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.status-paid {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status-pending {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.status-overdue {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.fee-item-body p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #475569;
+}

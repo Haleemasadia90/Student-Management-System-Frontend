@@ -187,3 +187,18 @@
 .show-btn:hover{
     background:#565e64;
 }
+
+.fee-btn {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.fee-btn:hover {
+  background: #0b5ed7;
+}
