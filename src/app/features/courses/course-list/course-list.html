@@ -21,6 +21,7 @@
         <th>Course Code</th>
         <th>Credit Hours</th>
         <th>Status</th>
+        <th>Department</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -33,6 +34,7 @@
             <td>{{ c.courseCode }}</td>
             <td>{{ c.creditHours }}</td>
             <td>{{ c.status }}</td>
+            <td>{{ c.departmentName }}</td>
             <td>
               <button (click)="deleteCourse(c.id)" class="delete-btn">Delete</button>
             </td>

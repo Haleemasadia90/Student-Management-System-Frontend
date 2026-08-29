@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { ENDPOINTS } from '../../../environments/endpoints';
 import { HttpClient } from '@angular/common/http';
-import {Fee, FeeRequest } from '../models/fee.model';
-import { ENDPOINTS } from '../../environments/endpoints';
+import { Fee, FeeRequest } from '../../models/fee.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

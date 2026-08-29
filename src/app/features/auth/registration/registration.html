@@ -1,4 +1,4 @@
-
+<!-- 
 
 
 <div class="login-container">
@@ -130,4 +130,575 @@
         </form>
 
     </div>
+</div> -->
+
+
+
+
+<div class="login-container">
+
+  <div class="login-card">
+
+    <h1>Student Registration</h1>
+
+    <!-- Step Indicator -->
+    <div class="steps">
+
+      <div
+        class="step"
+        [class.active]="currentStep() === 1"
+        [class.completed]="currentStep() > 1">
+
+        <span>1</span>
+        <p>Personal</p>
+
+      </div>
+
+      <div class="line"></div>
+
+      <div
+        class="step"
+        [class.active]="currentStep() === 2"
+        [class.completed]="currentStep() > 2">
+
+        <span>2</span>
+        <p>Academic</p>
+
+      </div>
+
+      <div class="line"></div>
+
+      <div
+        class="step"
+        [class.active]="currentStep() === 3">
+
+        <span>3</span>
+        <p>Account</p>
+
+      </div>
+
+    </div>
+
+
+    <form [formGroup]="registrationForm">
+
+
+      <!-- ========================= -->
+      <!-- STEP 1 PERSONAL INFORMATION -->
+      <!-- ========================= -->
+
+      @if (currentStep() === 1) {
+
+        <div class="step-content">
+
+          <h2>Personal Information</h2>
+
+          <!-- Full Name -->
+          <div class="form-group">
+
+            <label for="fullName">Full Name</label>
+
+            <input
+              class="form-control"
+              type="text"
+              id="fullName"
+              placeholder="Enter your full name"
+              formControlName="fullName">
+
+            @if (
+              registrationForm.get('fullName')?.touched &&
+              registrationForm.get('fullName')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Full name is required.
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- Email -->
+          <div class="form-group">
+
+            <label for="email">Email</label>
+
+            <input
+              class="form-control"
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              formControlName="email">
+
+            @if (
+              registrationForm.get('email')?.touched &&
+              registrationForm.get('email')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Email is required.
+              </small>
+
+            }
+
+            @if (
+              registrationForm.get('email')?.touched &&
+              registrationForm.get('email')?.hasError('email')
+            ) {
+
+              <small class="error">
+                Enter a valid email.
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- Phone -->
+          <div class="form-group">
+
+            <label for="phone">Phone Number</label>
+
+            <input
+              class="form-control"
+              type="text"
+              id="phone"
+              placeholder="Enter phone number"
+              formControlName="phone">
+
+            @if (
+              registrationForm.get('phone')?.touched &&
+              registrationForm.get('phone')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Phone number is required.
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- Date of Birth -->
+          <div class="form-group">
+
+            <label for="dateOfBirth">Date of Birth</label>
+
+            <input
+              class="form-control"
+              type="date"
+              id="dateOfBirth"
+              formControlName="dateOfBirth">
+
+            @if (
+              registrationForm.get('dateOfBirth')?.touched &&
+              registrationForm.get('dateOfBirth')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Date of birth is required.
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- Gender -->
+          <div class="form-group">
+
+            <label for="gender">Gender</label>
+
+            <select
+              class="form-control"
+              id="gender"
+              formControlName="gender">
+
+              <option value="">
+                Select Gender
+              </option>
+
+              <option value="Male">
+                Male
+              </option>
+
+              <option value="Female">
+                Female
+              </option>
+
+              <option value="Other">
+                Other
+              </option>
+
+            </select>
+
+            @if (
+              registrationForm.get('gender')?.touched &&
+              registrationForm.get('gender')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Gender is required.
+              </small>
+
+            }
+
+          </div>
+
+
+          <button
+            type="button"
+            class="login-btn"
+            (click)="nextStep()">
+
+            Continue →
+
+          </button>
+
+        </div>
+      }
+
+
+      <!-- ========================= -->
+      <!-- STEP 2 ACADEMIC INFORMATION -->
+      <!-- ========================= -->
+
+      @if (currentStep() === 2) {
+
+        <div class="step-content">
+
+          <h2>Academic Information</h2>
+
+
+          <!-- Department -->
+          <div class="form-group">
+
+            <label for="department">
+              Department
+            </label>
+
+           <select
+  class="form-control"
+  id="department"
+  formControlName="departmentId">
+
+  <option value="">
+    Select Department
+  </option>
+
+  @for (department of department(); track department.id) {
+
+    <option [value]="department.id">
+      {{ department.name }}
+    </option>
+
+  }
+
+</select>
+
+            @if (
+              registrationForm.get('department')?.touched &&
+              registrationForm.get('department')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Department is required.
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- Semester -->
+          <div class="form-group">
+
+            <label for="semester">
+              Semester
+            </label>
+
+            <select
+              class="form-control"
+              id="semester"
+              formControlName="semester">
+
+              <option value="">
+                Select Semester
+              </option>
+
+              <option value="1st">1st Semester</option>
+              <option value="2nd">2nd Semester</option>
+              <option value="3rd">3rd Semester</option>
+              <option value="4th">4th Semester</option>
+              <option value="5th">5th Semester</option>
+              <option value="6th">6th Semester</option>
+              <option value="7th">7th Semester</option>
+              <option value="8th">8th Semester</option>
+
+            </select>
+
+            @if (
+              registrationForm.get('semester')?.touched &&
+              registrationForm.get('semester')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Semester is required.
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- Admission Year -->
+          <div class="form-group">
+
+            <label for="admissionYear">
+              Admission Year
+            </label>
+
+            <input
+              class="form-control"
+              type="number"
+              id="admissionYear"
+              placeholder="e.g. 2023"
+              formControlName="admissionYear">
+
+            @if (
+              registrationForm.get('admissionYear')?.touched &&
+              registrationForm.get('admissionYear')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Admission year is required.
+              </small>
+
+            }
+
+          </div>
+
+
+          <div class="button-group">
+
+            <button
+              type="button"
+              class="back-btn"
+              (click)="previousStep()">
+
+              ← Back
+
+            </button>
+
+            <button
+              type="button"
+              class="login-btn"
+              (click)="nextStep()">
+
+              Continue →
+
+            </button>
+
+          </div>
+
+        </div>
+      }
+
+
+      <!-- ========================= -->
+      <!-- STEP 3 ACCOUNT INFORMATION -->
+      <!-- ========================= -->
+
+      @if (currentStep() === 3) {
+
+        <div class="step-content">
+
+          <h2>Account Information</h2>
+
+
+          <!-- Username -->
+          <div class="form-group">
+
+            <label for="username">
+              Username
+            </label>
+
+            <input
+              class="form-control"
+              type="text"
+              id="username"
+              placeholder="Enter username"
+              formControlName="username">
+
+            @if (
+              registrationForm.get('username')?.touched &&
+              registrationForm.get('username')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Username is required.
+              </small>
+
+            }
+
+            @if (
+              registrationForm.get('username')?.touched &&
+              registrationForm.get('username')?.hasError('minlength')
+            ) {
+
+              <small class="error">
+                Username must be at least 3 characters.
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- Password -->
+          <div class="form-group">
+
+            <label for="password">
+              Password
+            </label>
+
+            <input
+              class="form-control"
+              type="password"
+              id="password"
+              placeholder="Enter password"
+              formControlName="password">
+
+            @if (
+              registrationForm.get('password')?.touched &&
+              registrationForm.get('password')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Password is required.
+              </small>
+
+            }
+
+            @if (
+              registrationForm.get('password')?.touched &&
+              registrationForm.get('password')?.hasError('minlength')
+            ) {
+
+              <small class="error">
+                Password must be at least 6 characters.
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+
+            <label for="confirmPassword">
+              Confirm Password
+            </label>
+
+            <input
+              class="form-control"
+              type="password"
+              id="confirmPassword"
+              placeholder="Confirm password"
+              formControlName="confirmPassword">
+
+            @if (
+              registrationForm.get('confirmPassword')?.touched &&
+              registrationForm.get('confirmPassword')?.hasError('required')
+            ) {
+
+              <small class="error">
+                Confirm Password is required.
+              </small>
+
+            }
+
+            @if (
+              registrationForm.hasError('passwordMismatch') &&
+              registrationForm.get('confirmPassword')?.touched
+            ) {
+
+              <small class="error">
+                Password and Confirm Password do not match.
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- Messages -->
+
+          @if (successMessage()) {
+
+            <small class="success">
+              {{ successMessage() }}
+            </small>
+
+          }
+
+          @if (errorMessage()) {
+
+            <small class="error message">
+              {{ errorMessage() }}
+            </small>
+
+          }
+
+
+          <!-- Buttons -->
+
+          <div class="button-group">
+
+            <button
+              type="button"
+              class="back-btn"
+              (click)="previousStep()">
+
+              ← Back
+
+            </button>
+
+            <button
+              type="button"
+              class="login-btn"
+              [disabled]="isLoading()"
+              (click)="register()">
+
+              @if (isLoading()) {
+                Registering...
+              } @else {
+                Submit
+              }
+
+            </button>
+
+          </div>
+
+        </div>
+      }
+
+
+      @if (currentStep() === 1) {
+
+        <p class="link-text">
+          Already have an account?
+          <a routerLink="/login">Login</a>
+        </p>
+
+      }
+
+    </form>
+
+  </div>
+
 </div>

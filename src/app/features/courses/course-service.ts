@@ -11,9 +11,11 @@ export class CourseService {
   baseUrl = environment.apiUrl;
   readonly http = inject(HttpClient);
 
-  getAllCourses()
-  {
-    return this.http.get<Course[]>(this.baseUrl + ENDPOINTS.courses.getAllCourses);
+  getAllCourses(departmentId?: number) {
+    const url = departmentId
+      ? `${this.baseUrl}${ENDPOINTS.courses.getAllCourses}?departmentId=${departmentId}`
+      : this.baseUrl + ENDPOINTS.courses.getAllCourses;
+    return this.http.get<Course[]>(url);
   }
 
   getCourseById(id: number)

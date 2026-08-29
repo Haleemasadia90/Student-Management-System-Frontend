@@ -47,14 +47,17 @@ import { Registration } from './features/auth/registration/registration';
 import { authGuard } from './core/guard/auth-guard';
 import { authRole } from './core/guard/auth-role';
 
-import { AdminLayout } from './shared/admin-layout/admin-layout';
+import { AdminLayout } from './features/dashboard/admin-layout/admin-layout';
 
 import { AdminDashboard } from './features/dashboard/admin-dashboard/admin-dashboard';
 import { StudentDashboard } from './features/dashboard/student-dashboard/student-dashboard';
 
 import { StudentList } from './features/student/student-list/student-list';
 import { CourseList } from './features/courses/course-list/course-list';
-import { FeeList } from './fee/fee-list/fee-list';
+import { FeeList } from './features/fee/fee-list/fee-list';
+import { DepartmentManager } from './features/departments/department-manager/department-manager';
+import { StudentLayout } from './features/dashboard/student-layout/student-layout';
+
 
 export const routes: Routes = [
 
@@ -102,19 +105,51 @@ export const routes: Routes = [
       {
         path: 'finance',
         component: FeeList
+      },
+
+      {
+  path: 'departments',
+  component: DepartmentManager
+},
+
+    ]
+  },
+
+
+
+  {
+    path: 'student',
+    component: StudentDashboard,
+
+    canActivate: [
+      authGuard,
+      authRole('STUDENT')
+    ],
+
+    children: [
+
+      {
+        path: 'dashboard',
+        component: StudentDashboard
+      },
+
+      {
+        path: 'courses',
+        component: CourseList
+      },
+
+      {
+        path: 'fee',
+        component: FeeList
+      },
+
+      {
+        path: 'settings',
+        component: DepartmentManager
       }
 
     ]
   },
 
-  // =========================
-  // STUDENT ROUTES
-  // =========================
-
-  {
-    path: 'student/dashboard',
-    component: StudentDashboard,
-    canActivate: [authGuard, authRole('STUDENT')]
-  }
 
 ];

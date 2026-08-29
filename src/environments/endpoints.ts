@@ -26,6 +26,12 @@ export const ENDPOINTS = {
       getMyFees:'/api/fee/me',
       updateFee:'/api/fee/:feeId',
       deleteFee:'/api/fee/:feeId'
+   },
+
+   department:{
+      getAllDepartments:'/api/departments',
+      createDepartment:'/api/departments',
+      deleteDepartments:'/api/departments/:id'
    }
 };
  

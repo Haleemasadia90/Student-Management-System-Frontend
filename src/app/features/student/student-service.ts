@@ -35,5 +35,7 @@ deleteStudent(id: number){
   return this.http.get<Student>(this.baseUrl + ENDPOINTS.students.getMyRecord);
  }
 
-
+enrollInCourse(courseId: number) {
+  return this.http.post<Student>(this.baseUrl + '/api/students/enroll', { courseId });
+}
 }

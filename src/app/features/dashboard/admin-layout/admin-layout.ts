@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Layout } from '../layout/layout';
-import { NavItem } from '../../models/nav-item.model';
-import { AuthService } from '../../core/httpServices/auth-service';
+import { Layout } from '../../../shared/layout/layout';
+import { NavItem } from '../../../models/nav-item.model';
+import { AuthService } from '../../../core/httpServices/auth-service';
 
 
 @Component({
@@ -13,6 +13,7 @@ import { AuthService } from '../../core/httpServices/auth-service';
 })
 export class AdminLayout {
 
+  
   navItems: NavItem[] = [
     {
       label: 'Dashboard',
@@ -33,7 +34,14 @@ export class AdminLayout {
       label: 'Finance',
       icon: 'ti ti-wallet',
       route: '/admin/finance'
-    }
+    },
+
+    {
+ label: 'Settings',
+icon: 'ti ti-settings',
+
+  route: '/admin/departments'
+},
   ];
 
   username: string | null = null;

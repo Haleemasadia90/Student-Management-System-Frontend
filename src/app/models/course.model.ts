@@ -4,7 +4,9 @@ export interface Course{
     description:string,
     courseCode:string,
     creditHours:string,
-    status:string
+    status:string,
+    departmentId: number;
+  departmentName: string;
 }
 
 export interface CourseRequest {
@@ -13,4 +15,5 @@ export interface CourseRequest {
   courseCode: string;
   creditHours: number;
   status: string;
+  departmentId: number;
 }

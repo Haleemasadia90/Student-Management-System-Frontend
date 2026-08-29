@@ -135,7 +135,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Student } from '../../../models/student.model';
 import { CommonModule } from '@angular/common';
 import { StudentService } from '../student-service';
-import { FeeManager } from '../../../fee/fee-manager/fee-manager';
+import { FeeManager } from '../../fee/fee-manager/fee-manager';
 import { FormsModule } from '@angular/forms';
 
 @Component({

@@ -12,9 +12,16 @@ export class AuthService {
 
   constructor(private http:HttpClient, private router:Router){}
 
-  signup(data:SignupRequest): Observable<any>{
-    return this.http.post(`${this.baseUrl}/signup`,data);
-  }
+  // signup(data:SignupRequest): Observable<any>{
+  //   return this.http.post(`${this.baseUrl}/signup`,data);
+  // }
+
+  signup(data: SignupRequest) {
+  return this.http.post(
+    `${this.baseUrl}/signup`,
+    data
+  );
+}
 
   login(data: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}/login`, data).pipe(

@@ -1,9 +1,9 @@
 import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { FeeService } from '../fee-service';
-import { Fee } from '../../models/fee.model';
+import { Fee } from '../../../models/fee.model';
 import { FormGroup,FormControl,ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FeeRequest } from '../../models/fee.model';
+import { FeeRequest } from '../../../models/fee.model';
 
 @Component({
   selector: 'app-fee-manager',
