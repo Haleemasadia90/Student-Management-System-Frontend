@@ -35,6 +35,19 @@
     </div>
 
     <div class="form-group">
+      <label for="department">Department</label>
+      <select id="department" formControlName="departmentId" class="form-control">
+        <option [ngValue]="null">Select Department</option>
+        @for (dept of departments(); track dept.id) {
+          <option [ngValue]="dept.id">{{ dept.name }}</option>
+        }
+      </select>
+      @if (courseForm.get('departmentId')?.touched && courseForm.get('departmentId')?.hasError('required')) {
+        <small class="error">Department is required.</small>
+      }
+    </div>
+
+    <div class="form-group">
       <label for="status">Status</label>
       <select id="status" formControlName="status" class="form-control">
         <option value="ACTIVE">Active</option>

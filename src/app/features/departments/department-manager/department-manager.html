@@ -1,0 +1,53 @@
+<div class="dept-manager">
+  <div class="dept-header">
+    <h3>Manage Departments</h3>
+    <button (click)="openAddModal()" class="add-btn">+ Add Department</button>
+  </div>
+
+  <input
+    type="text"
+    class="search-input"
+    placeholder="Search department..."
+    [value]="searchTerm()"
+    (input)="searchTerm.set($any($event.target).value)" />
+
+  <ul class="dept-list">
+    @for (dept of filteredDepartments(); track dept.id) {
+      <li>
+        <span>{{ dept.name }}</span>
+        <button (click)="deleteDepartment(dept.id)" class="delete-btn-small">Delete</button>
+      </li>
+    } @empty {
+      <li class="empty-text">No departments found.</li>
+    }
+  </ul>
+
+  @if (showAddModal()) {
+    <div class="modal-overlay" (click)="closeAddModal()">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <h4>Add New Department</h4>
+
+        <form [formGroup]="departmentForm">
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Department name (e.g. Computer Science)"
+            class="form-control" />
+
+          @if (departmentForm.get('name')?.touched && departmentForm.get('name')?.hasError('required')) {
+            <small class="error">Department name is required.</small>
+          }
+
+          @if (errorMessage()) {
+            <small class="error">{{ errorMessage() }}</small>
+          }
+
+          <div class="modal-actions">
+            <button type="button" (click)="save()" class="save-btn">Save</button>
+            <button type="button" (click)="closeAddModal()" class="cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

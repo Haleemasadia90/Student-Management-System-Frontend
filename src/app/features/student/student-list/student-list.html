@@ -124,6 +124,7 @@
         <th>ID</th>
         <th>Username</th>
         <th>Email</th>
+        <th>Department</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -135,17 +136,28 @@
       <td>{{ s.id }}</td>
       <td>{{ s.username }}</td>
       <td>{{ s.email }}</td>
+        <td>{{ s.department }}</td>
       <td>
         <div class="button-group">
           <!-- <button (click)="openEditForm(s)" class="edit-btn">Edit</button> -->
+          <button (click)="toggleFeeManager(s.id)" class="fee-btn">
+                  {{ expandedStudentId() === s.id ? 'Hide Fee' : 'Manage Fee' }}
+                </button>
           <button (click)="deleteStudent(s.id)" class="delete-btn">Delete</button>
         </div>
       </td>
     </tr>
+    @if (expandedStudentId() === s.id) {
+    <tr>
+      <td colspan="5">
+        <app-fee-manager [studentId]="s.id"></app-fee-manager>
+      </td>
+    </tr>
+  }
   }
 } @else {
   <tr>
-    <td colspan="4" class="empty-row">No records found.</td>
+    <td colspan="5" class="empty-row">No records found.</td>
   </tr>
 }
     </tbody>

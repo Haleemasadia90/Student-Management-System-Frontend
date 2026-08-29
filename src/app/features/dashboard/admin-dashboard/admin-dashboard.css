@@ -1,21 +1,42 @@
 .dashboard-header {
+  margin-bottom: 25px;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #1e293b;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 20px 30px;
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
+  gap: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.dashboard-section {
-  max-width: 1100px;
-  margin: 30px auto;
-  padding: 24px;
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+.card-icon {
+  font-size: 30px;
 }
 
-body {
-  background: #f4f7fb;   /* halka grey background, cards ko "pop" karega */
+.dashboard-card p {
+  margin: 0 0 5px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.dashboard-card h3 {
+  margin: 0;
+  font-size: 28px;
+  color: #1e293b;
 }
