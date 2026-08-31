@@ -1,1 +1,89 @@
-<p>fee-list works!</p>
+<div class="list-section">
+
+  <div class="list-header">
+    <h3 class="list-title">FEE RECORDS</h3>
+  </div>
+
+  <div class="search-container">
+
+    <input
+      type="number"
+      class="search-input"
+      placeholder="Enter Student ID"
+      [(ngModel)]="searchId">
+
+    <button
+      class="search-btn"
+      (click)="searchFee()">
+      Search
+    </button>
+
+    <button
+      class="show-btn"
+      (click)="getFees()">
+      Show All
+    </button>
+
+  </div>
+
+  <table class="data-table">
+
+    <thead>
+      <tr>
+        <th>Fee ID</th>
+        <th>Student</th>
+        <th>Semester</th>
+        <th>Total Fee</th>
+        <th>Paid Fee</th>
+        <th>Due Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @if (fees().length > 0) {
+
+        @for (fee of fees(); track fee.id) {
+
+          <tr>
+
+            <td>{{ fee.id }}</td>
+
+            <td>{{ fee.studentUsername }}</td>
+
+            <td>{{ fee.semester }}</td>
+
+            <td>{{ fee.totalFee }}</td>
+
+            <td>{{ fee.paidFee }}</td>
+
+            <td>{{ fee.dueAmount }}</td>
+
+            <td>
+              <span
+                class="fee-status"
+                [class]="'status-' + fee.status.toLowerCase()">
+                {{ fee.status }}
+              </span>
+            </td>
+
+          </tr>
+
+        }
+
+      } @else {
+
+        <tr>
+          <td colspan="7" class="empty-row">
+            No fee records found.
+          </td>
+        </tr>
+
+      }
+
+    </tbody>
+
+  </table>
+
+</div>

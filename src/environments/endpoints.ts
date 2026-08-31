@@ -21,6 +21,7 @@ export const ENDPOINTS = {
    },
 
    fee:{
+       getAllFees: '/fees',
       createFee: '/api/fee/:studentId',
       getFeesByStudentId: '/api/fee/student/:studentId',
       getMyFees:'/api/fee/me',

@@ -22,6 +22,7 @@ loginForm = new FormGroup({
 
 errorMessage = signal('');
 isLoading=signal(false);
+showPassword = signal(false);
 
 constructor(private authService:AuthService,private router:Router){
    console.log('Login component loaded!');
@@ -56,14 +57,13 @@ this.authService.login(this.loginForm.getRawValue()).subscribe({
         this.isLoading.set(false);
         this.errorMessage.set(err.error || 'Login failed. Try again.');
       }
-
-
-
-
-      
     }
 
 );
 
+}
+
+togglePassword(): void {
+  this.showPassword.set(!this.showPassword());
 }
 }

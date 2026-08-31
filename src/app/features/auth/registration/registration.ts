@@ -32,6 +32,8 @@ export class Registration implements OnInit{
   errorMessage = signal('');
   successMessage = signal('');
   isLoading = signal(false);
+  showPassword = signal(false);
+showConfirmPassword = signal(false);
 
   ngOnInit(): void {
   this.loadDepartments();
@@ -274,4 +276,12 @@ loadDepartments(): void {
 
     });
   }
+
+  togglePassword(): void {
+  this.showPassword.set(!this.showPassword());
+}
+
+toggleConfirmPassword(): void {
+  this.showConfirmPassword.set(!this.showConfirmPassword());
+}
 }
