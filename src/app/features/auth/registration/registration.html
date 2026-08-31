@@ -565,12 +565,23 @@
               Password
             </label>
 
+            <div class="password-wrapper">
             <input
               class="form-control"
-              type="password"
+               [type]="showPassword() ? 'text' : 'password'"
               id="password"
               placeholder="Enter password"
               formControlName="password">
+
+
+    <span class="toggle-eye" (click)="togglePassword()">
+      @if (showPassword()) {
+        <i class="ti ti-eye-off"></i>
+      } @else {
+        <i class="ti ti-eye"></i>
+      }
+    </span>
+  </div>
 
             @if (
               registrationForm.get('password')?.touched &&
@@ -604,12 +615,22 @@
               Confirm Password
             </label>
 
+            <div class="password-wrapper">
             <input
               class="form-control"
-              type="password"
+              [type]="showConfirmPassword() ? 'text' : 'password'"
               id="confirmPassword"
               placeholder="Confirm password"
               formControlName="confirmPassword">
+
+              <span class="toggle-eye" (click)="toggleConfirmPassword()">
+      @if (showConfirmPassword()) {
+        <i class="ti ti-eye-off"></i>
+      } @else {
+        <i class="ti ti-eye"></i>
+      }
+    </span>
+  </div>
 
             @if (
               registrationForm.get('confirmPassword')?.touched &&
@@ -688,14 +709,19 @@
       }
 
 
-      @if (currentStep() === 1) {
+      <!-- @if (currentStep() === 1) {
 
         <p class="link-text">
           Already have an account?
           <a routerLink="/login">Login</a>
         </p>
 
-      }
+      } -->
+
+      <p class="link-text">
+          Already have an account?
+          <a routerLink="/login">Login</a>
+        </p>
 
     </form>
 

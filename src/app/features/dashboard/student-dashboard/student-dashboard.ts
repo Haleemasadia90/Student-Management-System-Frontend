@@ -26,6 +26,7 @@ export class StudentDashboard implements OnInit {
   myRecord = signal<Student | null>(null);
   myFees = signal<Fee[]>([]);
   availableCourses = signal<Course[]>([]);
+  errorMessage = signal('');
 
    get username(): string | null {
   return this.authService.getUsername();
@@ -58,15 +59,19 @@ loadAvailableCourses(departmentId: number): void {
 }
 
 enroll(courseId: number): void {
+  this.errorMessage.set('');
   this.studentService.enrollInCourse(courseId).subscribe({
     next: (updatedRecord) => {
-      this.myRecord.set(updatedRecord);   // record refresh, naya course dikh jayega
+      this.myRecord.set(updatedRecord);
     },
-    error: (err) => console.error('Enroll failed:', err)
+    error: (err) => {
+      this.errorMessage.set(err.error || 'Enrollment failed.');
+    }
   });
 }
 
-  
+
+
 
   logout(): void {
     this.authService.logout();

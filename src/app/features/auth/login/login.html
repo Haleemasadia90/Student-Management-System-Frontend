@@ -41,11 +41,21 @@
 
                 <label>Password</label>
 
+                <div class="password-wrapper">
                 <input
-                    type="password"
+                    [type]="showPassword() ? 'text' : 'password'"
                     class="form-control"
                     formControlName="password"
                     placeholder="Enter your password">
+
+                    <span class="toggle-eye" (click)="togglePassword()">
+      @if (showPassword()) {
+        <i class="ti ti-eye-off"></i>
+      } @else {
+        <i class="ti ti-eye"></i>
+      }
+    </span>
+  </div>
 
                 @if(loginForm.get('password')?.touched &&
                     loginForm.get('password')?.hasError('required')){

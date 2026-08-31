@@ -77,6 +77,7 @@ export class FeeManager implements OnInit {
           
           this.closeForm();
           this.loadFees();
+          
         },
         error: (err) => console.error('Error updating fee:', err)
       });

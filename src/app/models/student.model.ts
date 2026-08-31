@@ -7,4 +7,7 @@ export interface Student {
 
   departmentId: number;
      courseTitles: string[];
+
+     totalCreditHours: number;
+  maxCreditHours: number;
 }
