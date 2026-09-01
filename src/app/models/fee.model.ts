@@ -1,5 +1,6 @@
 export interface Fee {
   id: number;
+  studentId:number;
   studentUsername: string;
   semester: string;
   totalFee: number;

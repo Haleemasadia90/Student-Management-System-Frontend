@@ -153,10 +153,7 @@ export class StudentList implements OnInit {
   students = signal<Student[]>([]);
   expandedStudentId = signal<number | null>(null);
 
-  // isEditMode = false;
-  // showAddForm = false;
-
-  // selectedStudent!: Student;
+  
 
   ngOnInit(): void {
     this.getStudents();
@@ -165,9 +162,7 @@ export class StudentList implements OnInit {
   getStudents(): void {
     this.studentService.getAllStudents().subscribe({
       next: (data: Student[]) => {
-        // console.log("Data:", data);
-        // console.log("Is Array:", Array.isArray(data));
-        // console.log("Length:", data.length);
+      
 
         this.students.set([...data]);
       },
@@ -175,19 +170,7 @@ export class StudentList implements OnInit {
     });
   }
 
-  // openAddForm(): void {
-  //   this.showAddForm = true;
-  // }
-
-  // closeAddForm(): void {
-  //   this.showAddForm = false;
-  // }
-
-  // openEditForm(student: Student): void {
-  //   this.selectedStudent = student;
-  //   this.isEditMode = true;
-  //   this.showAddForm = true;
-  // }
+ 
 
   toggleFeeManager(id:number):void{
     this.expandedStudentId.set(this.expandedStudentId() === id ? null : id);
@@ -225,31 +208,5 @@ export class StudentList implements OnInit {
     });
   }
 
-  // createStudents(student: Student): void {
-  //   if (this.isEditMode) {
-  //     this.studentService.updateStudent(student.studentID, student).subscribe({
-  //       next: (data) => {
-  //         console.log(data);
-  //         this.getStudents();
-  //         this.closeAddForm();
-  //         this.isEditMode = false;
-  //       },
-  //       error: (error) => {
-  //         console.error('Error updating student:', error);
-  //       }
-  //     });
-  //   } else {
-  //     this.studentService.createStudents(student).subscribe({
-  //       next: (data) => {
-  //         console.log(data);
-  //         this.getStudents();
-  //         this.closeAddForm();
-  //       },
-  //       error: (error) => {
-  //         console.error('Error creating student:', error);
-  //       }
-  //     });
-  //   }
-  // }
 
 }

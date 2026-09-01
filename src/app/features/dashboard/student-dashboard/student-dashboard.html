@@ -13,35 +13,54 @@
     </div>
 
     <div class="courses-card">
-        <h3>My Courses</h3>
-        @if (myRecord()?.courseTitles && myRecord()!.courseTitles.length > 0) {
-            <ul class="course-list">
-                @for (course of myRecord()!.courseTitles; track course) {
-                    <li>{{ course }}</li>
-                }
-            </ul>
-        } @else {
-            <p class="empty-text">You are not enrolled in any courses yet.</p>
-        }
-    </div>
+  <h3>My Courses</h3>
 
-    <div class="courses-card">
-        <h3>Available Courses in My Department</h3>
-        @if (availableCourses().length > 0) {
-            @for (course of availableCourses(); track course.id) {
-                <div class="course-row">
-                    <span>{{ course.title }} ({{ course.courseCode }})</span>
-                    @if (myRecord()!.courseTitles.includes(course.title)) {
-                        <span class="enrolled-badge">Enrolled</span>
-                    } @else {
-                        <button (click)="enroll(course.id)" class="enroll-btn">Enroll</button>
-                    }
-                </div>
-            }
-        } @else {
-            <p class="empty-text">No courses available in your department yet.</p>
-        }
+  <div class="credit-tracker">
+    <span>{{ myRecord()?.totalCreditHours }} / {{ myRecord()?.maxCreditHours }} Credit Hours</span>
+    <div class="credit-bar">
+      <div class="credit-fill" [style.width.%]="(myRecord()!.totalCreditHours / myRecord()!.maxCreditHours) * 100"></div>
     </div>
+  </div>
+
+  @if (myRecord()?.courseTitles && myRecord()!.courseTitles.length > 0) {
+    <ul class="course-list">
+      @for (course of myRecord()!.courseTitles; track course) {
+        <li>{{ course }}</li>
+      }
+    </ul>
+  } @else {
+    <p class="empty-text">You are not enrolled in any courses yet.</p>
+  }
+</div>
+
+<div class="courses-card">
+  <h3>Available Courses in My Department</h3>
+  @if (availableCourses().length > 0) {
+    @for (course of availableCourses(); track course.id) {
+      <div class="course-row">
+        <span>{{ course.title }} ({{ course.courseCode }}) — {{ course.creditHours }} CH</span>
+
+        @if (myRecord()!.courseTitles.includes(course.title)) {
+          <span class="enrolled-badge">Enrolled</span>
+        } @else if (myRecord()!.totalCreditHours + course.creditHours > myRecord()!.maxCreditHours) {
+          <span class="limit-badge">Limit Exceeded</span>
+        } @else {
+          <button (click)="enroll(course.id)" class="enroll-btn">Enroll</button>
+        }
+      </div>
+    }
+  } @else {
+    <p class="empty-text">No courses available in your department yet.</p>
+  }
+
+  @if (errorMessage()) {
+  <small class="error" style="display:block; margin-top:8px; color:#dc3545;">
+    {{ errorMessage() }}
+  </small>
+}
+</div>
+
+
 
     <div class="fee-card">
         <h3>My Fee</h3>

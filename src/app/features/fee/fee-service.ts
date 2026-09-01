@@ -11,6 +11,13 @@ export class FeeService {
   baseUrl = environment.apiUrl;
   readonly http = inject(HttpClient);
 
+  
+
+  getAllFees() {
+  return this.http.get<Fee[]>(
+    this.baseUrl + ENDPOINTS.fee.getAllFees);}
+
+
   createFee(studentId:number, fee: FeeRequest){
     return this.http.post<Fee>(this.baseUrl+ENDPOINTS.fee.createFee.replace(':studentId',studentId.toString()),fee);
   }
