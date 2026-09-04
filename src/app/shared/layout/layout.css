@@ -7,16 +7,21 @@
 
 .sidebar {
   width: 220px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
   background: white;
   border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  overflow-y: auto;
 }
 
 .sidebar-header {
   padding: 20px;
   border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
 }
 
 .sidebar-title {
@@ -62,6 +67,7 @@
 .sidebar-footer {
   padding: 14px 10px;
   border-top: 1px solid #e2e8f0;
+  flex-shrink: 0;             
 }
 
 .logout-btn {

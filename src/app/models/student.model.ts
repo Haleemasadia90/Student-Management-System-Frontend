@@ -1,4 +1,5 @@
 export interface Student {
+  profilePicture: null;
     id:number;
     username:string;
     email:string;

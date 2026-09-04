@@ -12,11 +12,17 @@ import { CommonModule } from '@angular/common';
 export class Layout {
   @Input({required:true}) navItems: NavItem[] = [];
   @Input() panelTitle: string = '';
-  @Input() username:string | null = null;
+  @Input() username: string | null = null;
+  @Input() profilePicture: string | null = null;   
 
   @Input() logoutFn!: ()=> void;
 
   logout():void{
     this.logoutFn();
+  }
+
+
+  get initials(): string {
+    return this.username ? this.username.charAt(0).toUpperCase() : '?';
   }
 }

@@ -1,4 +1,4 @@
-<div class="dashboard-header">
+<!-- <div class="dashboard-header">
     <h2>Welcome, {{username}} (Student)</h2>
     <button (click)="logout()" class="logout-btn">Logout</button>
 </div>
@@ -86,4 +86,46 @@
 
 } @else {
     <p class="loading-text">Loading your record...</p>
+} --><div class="dashboard-header">
+  <h2>Welcome, {{ username }} (Student)</h2>
+</div>
+
+@if (myRecord()) {
+  <div class="dashboard-cards">
+
+    <div class="dashboard-card">
+      <div class="card-icon">🆔</div>
+      <div>
+        <p>Student ID</p>
+        <h3>{{ myRecord()?.id }}</h3>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-icon">👤</div>
+      <div>
+        <p>Username</p>
+        <h3>{{ myRecord()?.username }}</h3>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-icon">📧</div>
+      <div>
+        <p>Email</p>
+        <h3 class="card-value-sm">{{ myRecord()?.email }}</h3>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-icon">🏛️</div>
+      <div>
+        <p>Department</p>
+        <h3>{{ myRecord()?.department }}</h3>
+      </div>
+    </div>
+
+  </div>
+} @else {
+  <p class="loading-text">Loading your record...</p>
 }

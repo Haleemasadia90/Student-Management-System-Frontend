@@ -57,7 +57,13 @@ import { CourseList } from './features/courses/course-list/course-list';
 import { FeeList } from './features/fee/fee-list/fee-list';
 import { DepartmentManager } from './features/departments/department-manager/department-manager';
 import { StudentLayout } from './features/dashboard/student-layout/student-layout';
-
+import { FeeDetail } from './features/fee/fee-detail/fee-detail'; 
+import { MyFee } from './features/fee/my-fee/my-fee';
+import { MyCourses } from './features/courses/my-courses/my-courses';
+import { ChangePassword } from './features/auth/change-password/change-password';
+import { ResetPassword } from './features/auth/reset-password/reset-password';
+import { ForgotPassword } from './features/auth/forgot-password/forgot-password';
+import { Settings } from './features/settings/settings';
 
 export const routes: Routes = [
 
@@ -76,6 +82,9 @@ export const routes: Routes = [
     path: 'registration',
     component: Registration
   },
+
+  { path: 'forgot-password', component: ForgotPassword },
+{ path: 'reset-password', component: ResetPassword }, 
 
   // =========================
   // ADMIN ROUTES
@@ -107,6 +116,8 @@ export const routes: Routes = [
         component: FeeList
       },
 
+       { path: 'finance/:id', component: FeeDetail },
+
       {
   path: 'departments',
   component: DepartmentManager
@@ -118,38 +129,15 @@ export const routes: Routes = [
 
 
   {
-    path: 'student',
-    component: StudentDashboard,
-
-    canActivate: [
-      authGuard,
-      authRole('STUDENT')
-    ],
-
-    children: [
-
-      {
-        path: 'dashboard',
-        component: StudentDashboard
-      },
-
-      {
-        path: 'courses',
-        component: CourseList
-      },
-
-      {
-        path: 'fee',
-        component: FeeList
-      },
-
-      {
-        path: 'settings',
-        component: DepartmentManager
-      }
-
-    ]
-  },
-
+  path: 'student',
+  component: StudentLayout,         
+  canActivate: [authGuard, authRole('STUDENT')],
+  children: [
+    { path: 'dashboard', component: StudentDashboard },
+    { path: 'courses', component: MyCourses },  
+    { path: 'fee', component: MyFee },             
+    { path: 'settings', component: Settings },
+  ]
+},
 
 ];
