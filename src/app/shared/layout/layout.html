@@ -2,6 +2,15 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <span class="sidebar-title">{{ panelTitle }}</span>
+
+      <div class="user-profile">
+        @if (profilePicture) {
+          <img [src]="profilePicture" class="user-avatar" alt="Profile">
+        } @else {
+          <div class="user-avatar-fallback">{{ initials }}</div>
+        }
+        <span class="user-name">{{ username }}</span>
+      </div>
     </div>
 
     <nav class="sidebar-nav">
