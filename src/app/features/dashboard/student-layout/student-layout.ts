@@ -29,10 +29,9 @@ export class StudentLayout {
   logoutFn = () => this.authService.logout();
 
   constructor() {
-    // Jab bhi notifyProfileUpdated() kahin se (jaise dashboard se) call ho,
-    // ye effect khud chal kar naya profile record fetch kar lega
+    
     effect(() => {
-      this.studentService.profileUpdated();   // dependency track karne ke liye
+      this.studentService.profileUpdated();   
       this.loadProfile();
     });
   }

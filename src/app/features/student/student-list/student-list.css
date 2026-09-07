@@ -1,10 +1,9 @@
-/* Container Box spacing */
+
 .list-section {
   margin-top: 15px;
   width: 100%;
 }
 
-/* Header Text customization */
 .list-title {
   color: #2c3e50;
   font-size: 20px;
@@ -124,9 +123,7 @@
 }
 
 
-/* ===========================
-   Search Container
-=========================== */
+
 
 .search-container{
     width:90%;
@@ -137,7 +134,7 @@
     gap:12px;
 }
 
-/* Search Input */
+
 
 .search-input{
     width:250px;
@@ -154,7 +151,7 @@
     box-shadow:0 0 5px rgba(13,110,253,.3);
 }
 
-/* Search Button */
+
 
 .search-btn{
     background:#198754;
@@ -171,7 +168,7 @@
     background:#157347;
 }
 
-/* Show All Button */
+
 
 .show-btn{
     background:#6c757d;
@@ -202,3 +199,4 @@
 .fee-btn:hover {
   background: #0b5ed7;
 }
+

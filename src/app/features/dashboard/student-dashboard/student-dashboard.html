@@ -86,11 +86,28 @@
 
 } @else {
     <p class="loading-text">Loading your record...</p>
-} --><div class="dashboard-header">
-  <h2>Welcome, {{ username }} (Student)</h2>
+} -->
+
+<div class="dashboard-header">
+  <h2>Welcome, {{ username }} </h2>
 </div>
 
 @if (myRecord()) {
+
+  <div class="profile-upload-section">
+    <img
+      [src]="myRecord()?.profilePicture
+        ? 'http://localhost:8080/uploads/profile-pictures/' + myRecord()?.profilePicture
+        : 'assets/default-avatar.png'"
+      class="profile-dp"
+      alt="Profile Picture">
+
+    <label class="upload-label">
+      Change Photo
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+    </label>
+  </div>
+
   <div class="dashboard-cards">
 
     <div class="dashboard-card">

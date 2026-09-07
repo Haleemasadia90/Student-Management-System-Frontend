@@ -12,17 +12,16 @@ import { ChangePassword } from '../auth/change-password/change-password';
 })
 export class Settings {
 
-  activeOption = signal<string | null>(null);
+  activeOption = signal<string | 'change-password'>('change-password');
 
   options = [
-    { key: 'change-password', label: 'Change Password', icon: 'ti ti-lock', desc: 'Update your account password' },
-    // future options yahan add hote jayenge, e.g.:
-    // { key: 'profile', label: 'Edit Profile', icon: 'ti ti-user', desc: 'Update your name, DP and info' },
+    { key: 'change-password', label: '', icon: 'ti ti-lock', desc: 'Update your account password' },
+    
   ];
 
   selectOption(key: string): void {
-    // agar wahi option dobara click ho, to band (collapse) kar do; warna khol do
-    this.activeOption.set(this.activeOption() === key ? null : key);
+  
+    this.activeOption.set(this.activeOption() === key ? '' : key);
   }
 }
 
