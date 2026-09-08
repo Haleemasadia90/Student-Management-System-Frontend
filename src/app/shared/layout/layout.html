@@ -1,27 +1,69 @@
 <div class="layout-wrapper">
-  <aside class="sidebar">
+
+  <div class="mobile-topbar">
+    <button class="hamburger-btn" (click)="toggleSidebar()">
+      <i class="ti ti-menu-2"></i>
+    </button>
+    <span class="mobile-title">{{ panelTitle }}</span>
+  </div>
+
+  @if (isSidebarOpen()) {
+    <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+  }
+
+  <aside class="sidebar" [class.open]="isSidebarOpen()" [class.collapsed]="isCollapsed()">
+
     <div class="sidebar-header">
-      <span class="sidebar-title">{{ panelTitle }}</span>
+      @if (!isCollapsed()) {
+        <span class="sidebar-title">{{ panelTitle }}</span>
+      }
+
+      <button class="collapse-btn" (click)="toggleCollapse()" title="Toggle sidebar">
+        <i class="ti ti-layout-sidebar-left-collapse"></i>
+      </button>
+
+      <button class="close-btn" (click)="closeSidebar()">
+        <i class="ti ti-x"></i>
+      </button>
     </div>
+
+    @if (username) {
+      <div class="user-card">
+        <img [src]="avatarUrl" (error)="onImageError($event)" class="user-avatar" alt="">
+        @if (!isCollapsed()) {
+          <span class="user-name">{{ username }}</span>
+        }
+      </div>
+    }
 
     <nav class="sidebar-nav">
       @for (item of navItems; track item.route) {
-        <a [routerLink]="item.route" routerLinkActive="active-link" class="nav-item">
+        
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active-link"
+          class="nav-item"
+          [title]="item.label"
+          (click)="closeSidebar()">
           <i [class]="item.icon"></i>
-          <span>{{ item.label }}</span>
+          @if (!isCollapsed()) {
+            <span>{{ item.label }}</span>
+          }
         </a>
       }
     </nav>
 
     <div class="sidebar-footer">
-      <button (click)="logout()" class="logout-btn">
+      <button (click)="logout()" class="logout-btn" [title]="'Logout'">
         <i class="ti ti-logout"></i>
-        <span>Logout</span>
+        @if (!isCollapsed()) {
+          <span>Logout</span>
+        }
       </button>
     </div>
   </aside>
 
-  <main class="content-area">
+  <main class="content-area" [class.expanded]="isCollapsed()">
     <router-outlet></router-outlet>
   </main>
 </div>

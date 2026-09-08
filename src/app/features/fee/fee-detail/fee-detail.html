@@ -1,0 +1,73 @@
+<div class="fee-detail-section">
+
+  <div class="fee-detail-header">
+    <button class="back-btn" (click)="goBack()">
+      <span class="back-arrow">←</span> Back to Fee Records
+    </button>
+  </div>
+
+  @if (student()) {
+    <div class="student-info-card">
+      <div class="student-avatar">{{ student()!.username.charAt(0).toUpperCase() }}</div>
+      <div class="student-info-text">
+        <h3>{{ student()!.username }}</h3>
+        <p>{{ student()!.email }} &nbsp;•&nbsp; {{ student()!.department }}</p>
+      </div>
+    </div>
+  }
+
+  <div class="fee-summary-cards">
+    <div class="summary-card">
+      <span class="summary-label">Total Records</span>
+      <span class="summary-value">{{ fees().length }}</span>
+    </div>
+    <div class="summary-card">
+      <span class="summary-label">Total Fee</span>
+      <span class="summary-value">{{ totalFee() }}</span>
+    </div>
+    <div class="summary-card">
+      <span class="summary-label">Total Paid</span>
+      <span class="summary-value paid">{{ totalPaid() }}</span>
+    </div>
+    <div class="summary-card">
+      <span class="summary-label">Total Due</span>
+      <span class="summary-value due">{{ totalDue() }}</span>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Semester</th>
+          <th>Total Fee</th>
+          <th>Paid Fee</th>
+          <th>Due Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (fees().length > 0) {
+          @for (fee of fees(); track fee.id) {
+            <tr>
+              <td>{{ fee.semester }}</td>
+              <td>{{ fee.totalFee }}</td>
+              <td>{{ fee.paidFee }}</td>
+              <td>{{ fee.dueAmount }}</td>
+              <td>
+                <span class="fee-status" [class]="'status-' + fee.status.toLowerCase()">
+                  {{ fee.status }}
+                </span>
+              </td>
+            </tr>
+          }
+        } @else {
+          <tr>
+            <td colspan="5" class="empty-row">No fee records for this student.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>

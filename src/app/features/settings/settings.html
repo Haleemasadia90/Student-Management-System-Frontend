@@ -1,0 +1,39 @@
+<div class="settings-container">
+
+  <h2 class="settings-title">Settings</h2>
+
+  <div class="settings-list">
+    @for (option of options; track option.key) {
+
+      <div
+        class="settings-item"
+        [class.active]="activeOption() === option.key"
+        (click)="selectOption(option.key)">
+
+        <div class="settings-item-left">
+          <div class="settings-icon">
+            <i [class]="option.icon"></i>
+          </div>
+          <div class="settings-item-text">
+            <span class="settings-label">{{ option.label }}</span>
+            <span class="settings-desc">{{ option.desc }}</span>
+          </div>
+        </div>
+
+        <i class="ti ti-chevron-right chevron" [class.rotated]="activeOption() === option.key"></i>
+      </div>
+
+      @if (activeOption() === option.key) {
+        <div class="settings-form-wrapper">
+          @switch (option.key) {
+            @case ('change-password') {
+              <app-change-password></app-change-password>
+            }
+          }
+        </div>
+      }
+
+    }
+  </div>
+
+</div>

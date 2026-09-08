@@ -1,9 +1,12 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-import { FeeService } from '../fee-service';
-import { Fee } from '../../../models/fee.model';
+import { StudentService } from '../../student/student-service';
+import { Student } from '../../../models/student.model';
 
 @Component({
   selector: 'app-fee-list',
@@ -12,48 +15,57 @@ import { Fee } from '../../../models/fee.model';
   templateUrl: './fee-list.html',
   styleUrl: './fee-list.css',
 })
-export class FeeList implements OnInit {
+export class FeeList implements OnInit, OnDestroy {
 
-  readonly feeService = inject(FeeService);
+  readonly studentService = inject(StudentService);
+  readonly router = inject(Router);
 
-  fees = signal<Fee[]>([]);
+  students = signal<Student[]>([]);
+  searchName: string = '';
 
-  searchId!: number;
 
-  
+  private searchSubject = new Subject<string>();
 
   ngOnInit(): void {
-    this.getFees();
-  }
+    this.getStudents();
 
-  getFees(): void {
-    this.feeService.getAllFees().subscribe({
-      next: (data: Fee[]) => {
-        this.fees.set(data);
-      },
+   
+    this.searchSubject.pipe(
+      debounceTime(300),        
+      distinctUntilChanged(),     
+      switchMap((name: string) => {
+        if (!name || !name.trim()) {
+        
+          return this.studentService.getAllStudents();
+        }
+        return this.studentService.searchStudentsByName(name);
+      })
+    ).subscribe({
+      next: (data: Student[]) => this.students.set(data),
       error: (err) => {
-        console.error('Error loading fee records:', err);
+        console.error('Error searching student:', err);
+        this.students.set([]);
       }
     });
   }
 
-  searchFee(): void {
+  onSearchChange(value: string): void {
+    this.searchSubject.next(value);
+  }
 
-    if (!this.searchId) {
-      alert('Please enter Student ID');
-      return;
-    }
-
-    this.feeService.getFeesByStudentId(this.searchId).subscribe({
-      next: (data: Fee[]) => {
-        this.fees.set(data);
-      },
-      error: (err) => {
-        console.error('Error searching fee:', err);
-        alert('No fee record found');
-        this.fees.set([]);
-      }
+  getStudents(): void {
+    this.studentService.getAllStudents().subscribe({
+      next: (data: Student[]) => this.students.set(data),
+      error: (err) => console.error('Error loading students:', err)
     });
   }
 
+  viewFeeDetail(studentId: number): void {
+    this.router.navigate(['/admin/finance', studentId]);
+  }
+
+  ngOnDestroy(): void {
+  
+    this.searchSubject.complete();
+  }
 }
