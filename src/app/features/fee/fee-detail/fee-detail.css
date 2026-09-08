@@ -5,7 +5,7 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
 
-/* Header */
+
 .fee-detail-header {
   margin-bottom: 20px;
 }
@@ -33,7 +33,7 @@
   font-size: 16px;
 }
 
-/* Student info card */
+
 .student-info-card {
   display: flex;
   align-items: center;
@@ -70,7 +70,7 @@
   font-size: 13px;
 }
 
-/* Summary cards */
+
 .fee-summary-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -109,7 +109,7 @@
   color: #dc2626;
 }
 
-/* Table */
+
 .table-wrapper {
   overflow-x: auto;
 }
@@ -171,7 +171,7 @@
   color: #dc2626;
 }
 
-/* Responsive */
+
 @media (max-width: 640px) {
   .fee-summary-cards {
     grid-template-columns: repeat(2, 1fr);

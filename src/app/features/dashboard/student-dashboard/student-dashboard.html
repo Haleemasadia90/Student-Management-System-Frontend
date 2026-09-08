@@ -1,96 +1,23 @@
-<!-- <div class="dashboard-header">
-    <h2>Welcome, {{username}} (Student)</h2>
-    <button (click)="logout()" class="logout-btn">Logout</button>
-</div>
-
-@if(myRecord())
-{
-    <div class="record-card">
-        <p><strong>ID:</strong> {{myRecord()?.id}}</p>
-        <p><strong>Username:</strong> {{myRecord()?.username}}</p>
-        <p><strong>Email:</strong> {{myRecord()?.email}}</p>
-        <p><strong>Department:</strong> {{myRecord()?.department}}</p>
-    </div>
-
-    <div class="courses-card">
-  <h3>My Courses</h3>
-
-  <div class="credit-tracker">
-    <span>{{ myRecord()?.totalCreditHours }} / {{ myRecord()?.maxCreditHours }} Credit Hours</span>
-    <div class="credit-bar">
-      <div class="credit-fill" [style.width.%]="(myRecord()!.totalCreditHours / myRecord()!.maxCreditHours) * 100"></div>
-    </div>
-  </div>
-
-  @if (myRecord()?.courseTitles && myRecord()!.courseTitles.length > 0) {
-    <ul class="course-list">
-      @for (course of myRecord()!.courseTitles; track course) {
-        <li>{{ course }}</li>
-      }
-    </ul>
-  } @else {
-    <p class="empty-text">You are not enrolled in any courses yet.</p>
-  }
-</div>
-
-<div class="courses-card">
-  <h3>Available Courses in My Department</h3>
-  @if (availableCourses().length > 0) {
-    @for (course of availableCourses(); track course.id) {
-      <div class="course-row">
-        <span>{{ course.title }} ({{ course.courseCode }}) — {{ course.creditHours }} CH</span>
-
-        @if (myRecord()!.courseTitles.includes(course.title)) {
-          <span class="enrolled-badge">Enrolled</span>
-        } @else if (myRecord()!.totalCreditHours + course.creditHours > myRecord()!.maxCreditHours) {
-          <span class="limit-badge">Limit Exceeded</span>
-        } @else {
-          <button (click)="enroll(course.id)" class="enroll-btn">Enroll</button>
-        }
-      </div>
-    }
-  } @else {
-    <p class="empty-text">No courses available in your department yet.</p>
-  }
-
-  @if (errorMessage()) {
-  <small class="error" style="display:block; margin-top:8px; color:#dc3545;">
-    {{ errorMessage() }}
-  </small>
-}
-</div>
-
-
-
-    <div class="fee-card">
-        <h3>My Fee</h3>
-        @if(myFees().length>0){
-            @for (fee of myFees(); track fee.id) {
-                <div class="fee-item">
-                    <div class="fee-item-header">
-                        <span class="fee-semester">{{ fee.semester }}</span>
-                        <span class="fee-status" [class]="'status-' + fee.status.toLowerCase()">{{ fee.status }}</span>
-                    </div>
-                    <div class="fee-item-body">
-                        <p>Total: {{ fee.totalFee }}</p>
-                        <p>Paid: {{ fee.paidFee }}</p>
-                        <p>Due: {{ fee.dueAmount }}</p>
-                    </div>
-                </div>
-            }
-        }
-        @else {
-            <p class="empty-text">No fee records found.</p>
-        }
-    </div>
-
-} @else {
-    <p class="loading-text">Loading your record...</p>
-} --><div class="dashboard-header">
-  <h2>Welcome, {{ username }} (Student)</h2>
+<div class="dashboard-header">
+  <h2>Welcome, {{ username }} </h2>
 </div>
 
 @if (myRecord()) {
+
+  <div class="profile-upload-section">
+    <img
+      [src]="myRecord()?.profilePicture
+        ? 'http://localhost:8080/uploads/profile-pictures/' + myRecord()?.profilePicture
+        : 'assets/default-avatar.png'"
+      class="profile-dp"
+      alt="Profile Picture">
+
+    <label class="upload-label">
+      Change Photo
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+    </label>
+  </div>
+
   <div class="dashboard-cards">
 
     <div class="dashboard-card">

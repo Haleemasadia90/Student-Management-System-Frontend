@@ -16,13 +16,6 @@ getAllStudents() {
   return this.http.get<Student[]>(this.baseUrl+ENDPOINTS.students.getAllStudents);
 }
 
-// createStudents(student: Student){
-//   return this.http.post<Student>(this.baseUrl+ENDPOINTS.students.createStudents, student);
-// }
-
-// updateStudent(id: number, student: Student){
-//   return this.http.put<Student>(this.baseUrl+ENDPOINTS.students.updateStudent.replace(':id', id.toString()), student);
-// }
 
 searchStudentsByName(name: string) {
   return this.http.get<Student[]>(
