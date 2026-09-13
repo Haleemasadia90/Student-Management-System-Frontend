@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChangePassword } from '../auth/change-password/change-password';
-
+import { ChangePassword } from '../auth/change-password/change-password'; 
+// 
 
 @Component({
   selector: 'app-settings',
@@ -12,16 +12,15 @@ import { ChangePassword } from '../auth/change-password/change-password';
 })
 export class Settings {
 
-  activeOption = signal<string | 'change-password'>('change-password');
-
   options = [
-    { key: 'change-password', label: '', icon: 'ti ti-lock', desc: 'Update your account password' },
-    
+    { key: 'profile', label: 'Profile', icon: 'ti ti-user-circle' },
+    { key: 'password', label: 'Password', icon: 'ti ti-lock' },
   ];
 
+  // Default: pehla option hamesha selected rahe (jaisa "General" screenshot mein hai)
+  selectedOption = signal<string>('profile');
+
   selectOption(key: string): void {
-  
-    this.activeOption.set(this.activeOption() === key ? '' : key);
+    this.selectedOption.set(key);
   }
 }
-

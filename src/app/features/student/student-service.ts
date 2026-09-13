@@ -41,6 +41,9 @@ enrollInCourse(courseId: number) {
   return this.http.post<Student>(this.baseUrl + '/api/students/enroll', { courseId });
 }
 
+updateProfile(data: { username: string }) {
+  return this.http.put<Student>(this.baseUrl + ENDPOINTS.students.updateProfile, data);
+}
 
 
 

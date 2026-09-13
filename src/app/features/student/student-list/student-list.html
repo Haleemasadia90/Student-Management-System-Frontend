@@ -66,7 +66,7 @@
     @if (expandedStudentId() === s.id) {
     <tr>
       <td colspan="5">
-        <app-fee-manager [studentId]="s.id"></app-fee-manager>
+      <app-fee-manager [studentId]="s.id" [admissionYear]="s.admissionYear ?? 0"></app-fee-manager>
       </td>
     </tr>
   }

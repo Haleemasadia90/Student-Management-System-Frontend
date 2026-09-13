@@ -23,6 +23,7 @@ import { ChangePassword } from './features/auth/change-password/change-password'
 import { ResetPassword } from './features/auth/reset-password/reset-password';
 import { ForgotPassword } from './features/auth/forgot-password/forgot-password';
 import { Settings } from './features/settings/settings';
+import { EditProfile } from './features/settings/edit-profile/edit-profile';
 
 export const routes: Routes = [
 
@@ -45,7 +46,7 @@ export const routes: Routes = [
   { path: 'forgot-password', component: ForgotPassword },
 { path: 'reset-password', component: ResetPassword }, 
 
-
+{ path: 'change-password', component: ChangePassword },
 
   {
     path: 'admin',
@@ -93,7 +94,8 @@ export const routes: Routes = [
     { path: 'dashboard', component: StudentDashboard },
     { path: 'courses', component: MyCourses },  
     { path: 'fee', component: MyFee },             
-    { path: 'settings', component: Settings },
+    { path: 'settings/profile', component: EditProfile },
+{ path: 'settings/password', component: ChangePassword },
   ]
 },
 

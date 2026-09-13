@@ -10,26 +10,39 @@ import { CommonModule } from '@angular/common';
   styleUrl: './layout.css',
 })
 export class Layout {
-
-
   @Input({required:true}) navItems: NavItem[] = [];
   @Input() panelTitle: string = '';
   @Input() username: string | null = null;
-  @Input() profilePicture: string | null = null;   
-
+  @Input() profilePicture: string | null = null;
   @Input() logoutFn!: ()=> void;
-    isSidebarOpen = signal(false);
-     isCollapsed = signal(false);  
 
-
-     onImageError($event: ErrorEvent) {
-throw new Error('Method not implemented.');
-}
+  isSidebarOpen = signal(false);
+  isCollapsed = signal(false);
+  imageLoadFailed = signal(false);
+  expandedItem = signal<string | null>(null);
 
   get avatarUrl(): string {
-    return this.profilePicture
-      ? 'http://localhost:8080/uploads/profile-pictures/' + this.profilePicture
-      : 'assets/default-avatar.png';
+    return 'http://localhost:8080/uploads/profile-pictures/' + this.profilePicture;
+  }
+
+  get initials(): string {
+    return this.username ? this.username.charAt(0).toUpperCase() : '?';
+  }
+
+  onImageError(): void {
+    this.imageLoadFailed.set(true);
+  }
+
+  toggleExpand(item: NavItem): void {
+    this.expandedItem.set(this.expandedItem() === item.label ? null : item.label);
+  }
+
+  onParentClick(item: NavItem): void {
+    if (item.children) {
+      this.toggleExpand(item);
+    } else {
+      this.closeSidebar();
+    }
   }
 
   toggleSidebar(): void {
@@ -40,16 +53,11 @@ throw new Error('Method not implemented.');
     this.isSidebarOpen.set(false);
   }
 
-   toggleCollapse(): void {
+  toggleCollapse(): void {
     this.isCollapsed.update(v => !v);
   }
 
   logout():void{
     this.logoutFn();
-  }
-
-
-  get initials(): string {
-    return this.username ? this.username.charAt(0).toUpperCase() : '?';
   }
 }

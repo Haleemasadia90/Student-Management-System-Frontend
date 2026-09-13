@@ -23,15 +23,15 @@
     </div>
     <div class="summary-card">
       <span class="summary-label">Total Fee</span>
-      <span class="summary-value">{{ totalFee() }}</span>
+      <span class="summary-value">{{ summary()!.totalOverall }}</span>
     </div>
     <div class="summary-card">
       <span class="summary-label">Total Paid</span>
-      <span class="summary-value paid">{{ totalPaid() }}</span>
+      <span class="summary-value paid">{{ summary()!.totalPaid }}</span>
     </div>
     <div class="summary-card">
       <span class="summary-label">Total Due</span>
-      <span class="summary-value due">{{ totalDue() }}</span>
+      <span class="summary-value due">{{ summary()!.totalDue }}</span>
     </div>
   </div>
 

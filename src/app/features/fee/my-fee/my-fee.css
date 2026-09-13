@@ -3,22 +3,42 @@
   font-family: 'Inter', Arial, sans-serif;
 }
 
-.fee-card {
-  max-width: 480px;
-  margin: 0 auto 24px;
-  background: white;
-  padding: 22px;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+.page-header {
+  margin-bottom: 20px;
 }
 
-.fee-card h3 {
-  margin: 0 0 14px;
-  font-size: 16px;
+.page-header h2 {
+  text-align: center;
+  margin: 0;
+  font-size: 22px;
   color: #1e293b;
-  border-left: 4px solid #0d6efd;
-  padding-left: 10px;
 }
+
+
+.fee-list-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.fee-list-card {
+  width: 100%;
+  max-width: 480px;
+}
+
+.edit-profile-card {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
 
 .fee-item {
   background: #f8fafc;
@@ -78,4 +98,20 @@
   font-size: 14px;
   text-align: center;
   padding: 10px 0;
+}
+
+ 
+@media (max-width: 560px) {
+  .fee-list-card {
+    max-width: 100%;
+    margin: 0 12px;
+  }
+
+  .edit-profile-card {
+    padding: 18px;
+  }
+
+  .page-header h2 {
+    font-size: 19px;
+  }
 }

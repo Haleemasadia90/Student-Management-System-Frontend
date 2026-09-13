@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { FeeService } from '../fee-service';
 import { StudentService } from '../../student/student-service';
-import { Fee } from '../../../models/fee.model';
+import { Fee, FeeSummary } from '../../../models/fee.model';
 import { Student } from '../../../models/student.model';
 
 @Component({
@@ -23,16 +23,14 @@ export class FeeDetail implements OnInit {
 
   student = signal<Student | null>(null);
   fees = signal<Fee[]>([]);
+  summary = signal<FeeSummary | null>(null);
   studentId!: number;
-
-  totalFee = computed(() => this.fees().reduce((sum, f) => sum + f.totalFee, 0));
-  totalPaid = computed(() => this.fees().reduce((sum, f) => sum + f.paidFee, 0));
-  totalDue = computed(() => this.fees().reduce((sum, f) => sum + f.dueAmount, 0));
 
   ngOnInit(): void {
     this.studentId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadStudent();
     this.loadFees();
+    this.loadSummary();
   }
 
   loadStudent(): void {
@@ -47,6 +45,15 @@ export class FeeDetail implements OnInit {
       next: (data) => this.fees.set(data),
       error: (err) => console.error('Error loading fees:', err)
     });
+  }
+
+
+  loadSummary(): void{
+    this.feeService.getStudentFeeSummary(this.studentId).subscribe({
+      next:(data) => this.summary.set(data),
+      error:(err) => console.error('Error loading fee summary:', err)
+    });
+
   }
 
   goBack(): void {
