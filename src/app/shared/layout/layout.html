@@ -1,3 +1,5 @@
+
+
 <div class="layout-wrapper">
 
   <div class="mobile-topbar">
@@ -17,11 +19,9 @@
       @if (!isCollapsed()) {
         <span class="sidebar-title">{{ panelTitle }}</span>
       }
-
       <button class="collapse-btn" (click)="toggleCollapse()" title="Toggle sidebar">
         <i class="ti ti-layout-sidebar-left-collapse"></i>
       </button>
-
       <button class="close-btn" (click)="closeSidebar()">
         <i class="ti ti-x"></i>
       </button>
@@ -29,7 +29,11 @@
 
     @if (username) {
       <div class="user-card">
-        <img [src]="avatarUrl" (error)="onImageError($event)" class="user-avatar" alt="">
+        @if (profilePicture && !imageLoadFailed()) {
+          <img [src]="avatarUrl" (error)="onImageError()" class="user-avatar" alt="">
+        } @else {
+          <div class="user-avatar-fallback">{{ initials }}</div>
+        }
         @if (!isCollapsed()) {
           <span class="user-name">{{ username }}</span>
         }
@@ -37,19 +41,52 @@
     }
 
     <nav class="sidebar-nav">
-      @for (item of navItems; track item.route) {
-        
-        <a
-          [routerLink]="item.route"
-          routerLinkActive="active-link"
-          class="nav-item"
-          [title]="item.label"
-          (click)="closeSidebar()">
-          <i [class]="item.icon"></i>
-          @if (!isCollapsed()) {
-            <span>{{ item.label }}</span>
+      @for (item of navItems; track item.label) {
+
+        @if (item.children) {
+
+          <button
+            class="nav-item"
+            [class.expanded-parent]="expandedItem() === item.label"
+            [title]="item.label"
+            (click)="onParentClick(item)">
+            <i [class]="item.icon"></i>
+            @if (!isCollapsed()) {
+              <span>{{ item.label }}</span>
+              <i class="ti ti-chevron-right nav-chevron" [class.rotated]="expandedItem() === item.label"></i>
+            }
+          </button>
+
+          @if (expandedItem() === item.label && !isCollapsed()) {
+            <div class="nav-submenu">
+              @for (child of item.children; track child.route) {
+                <a
+                  [routerLink]="child.route"
+                  routerLinkActive="active-sublink"
+                  class="nav-subitem"
+                  (click)="closeSidebar()">
+                  <i [class]="child.icon"></i>
+                  <span>{{ child.label }}</span>
+                </a>
+              }
+            </div>
           }
-        </a>
+
+        } @else {
+          
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active-link"
+            class="nav-item"
+            [title]="item.label"
+            (click)="closeSidebar()">
+            <i [class]="item.icon"></i>
+            @if (!isCollapsed()) {
+              <span>{{ item.label }}</span>
+            }
+          </a>
+        }
+
       }
     </nav>
 
@@ -64,6 +101,13 @@
   </aside>
 
   <main class="content-area" [class.expanded]="isCollapsed()">
+  <div class="page-topbar">
+    <h2>Welcome, {{ username }}</h2>
+  </div>
+
+  <div class="page-content">
     <router-outlet></router-outlet>
-  </main>
+  </div>
+</main>
+
 </div>

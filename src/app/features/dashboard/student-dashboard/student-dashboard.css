@@ -13,7 +13,9 @@
   color: #1e293b;
 }
 
+/* ===== Info Cards Grid ===== */
 .dashboard-cards {
+  margin-top: 50px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
@@ -28,7 +30,7 @@
   gap: 16px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  min-width: 0;                /* long email overflow na ho isliye */
+  min-width: 0;
 }
 
 .card-icon {
@@ -52,7 +54,6 @@
   color: #1e293b;
 }
 
-/* Email jaisi lambi values ke liye chhota font, wrap ho sake */
 .card-value-sm {
   font-size: 15px !important;
   word-break: break-word;
@@ -66,29 +67,7 @@
   margin-top: 40px;
 }
 
-/* ===== Tablet ===== */
-@media (max-width: 900px) {
-  .dashboard-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* ===== Mobile ===== */
-@media (max-width: 560px) {
-  .dashboard-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-header h2 {
-    font-size: 20px;
-  }
-
-  .dashboard-card h3 {
-    font-size: 22px;
-  }
-}
-
-
+/* ===== Profile Upload (agar kahin use ho) ===== */
 .profile-upload-section {
   display: flex;
   flex-direction: column;
@@ -119,4 +98,175 @@
 
 .upload-label:hover {
   background: #e0e7ff;
+}
+
+/* ===== Chart Wrapper — Ye card ko CENTER karta hai ===== */
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.chart-card {
+  width: 100%;
+  max-width: 380px;
+  padding-bottom: 28px;
+}
+
+.edit-profile-card {
+  margin-top: 20px;
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: center;
+}
+
+/* ===== Pie Chart ===== */
+.pie-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.pie-chart {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pie-chart-center {
+  width: 104px;
+  height: 104px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pie-chart-percent {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.pie-chart-label {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.paid-dot {
+  background: #16a34a;
+}
+
+.due-dot {
+  background: #dc2626;
+}
+
+.legend-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.legend-label {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.legend-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Small tablet / large mobile */
+@media (max-width: 640px) {
+  .pie-chart {
+    width: 140px;
+    height: 140px;
+  }
+
+  .pie-chart-center {
+    width: 92px;
+    height: 92px;
+  }
+
+  .pie-chart-percent {
+    font-size: 20px;
+  }
+
+  .chart-card {
+    max-width: 320px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header h2 {
+    font-size: 20px;
+  }
+
+  .dashboard-card h3 {
+    font-size: 22px;
+  }
+
+  .chart-card {
+    max-width: 100%;
+    margin: 0 12px;
+  }
+
+  .edit-profile-card {
+    padding: 18px;
+  }
 }

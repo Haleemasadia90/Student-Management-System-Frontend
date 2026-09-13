@@ -16,14 +16,21 @@ export class StudentLayout {
   readonly authService = inject(AuthService);
   readonly studentService = inject(StudentService);
 
-  navItems: NavItem[] = [
-    { label: 'Dashboard', icon: 'ti ti-layout-dashboard', route: '/student/dashboard' },
-    { label: 'My Courses', icon: 'ti ti-book', route: '/student/courses' },
-    { label: 'My Fee', icon: 'ti ti-cash', route: '/student/fee' },
-    { label: 'Settings', icon: 'ti ti-settings', route: '/student/settings' },
-  ];
-
-  username: string | null = this.authService.getUsername();
+navItems: NavItem[] = [
+  { label: 'Dashboard', icon: 'ti ti-layout-dashboard', route: '/student/dashboard' },
+  { label: 'My Courses', icon: 'ti ti-book', route: '/student/courses' },
+  { label: 'My Fee', icon: 'ti ti-cash', route: '/student/fee' },
+  {
+    label: 'Settings',
+    icon: 'ti ti-settings',
+    route: '',
+    children: [
+      { label: 'Profile', icon: 'ti ti-user-circle', route: '/student/settings/profile' },
+      { label: 'Password', icon: 'ti ti-lock', route: '/student/settings/password' },
+    ]
+  },
+];
+    username = signal<string | null>(this.authService.getUsername());
   profilePicture = signal<string | null>(null);
 
   logoutFn = () => this.authService.logout();
@@ -38,7 +45,11 @@ export class StudentLayout {
 
   loadProfile(): void {
     this.studentService.getMyRecord().subscribe({
-      next: (data) => this.profilePicture.set(data.profilePicture ?? null),
+      next: (data) => 
+        {
+        this.profilePicture.set(data.profilePicture ?? null);
+        this.username.set(data.username);   
+      },
       error: (err) => console.error('Error loading profile picture:', err)
     });
   }

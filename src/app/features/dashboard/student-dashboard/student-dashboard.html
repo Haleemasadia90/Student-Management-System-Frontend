@@ -1,25 +1,5 @@
-<div class="dashboard-header">
-  <h2>Welcome, {{ username }} </h2>
-</div>
-
 @if (myRecord()) {
-
-  <div class="profile-upload-section">
-    <img
-      [src]="myRecord()?.profilePicture
-        ? 'http://localhost:8080/uploads/profile-pictures/' + myRecord()?.profilePicture
-        : 'assets/default-avatar.png'"
-      class="profile-dp"
-      alt="Profile Picture">
-
-    <label class="upload-label">
-      Change Photo
-      <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
-    </label>
-  </div>
-
   <div class="dashboard-cards">
-
     <div class="dashboard-card">
       <div class="card-icon">🆔</div>
       <div>
@@ -52,7 +32,85 @@
       </div>
     </div>
 
+    <div class="dashboard-card">
+      <div class="card-icon">🎓</div>
+      <div>
+        <p>Batch</p>
+        <h3>{{ myRecord()?.admissionYear }}</h3>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-icon">📘</div>
+      <div>
+        <p>Enrolled Courses</p>
+        <h3>{{ enrolledCoursesCount }}</h3>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-icon">📚</div>
+      <div>
+        <p>Available Courses</p>
+        <h3>{{ availableCoursesCount() }}</h3>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-icon">📅</div>
+      <div>
+        <p>Current Semester</p>
+        <h3 class="card-value-sm">{{ myRecord()?.currentSemester }}</h3>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-icon">📊</div>
+      <div>
+        <p>Total Semesters</p>
+        <h3>{{ myRecord()?.currentSemesterNumber }} / {{ myRecord()?.totalSemesters }}</h3>
+      </div>
+    </div>
+
   </div>
 } @else {
   <p class="loading-text">Loading your record...</p>
 }
+
+<div class="chart-wrapper">
+  @if (summary()) {
+    <div class="edit-profile-card chart-card">
+      <h4 class="section-title">Payment Overview</h4>
+
+      <div class="pie-chart-wrapper">
+        <div class="pie-chart" [style.background]="pieChartStyle">
+          <div class="pie-chart-center">
+            <span class="pie-chart-percent">{{ summary()!.paidPercentage }}%</span>
+            <span class="pie-chart-label">Paid</span>
+          </div>
+        </div>
+
+        <div class="pie-legend">
+          <div class="legend-item">
+            <span class="legend-dot paid-dot"></span>
+            <div>
+              <span class="legend-label">Total Paid</span>
+              <span class="legend-value">{{ summary()!.totalPaid }}</span>
+            </div>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot due-dot"></span>
+            <div>
+              <span class="legend-label">Total Due</span>
+              <span class="legend-value">{{ summary()!.totalDue }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="edit-profile-card">
+      <p class="empty-text">No fee records found.</p>
+    </div>
+  }
+</div>

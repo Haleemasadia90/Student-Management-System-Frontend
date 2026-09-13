@@ -1,7 +1,11 @@
+<div class="page-header">
+  <h2>My Courses</h2>
+</div>
+
 @if (myRecord()) {
 
-  <div class="courses-card">
-    <h3>My Courses</h3>
+  <div class="edit-profile-card">
+    <h4 class="section-title">Enrolled Courses</h4>
 
     <div class="credit-tracker">
       <span>{{ myRecord()?.totalCreditHours }} / {{ myRecord()?.maxCreditHours }} Credit Hours</span>
@@ -21,8 +25,9 @@
     }
   </div>
 
-  <div class="courses-card">
-    <h3>Available Courses in My Department</h3>
+  <div class="edit-profile-card">
+    <h4 class="section-title">Available Courses in My Department</h4>
+
     @if (availableCourses().length > 0) {
       @for (course of availableCourses(); track course.id) {
         <div class="course-row">
@@ -42,9 +47,7 @@
     }
 
     @if (errorMessage()) {
-      <small class="error" style="display:block; margin-top:8px; color:#dc3545;">
-        {{ errorMessage() }}
-      </small>
+      <small class="error">{{ errorMessage() }}</small>
     }
   </div>
 
