@@ -7,7 +7,8 @@ export const ENDPOINTS = {
     getMyRecord:'/api/students/me',
      searchByName: '/api/students/search',
    uploadPhoto:'/api/students/upload-photo',
-   updateProfile: '/api/students/update-profile'
+   updateProfile: '/api/students/update-profile',
+     getTotalStudents: '/api/students/count',
     
    },
 
@@ -17,6 +18,7 @@ export const ENDPOINTS = {
       createCourse:'/api/courses',
       updateCourse:'/api/courses/:id',
       deleteCourse:'/api/courses/:id',
+       getTotalCourses: '/api/courses/count', 
       
 
    },
@@ -30,14 +32,16 @@ export const ENDPOINTS = {
       deleteFee:'/api/fee/:feeId',
       getMyFeeSummary:'/api/fee/me/summary',   // for student module
       getFeeSummaryByStudentId: '/api/fee/student/:studentId/summary', // for admin module
-      getAvailableSemesters:'/api/fee/student/:studentId/available-semesters'
+      getAvailableSemesters:'/api/fee/student/:studentId/available-semesters',
+       getOverallFeeSummary: '/api/fee/summary',
    },
       
 
    department:{
       getAllDepartments:'/api/departments',
       createDepartment:'/api/departments',
-      deleteDepartments:'/api/departments/:id'
+      deleteDepartments:'/api/departments/:id',
+       getTotalDepartments: '/api/departments/count',
    },
 
     auth:{                                       

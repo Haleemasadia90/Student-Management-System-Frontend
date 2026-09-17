@@ -44,7 +44,7 @@
       <div class="card-icon">📘</div>
       <div>
         <p>Enrolled Courses</p>
-        <h3>{{ enrolledCoursesCount }}</h3>
+        <h3>{{myRecord()?.enrolledCoursesCount }}</h3>
       </div>
     </div>
 
@@ -52,7 +52,7 @@
       <div class="card-icon">📚</div>
       <div>
         <p>Available Courses</p>
-        <h3>{{ availableCoursesCount() }}</h3>
+        <h3>{{myRecord()?.availableCoursesCount }}</h3>
       </div>
     </div>
 

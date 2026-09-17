@@ -1,12 +1,7 @@
-
-
 <div class="dashboard-cards">
 
   <div class="dashboard-card">
-    <div class="card-icon">
-      👨‍🎓
-    </div>
-
+    <div class="card-icon">👨‍🎓</div>
     <div>
       <p>Total Students</p>
       <h3>{{ totalStudents() }}</h3>
@@ -14,10 +9,7 @@
   </div>
 
   <div class="dashboard-card">
-    <div class="card-icon">
-      📚
-    </div>
-
+    <div class="card-icon">📚</div>
     <div>
       <p>Total Courses</p>
       <h3>{{ totalCourses() }}</h3>
@@ -25,14 +17,37 @@
   </div>
 
   <div class="dashboard-card">
-    <div class="card-icon">
-      💰
-    </div>
-
+    <div class="card-icon">🏛️</div>
     <div>
-      <p>Pending Fees</p>
-      <h3>--</h3>
+      <p>Total Departments</p>
+      <h3>{{ totalDepartments() }}</h3>
     </div>
   </div>
+
+  @if (feeSummary()) {
+    <div class="dashboard-card">
+      <div class="card-icon">💰</div>
+      <div>
+        <p>Total Pending Fees</p>
+        <h3>{{ feeSummary()!.totalDue }}</h3>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-icon">✅</div>
+      <div>
+        <p>Total Collected</p>
+        <h3>{{ feeSummary()!.totalPaid }}</h3>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-icon">📊</div>
+      <div>
+        <p>Collection Rate</p>
+        <h3>{{ feeSummary()!.paidPercentage }}%</h3>
+      </div>
+    </div>
+  }
 
 </div>

@@ -21,7 +21,6 @@ export class StudentDashboard implements OnInit {
  readonly feeService = inject(FeeService);
 
   myRecord = signal<Student | null>(null);
-   availableCoursesCount = signal<number>(0);
    summary = signal<FeeSummary | null>(null);
 
 
@@ -43,28 +42,17 @@ const paidDeg = (s.paidPercentage / 100) * 360;
     return this.myRecord()?.courseTitles?.length ?? 0;
   }
 
+
+
   ngOnInit(): void {
     this.studentService.getMyRecord().subscribe({
-      next: (data) => {
-        this.myRecord.set(data);
-
-        if (data.departmentId) {
-          this.loadAvailableCourses(data.departmentId);
-        }
-      },
+      next: (data) => this.myRecord.set(data),
       error: (err) => console.error('Error fetching record:', err)
     });
 
-     this.feeService.getMyFeeSummary().subscribe({
+    this.feeService.getMyFeeSummary().subscribe({
       next: (data) => this.summary.set(data),
       error: (err) => console.error('Error fetching fee summary:', err)
-    });
-  }
-
-   loadAvailableCourses(departmentId: number): void {
-    this.courseService.getAllCourses(departmentId).subscribe({
-      next: (courses) => this.availableCoursesCount.set(courses.length),
-      error: (err) => console.error('Error fetching courses:', err)
     });
   }
 

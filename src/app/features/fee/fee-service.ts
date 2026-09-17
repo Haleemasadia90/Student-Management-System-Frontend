@@ -53,4 +53,9 @@ export class FeeService {
     getAvailableSemesters(studentId: number) {
       return this.http.get<string[]>(this.baseUrl + ENDPOINTS.fee.getAvailableSemesters.replace(':studentId', studentId.toString()));
     }
+
+    // get overall fee summary
+    getOverallFeeSummary() {
+      return this.http.get<FeeSummary>(this.baseUrl + ENDPOINTS.fee.getOverallFeeSummary);
+    }
   }

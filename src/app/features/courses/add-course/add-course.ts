@@ -5,11 +5,12 @@ import { FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angula
 import { CourseRequest } from '../../../models/course.model';
 import { Department } from '../../../models/department.model';
 import { DepartmentService } from '../../departments/department-service';
+import {ButtonModule} from 'primeng/button';
 
 @Component({
   selector: 'app-add-course',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule],
   templateUrl: './add-course.html',
   styleUrl: './add-course.css',
 })

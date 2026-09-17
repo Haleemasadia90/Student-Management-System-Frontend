@@ -58,4 +58,9 @@ updateProfile(data: { username: string }) {
     formData.append('file', file);
     return this.http.post(this.baseUrl + ENDPOINTS.students.uploadPhoto, formData, { responseType: 'text' });
   }
+
+  // calculate total students
+  getTotalStudentsCount() {
+  return this.http.get<number>(this.baseUrl + ENDPOINTS.students.getTotalStudents);
+}
 }

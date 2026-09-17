@@ -14,4 +14,6 @@ export interface Student {
   currentSemester?: string;
   currentSemesterNumber?: number;
   totalSemesters?: number;
+    enrolledCoursesCount?: number;
+  availableCoursesCount?: number;
 }
