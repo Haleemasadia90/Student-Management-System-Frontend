@@ -1,27 +1,113 @@
+
+
 <div class="layout-wrapper">
-  <aside class="sidebar">
+
+  <div class="mobile-topbar">
+    <button class="hamburger-btn" (click)="toggleSidebar()">
+      <i class="ti ti-menu-2"></i>
+    </button>
+    <span class="mobile-title">{{ panelTitle }}</span>
+  </div>
+
+  @if (isSidebarOpen()) {
+    <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+  }
+
+  <aside class="sidebar" [class.open]="isSidebarOpen()" [class.collapsed]="isCollapsed()">
+
     <div class="sidebar-header">
-      <span class="sidebar-title">{{ panelTitle }}</span>
+      @if (!isCollapsed()) {
+        <span class="sidebar-title">{{ panelTitle }}</span>
+      }
+      <button class="collapse-btn" (click)="toggleCollapse()" title="Toggle sidebar">
+        <i class="ti ti-layout-sidebar-left-collapse"></i>
+      </button>
+      <button class="close-btn" (click)="closeSidebar()">
+        <i class="ti ti-x"></i>
+      </button>
     </div>
 
+    @if (username) {
+      <div class="user-card">
+        @if (profilePicture && !imageLoadFailed()) {
+          <img [src]="avatarUrl" (error)="onImageError()" class="user-avatar" alt="">
+        } @else {
+          <div class="user-avatar-fallback">{{ initials }}</div>
+        }
+        @if (!isCollapsed()) {
+          <span class="user-name">{{ username }}</span>
+        }
+      </div>
+    }
+
     <nav class="sidebar-nav">
-      @for (item of navItems; track item.route) {
-        <a [routerLink]="item.route" routerLinkActive="active-link" class="nav-item">
-          <i [class]="item.icon"></i>
-          <span>{{ item.label }}</span>
-        </a>
+      @for (item of navItems; track item.label) {
+
+        @if (item.children) {
+
+          <button
+            class="nav-item"
+            [class.expanded-parent]="expandedItem() === item.label"
+            [title]="item.label"
+            (click)="onParentClick(item)">
+            <i [class]="item.icon"></i>
+            @if (!isCollapsed()) {
+              <span>{{ item.label }}</span>
+              <i class="ti ti-chevron-right nav-chevron" [class.rotated]="expandedItem() === item.label"></i>
+            }
+          </button>
+
+          @if (expandedItem() === item.label && !isCollapsed()) {
+            <div class="nav-submenu">
+              @for (child of item.children; track child.route) {
+                <a
+                  [routerLink]="child.route"
+                  routerLinkActive="active-sublink"
+                  class="nav-subitem"
+                  (click)="closeSidebar()">
+                  <i [class]="child.icon"></i>
+                  <span>{{ child.label }}</span>
+                </a>
+              }
+            </div>
+          }
+
+        } @else {
+          
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active-link"
+            class="nav-item"
+            [title]="item.label"
+            (click)="closeSidebar()">
+            <i [class]="item.icon"></i>
+            @if (!isCollapsed()) {
+              <span>{{ item.label }}</span>
+            }
+          </a>
+        }
+
       }
     </nav>
 
     <div class="sidebar-footer">
-      <button (click)="logout()" class="logout-btn">
+      <button (click)="logout()" class="logout-btn" [title]="'Logout'">
         <i class="ti ti-logout"></i>
-        <span>Logout</span>
+        @if (!isCollapsed()) {
+          <span>Logout</span>
+        }
       </button>
     </div>
   </aside>
 
-  <main class="content-area">
+  <main class="content-area" [class.expanded]="isCollapsed()">
+  <div class="page-topbar">
+    <h2>Welcome, {{ username }}</h2>
+  </div>
+
+  <div class="page-content">
     <router-outlet></router-outlet>
-  </main>
+  </div>
+</main>
+
 </div>

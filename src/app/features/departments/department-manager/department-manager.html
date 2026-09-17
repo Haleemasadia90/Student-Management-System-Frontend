@@ -11,6 +11,8 @@
     [value]="searchTerm()"
     (input)="searchTerm.set($any($event.target).value)" />
 
+
+
   <ul class="dept-list">
     @for (dept of filteredDepartments(); track dept.id) {
       <li>
@@ -50,4 +52,8 @@
       </div>
     </div>
   }
+
+  
 </div>
+
+

@@ -10,7 +10,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/app/features/courses/my-courses"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]

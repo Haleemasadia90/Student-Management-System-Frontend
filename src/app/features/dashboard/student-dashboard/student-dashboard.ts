@@ -1,17 +1,15 @@
-import { Component,inject, OnInit , signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../../core/httpServices/auth-service';
-import { Router } from '@angular/router';
 import { Student } from '../../../models/student.model';
 import { StudentService } from '../../student/student-service';
 import { CommonModule } from '@angular/common';
+import {CourseService} from '../../courses/course-service';
+import { FeeSummary } from '../../../models/fee.model';
 import { FeeService } from '../../fee/fee-service';
-import { Fee } from '../../../models/fee.model';
-import { Course } from '../../../models/course.model';
-import { CourseService } from '../../courses/course-service';
 
 @Component({
   selector: 'app-student-dashboard',
-    standalone: true,
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './student-dashboard.html',
   styleUrl: './student-dashboard.css',
@@ -19,62 +17,44 @@ import { CourseService } from '../../courses/course-service';
 export class StudentDashboard implements OnInit {
   readonly studentService = inject(StudentService);
   readonly authService = inject(AuthService);
-  readonly feeService = inject(FeeService);
-  readonly router = inject(Router);
-  readonly courseService = inject(CourseService);
+ readonly courseService = inject(CourseService);
+ readonly feeService = inject(FeeService);
 
   myRecord = signal<Student | null>(null);
-  myFees = signal<Fee[]>([]);
-  availableCourses = signal<Course[]>([]);
-  errorMessage = signal('');
+   summary = signal<FeeSummary | null>(null);
 
-   get username(): string | null {
-  return this.authService.getUsername();
-}
 
-ngOnInit(): void {
-    this.studentService.getMyRecord().subscribe({
-      next: (data) => {
-      this.myRecord.set(data);
+    get pieChartStyle(): string {
+
+    const s = this.summary();
+    if (!s) return '';
+const paidDeg = (s.paidPercentage / 100) * 360;
+    return `conic-gradient(#16a34a 0deg ${paidDeg}deg, #dc2626 ${paidDeg}deg 360deg)`;
+  }
     
-      if (data.departmentId) {
-        this.loadAvailableCourses(data.departmentId);
-      }
-    },
+
+   
+  get username(): string | null {
+    return this.authService.getUsername();
+  }
+
+  get enrolledCoursesCount(): number {
+    return this.myRecord()?.courseTitles?.length ?? 0;
+  }
+
+
+
+  ngOnInit(): void {
+    this.studentService.getMyRecord().subscribe({
+      next: (data) => this.myRecord.set(data),
       error: (err) => console.error('Error fetching record:', err)
     });
 
-    this.feeService.getMyFees().subscribe(
-      {
-        next:(data)=>this.myFees.set(data),
-        error:(err)=>console.error('Error fetching fees:',err)
-      }
-    );
+    this.feeService.getMyFeeSummary().subscribe({
+      next: (data) => this.summary.set(data),
+      error: (err) => console.error('Error fetching fee summary:', err)
+    });
   }
 
-loadAvailableCourses(departmentId: number): void {
-  this.courseService.getAllCourses(departmentId).subscribe({
-    next: (data) => this.availableCourses.set(data)
-  });
-}
-
-enroll(courseId: number): void {
-  this.errorMessage.set('');
-  this.studentService.enrollInCourse(courseId).subscribe({
-    next: (updatedRecord) => {
-      this.myRecord.set(updatedRecord);
-    },
-    error: (err) => {
-      this.errorMessage.set(err.error || 'Enrollment failed.');
-    }
-  });
-}
-
-
-
-
-  logout(): void {
-    this.authService.logout();
-  }
-
+ 
 }

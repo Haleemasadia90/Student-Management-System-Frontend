@@ -56,6 +56,7 @@
       </select>
     </div>
 
+    
     @if (successMessage()) {
       <small style="color: green; display: block; margin-top: 10px;">{{ successMessage() }}</small>
     }
@@ -63,8 +64,15 @@
       <small class="error" style="display: block; margin-top: 10px;">{{ errorMessage() }}</small>
     }
 
-    <button type="button" (click)="save()" [disabled]="isLoading()" class="save-btn">
+    <!-- <button type="button" (click)="save()" [disabled]="isLoading()" class="save-btn">
       {{ isLoading() ? 'Saving...' : 'Save Course' }}
-    </button>
+    </button> -->
+<p-button
+  [label]="isLoading() ? 'Saving...' : 'Save Course'"
+  [loading]="isLoading()"
+  [disabled]="isLoading()"
+  (onClick)="save()"
+  iconPos="right">
+</p-button>
   </form>
 </div>

@@ -2,17 +2,51 @@
   <div class="list-header">
     <h3 class="list-title">COURSES</h3>
 
-    <button (click)="toggleAddForm()" class="add-btn">
-    {{ showAddForm ? 'Cancel' : 'Add Course' }}
-  </button>
+   <!-- <p-button
+  *ngIf="!showAddForm"
+  label="Add Course"
+  icon="pi pi-plus"
+  [text]="true"
+  [raised]="true"
+  (onClick)="toggleAddForm()">
+</p-button> -->
+
+ <!-- <p-button  *ngIf="!showAddForm" label="Add Course" (click)="toggleAddForm()" [raised]="true"  />
+
+ 
+<p-button
+  *ngIf="showAddForm"
+  icon="pi pi-times"
+  
+ 
+  severity="danger"
+  (onClick)="toggleAddForm()">
+</p-button> -->
+
+ @if (!showAddForm) {
+      <p-button
+        label="Add Course"
+        icon="pi pi-plus"
+        [raised]="true"
+        (onClick)="toggleAddForm()">
+      </p-button>
+    } @else {
+      <p-button
+        icon="pi pi-times"
+        [rounded]="true"
+        severity="danger"
+        (onClick)="toggleAddForm()">
+      </p-button>
+    }
+
 
   </div>
 
   @if (showAddForm) {
 <app-add-course (courseAdded)="onCourseAdded()"></app-add-course>
 }
-
-
+<!-- 
+<div class="table-scroll">
   <table class="data-table">
     <thead>
       <tr>
@@ -36,7 +70,8 @@
             <td>{{ c.status }}</td>
             <td>{{ c.departmentName }}</td>
             <td>
-              <button (click)="deleteCourse(c.id)" class="delete-btn">Delete</button>
+             
+              <p-button label="Delete"(click)="deleteCourse(c.id)" [raised]="true" severity="danger" />
             </td>
           </tr>
         }
@@ -47,6 +82,59 @@
       }
     </tbody>
   </table>
+  </div>
 </div>
 
+ -->
 
+
+
+  <p-table
+    [value]="courses()"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} courses"
+    [tableStyle]="{ 'min-width': '50rem' }">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Course Code</th>
+        <th>Credit Hours</th>
+        <th>Status</th>
+        <th>Department</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-c>
+      <tr>
+        <td>{{ c.id }}</td>
+        <td>{{ c.title }}</td>
+        <td>{{ c.courseCode }}</td>
+        <td>{{ c.creditHours }}</td>
+        <td>{{ c.status }}</td>
+        <td>{{ c.departmentName }}</td>
+        <td>
+          <p-button
+            label="Delete"
+            icon="pi pi-trash"
+            [raised]="true"
+            severity="danger"
+            (onClick)="deleteCourse(c.id)">
+          </p-button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7" class="empty-row">No courses found.</td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>

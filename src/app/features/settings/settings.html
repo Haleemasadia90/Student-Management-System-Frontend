@@ -1,0 +1,33 @@
+<div class="settings-layout">
+
+  <!-- LEFT: Sidebar menu -->
+  <aside class="settings-sidebar">
+    <span class="settings-sidebar-title">Settings</span>
+
+    <nav class="settings-nav">
+      @for (option of options; track option.key) {
+        <button
+          class="settings-nav-item"
+          [class.active]="selectedOption() === option.key"
+          (click)="selectOption(option.key)">
+          <i [class]="option.icon"></i>
+          <span>{{ option.label }}</span>
+        </button>
+      }
+    </nav>
+  </aside>
+
+  <section class="settings-content">
+    @switch (selectedOption()) {
+      @case ('profile') {
+        <h3 class="settings-content-title">Profile</h3>
+  
+      }
+      @case ('password') {
+        <h3 class="settings-content-title">Password</h3>
+        <app-change-password></app-change-password>
+      }
+    }
+  </section>
+
+</div>

@@ -23,4 +23,8 @@ export class DepartmentService {
   {
     return this.http.delete(this.baseUrl + ENDPOINTS.department.deleteDepartments.replace(':id',id.toString()));
   }
+
+  getTotalDepartmentsCount() {
+    return this.http.get<number>(this.baseUrl + ENDPOINTS.department.getTotalDepartments);
+  }
 }

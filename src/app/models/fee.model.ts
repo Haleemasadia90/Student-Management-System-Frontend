@@ -15,3 +15,10 @@ export interface FeeRequest {
   paidFee: number;
   status: string;
 }
+
+export interface FeeSummary {
+  totalPaid: number;
+  totalDue: number;
+  totalOverall: number;
+  paidPercentage: number;
+}
