@@ -35,4 +35,8 @@ export class CourseService {
   deleteCourse(id:number){
     return this.http.delete(this.baseUrl+ENDPOINTS.courses.deleteCourse.replace(':id',id.toString()));
   }
+
+  getTotalCoursesCount() {
+    return this.http.get<number>(this.baseUrl + ENDPOINTS.courses.getTotalCourses);
+  }
 }

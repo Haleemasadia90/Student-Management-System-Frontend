@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { CourseService } from '../course-service';
 import { Course } from '../../../models/course.model';
 import { AddCourse } from '../add-course/add-course';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-course-list',
-  imports: [CommonModule,AddCourse],
+  imports: [CommonModule,AddCourse,ButtonModule,TableModule],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })
