@@ -1,9 +1,6 @@
-
-  
-
-
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import {
   FormControl,
   FormGroup,
@@ -12,48 +9,47 @@ import {
   ValidationErrors,
   AbstractControl
 } from '@angular/forms';
+
 import { Router, RouterLink } from '@angular/router';
+
 import { AuthService } from '../../../core/httpServices/auth-service';
 import { DepartmentService } from '../../departments/department-service';
 import { Department } from '../../../models/department.model';
 
+// PrimeNG
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+
 @Component({
   selector: 'app-registration',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, CardModule, InputTextModule, ButtonModule, MessageModule, PasswordModule, SelectModule, DatePickerModule, InputNumberModule, IconFieldModule, InputIconModule],
   templateUrl: './registration.html',
   styleUrl: './registration.css',
 })
-export class Registration implements OnInit{
+export class Registration implements OnInit {
 
   currentStep = signal(1);
+
   department = signal<Department[]>([]);
 
   errorMessage = signal('');
   successMessage = signal('');
   isLoading = signal(false);
-  showPassword = signal(false);
-showConfirmPassword = signal(false);
 
-  ngOnInit(): void {
-  this.loadDepartments();
-}
-
-loadDepartments(): void {
-
-  this.departmentService.getAllDepartments().subscribe({
-
-    next: (departments) => {
-      this.department.set(departments);
-    },
-
-    error: (error) => {
-      console.error('Error loading departments:', error);
-    }
-
-  });
-
-}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private departmentService: DepartmentService
+  ) {}
 
   registrationForm = new FormGroup(
     {
@@ -65,7 +61,10 @@ loadDepartments(): void {
 
       email: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required, Validators.email]
+        validators: [
+          Validators.required,
+          Validators.email
+        ]
       }),
 
       phone: new FormControl('', {
@@ -126,11 +125,25 @@ loadDepartments(): void {
     }
   );
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-      private departmentService: DepartmentService
-  ) {}
+  ngOnInit(): void {
+    this.loadDepartments();
+  }
+
+  loadDepartments(): void {
+    this.departmentService.getAllDepartments().subscribe({
+      next: (departments) => {
+        this.department.set(departments);
+      },
+
+      error: (error) => {
+        console.error('Error loading departments:', error);
+
+        this.errorMessage.set(
+          'Unable to load departments.'
+        );
+      }
+    });
+  }
 
   passwordMatchValidator(
     control: AbstractControl
@@ -144,7 +157,9 @@ loadDepartments(): void {
     }
 
     if (password !== confirmPassword) {
-      return { passwordMismatch: true };
+      return {
+        passwordMismatch: true
+      };
     }
 
     return null;
@@ -190,7 +205,9 @@ loadDepartments(): void {
   previousStep(): void {
 
     if (this.currentStep() > 1) {
-      this.currentStep.update(step => step - 1);
+      this.currentStep.update(
+        step => step - 1
+      );
     }
   }
 
@@ -200,7 +217,8 @@ loadDepartments(): void {
 
     fields.forEach(fieldName => {
 
-      const control = this.registrationForm.get(fieldName);
+      const control =
+        this.registrationForm.get(fieldName);
 
       if (control?.invalid) {
         control.markAsTouched();
@@ -224,64 +242,76 @@ loadDepartments(): void {
       return;
     }
 
-    if (this.registrationForm.hasError('passwordMismatch')) {
-      this.registrationForm.get('confirmPassword')?.markAsTouched();
+    if (
+      this.registrationForm.hasError(
+        'passwordMismatch'
+      )
+    ) {
+      this.registrationForm
+        .get('confirmPassword')
+        ?.markAsTouched();
+
       return;
     }
 
     this.isLoading.set(true);
+
     this.errorMessage.set('');
     this.successMessage.set('');
 
-    const formValue = this.registrationForm.getRawValue();
+    const formValue =
+      this.registrationForm.getRawValue();
 
-   const signupData = {
-  username: formValue.username,
-  email: formValue.email,
-  password: formValue.password,
-  fullName: formValue.fullName,
-  phone: formValue.phone,
-  departmentId: Number(formValue.departmentId),
-  dateOfBirth: formValue.dateOfBirth,
-  gender: formValue.gender,
-  semester: formValue.semester,
-  admissionYear: Number(formValue.admissionYear)
-};
+    const signupData = {
+      username: formValue.username,
+      email: formValue.email,
+      password: formValue.password,
+      fullName: formValue.fullName,
+      phone: formValue.phone,
 
-    this.authService.signup(signupData).subscribe({
+      departmentId:
+        Number(formValue.departmentId),
 
-      next: () => {
+      dateOfBirth:
+        formValue.dateOfBirth,
 
-        this.isLoading.set(false);
+      gender:
+        formValue.gender,
 
-        this.successMessage.set(
-          'Registration successful!'
-        );
+      semester:
+        formValue.semester,
 
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 1000);
-      },
+      admissionYear:
+        Number(formValue.admissionYear)
+    };
 
-      error: (err) => {
+    this.authService
+      .signup(signupData)
+      .subscribe({
 
-        this.isLoading.set(false);
+        next: () => {
 
-        this.errorMessage.set(
-          err.error?.message ||
-          err.error ||
-          'Registration failed'
-        );
-      }
+          this.isLoading.set(false);
 
-    });
+          this.successMessage.set(
+            'Registration successful!'
+          );
+
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 1000);
+        },
+
+        error: (err) => {
+
+          this.isLoading.set(false);
+
+          this.errorMessage.set(
+            err.error?.message ||
+            err.error ||
+            'Registration failed'
+          );
+        }
+      });
   }
-
-  togglePassword(): void {
-  this.showPassword.set(!this.showPassword());
-}
-
-toggleConfirmPassword(): void {
-  this.showConfirmPassword.set(!this.showConfirmPassword());
-}
 }

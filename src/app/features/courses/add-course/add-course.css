@@ -1,78 +1,187 @@
+
 .form-container {
-  max-width: 480px;
-  margin: 25px auto;
-  background: #eae5e5;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 520px;
+  margin: 35px auto;
+  padding: 32px;
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f7f5ff 100%
+  );
+
+  border: 1px solid #e4defa;
+  border-radius: 18px;
+
+  box-shadow:
+    0 12px 30px rgba(67, 56, 202, 0.10),
+    0 3px 8px rgba(0, 0, 0, 0.04);
+
   font-family: 'Inter', Arial, sans-serif;
 }
 
+
+
 .form-container h3 {
+  margin: 0 0 32px;
+
   text-align: center;
-  margin-bottom: 22px;
-  color: #333;
+
+  font-size: 21px;
+  font-weight: 700;
+
+  color: #312e81;
+
+  letter-spacing: 0.3px;
 }
+
+
+
+
+.form-container form {
+  width: 100%;
+}
+
+
 
 .form-group {
-  margin-bottom: 16px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: #444;
-  font-size: 14px;
-}
-
-.form-control {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: 0.3s;
+  margin-bottom: 30px;
+}
+
+
+
+
+.form-group p-floatLabel {
+  display: block;
+  width: 100%;
+}
+
+
+
+.form-group input[pInputText] {
+  width: 100%;
   box-sizing: border-box;
 }
 
-.form-control:focus {
-  outline: none;
-  border-color: #0d6efd;
-  box-shadow: 0 0 5px rgba(13, 110, 253, 0.4);
+
+
+
+.form-group p-select {
+  /* display: block; */
+  width: 100%;
 }
 
-select.form-control {
-  background: white;
-  cursor: pointer;
+
+
+
+.form-group p-treeSelect {
+  display: block;
+  width: 100%;
 }
+
+
+.form-group p-treeSelect .p-treeselect {
+  width: 100%;
+}
+
+
+
+.form-group p-inputNumber {
+  display: block;
+  width: 100%;
+}
+
+.form-group p-inputNumber input {
+  width: 100%;
+}
+
+
 
 .error {
   display: block;
-  color: #dc3545;
+
+  margin-top: 7px;
+  padding-left: 3px;
+
+  color: #dc2626;
+
   font-size: 12px;
+  font-weight: 500;
+}
+
+
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   margin-top: 4px;
 }
 
-.save-btn {
+.button-container p-button {
+  min-width: 155px;
+}
+
+
+
+:host ::ng-deep .p-toast {
+  z-index: 9999;
+}
+
+
+.form-group {
   width: 100%;
-  padding: 11px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #0d6efd;
-  color: white;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
+  margin-bottom: 30px;
 }
 
-.save-btn:hover:not(:disabled) {
-  background: #0b5ed7;
+.form-group p-floatLabel {
+  display: block;
+  width: 100%;
 }
 
-.save-btn:disabled {
-  background: #93c5fd;
-  cursor: not-allowed;
+.form-group p-select {
+  /* display: block; */
+  width: 100%;
+}
+
+.form-group p-dropdown {
+  display: block;
+  width: 100%;
+}
+
+:host ::ng-deep .custom-dropdown {
+  width: 100%;
+  min-height: 44px;
+}
+
+:host ::ng-deep .custom-dropdown .p-dropdown-label {
+  padding: 12px;
+}
+
+:host ::ng-deep .custom-dropdown .p-dropdown-trigger {
+  width: 44px;
+}
+
+
+@media (max-width: 600px) {
+
+  .form-container {
+    width: calc(100% - 30px);
+    margin: 20px auto;
+    padding: 24px;
+  }
+
+  .form-container h3 {
+    font-size: 19px;
+    margin-bottom: 28px;
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
 }

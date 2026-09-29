@@ -1,3 +1,7 @@
+/* =========================================
+   MAIN CONTAINER
+   ========================================= */
+
 .fee-detail-section {
   background: #ffffff;
   border-radius: 14px;
@@ -6,174 +10,387 @@
 }
 
 
+/* =========================================
+   HEADER
+   ========================================= */
+
 .fee-detail-header {
   margin-bottom: 20px;
 }
 
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #f3f4f6;
-  border: none;
-  color: #374151;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 8px 16px;
-  border-radius: 8px;
-  transition: background 0.2s ease;
+
+/* =========================================
+   BACK BUTTON
+   ========================================= */
+
+:host ::ng-deep .back-button {
+  background: #4f46e5 !important;
+  border: 1px solid #4f46e5 !important;
+  color: #ffffff !important;
+
+  border-radius: 8px !important;
+
+  font-size: 14px !important;
+  font-weight: 600 !important;
+
+  padding: 8px 16px !important;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.back-btn:hover {
-  background: #e5e7eb;
+:host ::ng-deep .back-button:hover {
+  background: #4338ca !important;
+  border-color: #4338ca !important;
 }
 
-.back-arrow {
-  font-size: 16px;
+:host ::ng-deep .back-button:active {
+  transform: translateY(1px);
 }
 
+
+/* =========================================
+   STUDENT INFORMATION
+   ========================================= */
 
 .student-info-card {
   display: flex;
   align-items: center;
+
   gap: 16px;
+
   background: #f9fafb;
+
   border-radius: 12px;
+
   padding: 16px 20px;
+
   margin-bottom: 24px;
 }
 
-.student-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #4f46e5;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 700;
-  flex-shrink: 0;
+
+/* Avatar */
+
+:host ::ng-deep .student-avatar {
+  width: 48px !important;
+  height: 48px !important;
+
+  min-width: 48px;
+
+  border-radius: 50% !important;
+
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+
+  font-size: 20px !important;
+  font-weight: 700 !important;
 }
+
+
+/* Student text */
 
 .student-info-text h3 {
   margin: 0 0 4px 0;
+
   font-size: 18px;
+
   color: #1f2937;
+
+  font-weight: 700;
 }
 
 .student-info-text p {
   margin: 0;
+
   color: #6b7280;
+
   font-size: 13px;
 }
 
 
+/* =========================================
+   SUMMARY CARDS
+   ========================================= */
+
 .fee-summary-cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
   gap: 14px;
+
   margin-bottom: 24px;
 }
 
-.summary-card {
-  background: #f9fafb;
-  border: 1px solid #eef0f2;
-  border-radius: 10px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+
+/*
+   PrimeNG Card
+   Keep the SAME visual style
+   as your original cards.
+*/
+
+:host ::ng-deep .summary-card {
+  background: #ffffff !important;
+
+  border: 1px solid #eef0f2 !important;
+
+  border-radius: 10px !important;
+
+  padding: 14px 16px !important;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+
+  min-height: auto !important;
+
+  
+ 
+ 
+  
+
+  
+
+
+
 }
+
+
+/* Remove PrimeNG default spacing */
+
+:host ::ng-deep .summary-card .p-card-body {
+  padding: 0 !important;
+}
+
+:host ::ng-deep .summary-card .p-card-content {
+  padding: 0 !important;
+}
+
+
+/* Summary label */
 
 .summary-label {
+  display: block;
+
   font-size: 12px;
+
   color: #9ca3af;
+
   text-transform: uppercase;
+
   letter-spacing: 0.4px;
+
+  margin-bottom: 4px;
 }
 
+
+/* Summary value */
+
 .summary-value {
+  display: block;
+
   font-size: 20px;
+
   font-weight: 700;
+
   color: #1f2937;
 }
+
+
+/* Paid */
 
 .summary-value.paid {
   color: #16a34a;
 }
+
+
+/* Due */
 
 .summary-value.due {
   color: #dc2626;
 }
 
 
-.table-wrapper {
-  overflow-x: auto;
-}
+/* =========================================
+   PRIME NG TABLE
+   ========================================= */
 
-.data-table {
+:host ::ng-deep .fee-detail-table {
   width: 100%;
-  border-collapse: collapse;
 }
 
-.data-table thead th {
-  text-align: left;
-  padding: 12px 14px;
-  background: #f9fafb;
-  color: #6b7280;
-  font-size: 13px;
+
+/* =========================================
+   TABLE HEADER
+   ========================================= */
+
+:host ::ng-deep .fee-detail-table .p-datatable-thead > tr > th {
+  background: #f9fafb !important;
+
+  color: #6b7280 !important;
+
+  font-size: 13px !important;
+
+  font-weight: 700 !important;
+
   text-transform: uppercase;
+
   letter-spacing: 0.4px;
-  border-bottom: 2px solid #e5e7eb;
+
+  text-align: left;
+
+  padding: 12px 14px !important;
+
+  border: none !important;
+
+  border-bottom:
+    2px solid #e5e7eb !important;
 }
 
-.data-table tbody td {
-  padding: 12px 14px;
-  border-bottom: 1px solid #f0f1f3;
+
+/* =========================================
+   TABLE BODY
+   ========================================= */
+
+:host ::ng-deep .fee-detail-table .p-datatable-tbody > tr {
+  background: #ffffff;
+
+  transition:
+    background 0.2s ease;
+}
+
+
+/* Hover */
+
+:host ::ng-deep .fee-detail-table .p-datatable-tbody > tr:hover {
+  background: #f9fafb !important;
+}
+
+
+/* Body cells */
+
+:host ::ng-deep .fee-detail-table .p-datatable-tbody > tr > td {
+  padding: 12px 14px !important;
+
+  border: none !important;
+
+  border-bottom:
+    1px solid #f0f1f3 !important;
+
   font-size: 14px;
+
   color: #1f2937;
 }
 
-.data-table tbody tr:hover {
-  background: #f9fafb;
-}
 
-.empty-row {
-  text-align: center;
-  padding: 24px !important;
-  color: #9ca3af;
-  font-style: italic;
-}
+/* =========================================
+   STATUS TAG
+   ========================================= */
 
-.fee-status {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
+:host ::ng-deep .fee-status-tag {
+  border-radius: 20px !important;
+
+  font-size: 12px !important;
+
+  font-weight: 700 !important;
+
+  padding: 4px 12px !important;
+
   text-transform: uppercase;
 }
 
-.status-paid {
-  background: #dcfce7;
-  color: #16a34a;
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.empty-row {
+  text-align: center !important;
+
+  padding: 24px !important;
+
+  color: #9ca3af !important;
 }
 
-.status-pending {
-  background: #fef9c3;
-  color: #ca8a04;
+
+.empty-content {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
 }
 
-.status-overdue {
-  background: #fee2e2;
-  color: #dc2626;
+
+.empty-content i {
+  font-size: 16px;
+
+  color: #9ca3af;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 900px) {
+
+  .fee-summary-cards {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
 }
 
 
 @media (max-width: 640px) {
-  .fee-summary-cards {
-    grid-template-columns: repeat(2, 1fr);
+
+  .fee-detail-section {
+    padding: 20px;
   }
+
+
+  .fee-summary-cards {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 10px;
+  }
+
+
+  .student-info-card {
+    padding: 14px 16px;
+  }
+
+
+  .student-info-text h3 {
+    font-size: 16px;
+  }
+
+
+  .student-info-text p {
+    font-size: 12px;
+  }
+
+
+  :host ::ng-deep .fee-detail-table
+  .p-datatable-thead > tr > th {
+
+    font-size: 11px !important;
+
+    padding: 10px !important;
+  }
+
+
+  :host ::ng-deep .fee-detail-table
+  .p-datatable-tbody > tr > td {
+
+    font-size: 13px;
+
+    padding: 10px !important;
+  }
+
 }

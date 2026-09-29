@@ -63,4 +63,18 @@ updateProfile(data: { username: string }) {
   getTotalStudentsCount() {
   return this.http.get<number>(this.baseUrl + ENDPOINTS.students.getTotalStudents);
 }
+getStudentByEmail(email: string) {
+  return this.http.get<Student>(
+    this.baseUrl +
+    ENDPOINTS.students.getStudentByEmail.replace(
+      ':email',
+      encodeURIComponent(email)
+    )
+  );
+}
+
+
+getProfilePictureUrl(fileName: string): string {
+  return this.baseUrl + ENDPOINTS.students.profilePictureUrl + fileName;
+}
 }

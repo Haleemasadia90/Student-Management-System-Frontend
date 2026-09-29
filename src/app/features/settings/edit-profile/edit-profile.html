@@ -1,66 +1,299 @@
-<div class="page-header">
-  <h2>Profile</h2>
-</div>
+<div class="edit-profile-page">
 
-<div class="edit-profile-card">
+  <!-- Page Header -->
+  <div class="page-header">
 
-  <div class="avatar-row">
-    <span class="avatar-label">Avatar</span>
-    @if (avatarUrl && !imageLoadFailed()) {
-      <img [src]="avatarUrl" (error)="onImageError()" class="profile-dp" alt="">
-    } @else {
-      <div class="profile-dp-fallback">{{ initials }}</div>
-    }
+    <div class="page-title-icon">
+      <i class="pi pi-user"></i>
+    </div>
+
+    <div>
+      <h2>Profile</h2>
+      <p>Manage your personal profile information.</p>
+    </div>
+
   </div>
 
-  <label class="upload-label">
-    Change Photo
-    <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
-  </label>
 
-  <form [formGroup]="profileForm" class="profile-form">
+  <!-- Profile Card -->
+  <p-card styleClass="profile-card">
 
-     <div class="form-group">
-      <label>Full Name</label>
-      <input class="form-control" type="text" formControlName="fullName">
-      @if (profileForm.get('fullName')?.touched && profileForm.get('fullName')?.hasError('required')) {
-        <small class="error">Full name is required.</small>
+    <ng-template pTemplate="header">
+
+      <div class="card-header">
+
+        <div class="header-icon">
+          <i class="pi pi-user-edit"></i>
+        </div>
+
+        <div>
+          <h4>Edit Profile</h4>
+          <span>Update your personal information</span>
+        </div>
+
+      </div>
+
+    </ng-template>
+
+
+    <!-- =========================
+         CENTER PROFILE PICTURE
+    ========================== -->
+
+    <div class="avatar-section">
+
+      @if (avatarUrl && !imageLoadFailed()) {
+
+        <img
+          [src]="avatarUrl"
+          (error)="onImageError()"
+          (click)="openProfilePicture()"
+          class="profile-dp"
+          alt="Profile picture">
+
+      } @else {
+
+        <p-avatar
+          [label]="initials"
+          shape="circle"
+          styleClass="profile-avatar"
+          (click)="openProfilePicture()">
+        </p-avatar>
+
       }
+
+      <span class="avatar-hint">
+        Click your photo to view
+      </span>
+
     </div>
 
 
-    <div class="form-group">
-      <label>Username</label>
-      <input class="form-control" type="text" formControlName="username">
-      @if (profileForm.get('username')?.touched && profileForm.get('username')?.hasError('required')) {
-        <small class="error">Username is required.</small>
-      }
-      @if (profileForm.get('username')?.touched && profileForm.get('username')?.hasError('minlength')) {
-        <small class="error">Username must be at least 3 characters.</small>
-      }
+    <!-- Change Photo -->
+    <div class="upload-section">
+
+      <label
+        for="profilePicture"
+        class="upload-button">
+
+        <i class="pi pi-camera"></i>
+
+        <span>Change Photo</span>
+
+      </label>
+
+      <input
+        id="profilePicture"
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        hidden>
+
     </div>
 
 
-    <div class="form-group">
-      <label>Phone Number</label>
-      <input class="form-control" type="tel" formControlName="phone" placeholder="+92 300 1234567">
-      @if (profileForm.get('phone')?.touched && profileForm.get('phone')?.hasError('required')) {
-        <small class="error">Phone number is required.</small>
+    <!-- =========================
+         PROFILE FORM
+    ========================== -->
+
+    <form
+      [formGroup]="profileForm"
+      class="profile-form">
+
+
+      <!-- Full Name -->
+      <div class="form-group">
+
+        <label for="fullName">
+          Full Name
+        </label>
+
+        <input
+          id="fullName"
+          type="text"
+          pInputText
+          formControlName="fullName"
+          placeholder="Enter your full name"
+          class="profile-input">
+
+        @if (
+          profileForm.get('fullName')?.touched &&
+          profileForm.get('fullName')?.hasError('required')
+        ) {
+
+          <small class="error">
+            Full name is required.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- Username -->
+      <div class="form-group">
+
+        <label for="username">
+          Username
+        </label>
+
+        <input
+          id="username"
+          type="text"
+          pInputText
+          formControlName="username"
+          placeholder="Enter your username"
+          class="profile-input">
+
+        @if (
+          profileForm.get('username')?.touched &&
+          profileForm.get('username')?.hasError('required')
+        ) {
+
+          <small class="error">
+            Username is required.
+          </small>
+
+        }
+
+        @if (
+          profileForm.get('username')?.touched &&
+          profileForm.get('username')?.hasError('minlength')
+        ) {
+
+          <small class="error">
+            Username must be at least 3 characters.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- Phone -->
+      <div class="form-group">
+
+        <label for="phone">
+          Phone Number
+        </label>
+
+        <input
+          id="phone"
+          type="tel"
+          pInputText
+          formControlName="phone"
+          placeholder="+92 300 1234567"
+          class="profile-input">
+
+        @if (
+          profileForm.get('phone')?.touched &&
+          profileForm.get('phone')?.hasError('required')
+        ) {
+
+          <small class="error">
+            Phone number is required.
+          </small>
+
+        }
+
+        @if (
+          profileForm.get('phone')?.touched &&
+          profileForm.get('phone')?.hasError('pattern')
+        ) {
+
+          <small class="error">
+            Enter a valid phone number.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- Success -->
+      @if (successMsg()) {
+
+        <p-message
+          severity="success"
+          icon="pi pi-check-circle"
+          styleClass="profile-message">
+
+          {{ successMsg() }}
+
+        </p-message>
+
       }
-      @if (profileForm.get('phone')?.touched && profileForm.get('phone')?.hasError('pattern')) {
-        <small class="error">Enter a valid phone number.</small>
+
+
+      <!-- Error -->
+      @if (errorMsg()) {
+
+        <p-message
+          severity="error"
+          icon="pi pi-exclamation-circle"
+          styleClass="profile-message">
+
+          {{ errorMsg() }}
+
+        </p-message>
+
       }
+
+
+      <!-- Save -->
+      <div class="save-container">
+
+        <p-button
+          type="button"
+          label="Save Changes"
+          icon="pi pi-save"
+          severity="primary"
+          [raised]="true"
+          (onClick)="saveProfile()">
+        </p-button>
+
+      </div>
+
+    </form>
+
+  </p-card>
+
+
+  <!-- =========================
+       PROFILE PICTURE POPUP
+  ========================== -->
+
+  <p-dialog
+    [(visible)]="showProfilePicture"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [closable]="true"
+    [dismissableMask]="true"
+    [showHeader]="false"
+    styleClass="profile-picture-dialog">
+
+    <div class="profile-picture-popup">
+
+      @if (avatarUrl && !imageLoadFailed()) {
+
+        <img
+          [src]="avatarUrl"
+          class="large-profile-picture"
+          alt="Profile picture">
+
+      } @else {
+
+        <p-avatar
+          [label]="initials"
+          shape="circle"
+          styleClass="large-profile-avatar">
+        </p-avatar>
+
+      }
+
     </div>
-    
 
-    @if (successMsg()) {
-      <small class="success">{{ successMsg() }}</small>
-    }
-    @if (errorMsg()) {
-      <small class="error">{{ errorMsg() }}</small>
-    }
-
-    <button type="button" class="save-btn" (click)="saveProfile()">Save Changes</button>
-  </form>
+  </p-dialog>
 
 </div>

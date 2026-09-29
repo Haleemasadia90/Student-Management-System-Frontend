@@ -33,6 +33,8 @@ navItems: NavItem[] = [
     username = signal<string | null>(this.authService.getUsername());
   profilePicture = signal<string | null>(null);
 
+   role = 'STUDENT';
+
   logoutFn = () => this.authService.logout();
 
   constructor() {

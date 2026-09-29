@@ -1,95 +1,248 @@
-<div class="login-container">
-    <div class="login-card">
-        <h1>Login</h1>
-        <form [formGroup]="loginForm">
+<div class="login-page">
 
+  <!-- =========================
+       LEFT BRAND SECTION
+  ========================== -->
 
-                 <div class="form-group">
+  <div class="login-brand-section">
 
-                  <label for="email">Email</label>  
-                  <input class="form-control" type="email" id="email" placeholder="Enter email" formControlName="email" />
-                     @if(loginForm.get('email')?.touched &&
-                    loginForm.get('email')?.hasError('required')){
+    <div class="brand-content">
 
-                    <small class="error">
-                        Email is required.
-                    </small>
+      <div class="brand-icon">
+        <i class="pi pi-building"></i>
+      </div>
 
-                }
+      <h1>
+        Student Management
+        <span>System</span>
+      </h1>
 
-                @if(loginForm.get('email')?.touched &&
-                    loginForm.get('email')?.hasError('email')){
+      <p>
+        Manage students, courses, fees and
+        academic information in one place.
+      </p>
 
-                    <small class="error">
-                        Enter a valid email.
-                    </small>
-                    }
-            </div>
+      <div class="brand-features">
 
-              <div class="form-group">
+        <div class="feature-item">
+          <i class="pi pi-users"></i>
+          <span>Student Management</span>
+        </div>
 
-                <label>Password</label>
+        <div class="feature-item">
+          <i class="pi pi-book"></i>
+          <span>Course Management</span>
+        </div>
 
-                <div class="password-wrapper">
-                <input
-                    [type]="showPassword() ? 'text' : 'password'"
-                    class="form-control"
-                    formControlName="password"
-                    placeholder="Enter your password">
+        <div class="feature-item">
+          <i class="pi pi-chart-bar"></i>
+          <span>Academic Overview</span>
+        </div>
 
-                    <span class="toggle-eye" (click)="togglePassword()">
-      @if (showPassword()) {
-        <i class="ti ti-eye-off"></i>
-      } @else {
-        <i class="ti ti-eye"></i>
-      }
-    </span>
-  </div>
-
-                @if(loginForm.get('password')?.touched &&
-                    loginForm.get('password')?.hasError('required')){
-
-                    <small class="error">
-                        Password is required.
-                    </small>
-
-                }
-
-                @if(loginForm.get('password')?.touched &&
-                    loginForm.get('password')?.hasError('minlength')){
-
-                    <small class="error">
-                        Password must be at least 6 characters.
-                    </small>
-
-                }
-              </div>
-
-@if (errorMessage()) {
-  <small class="error" style="display:block; text-align:center; margin-top:10px;">
-    {{ errorMessage() }}
-  </small>
-}
-
-               <button
-                type="button"
-                class="login-btn"
-                (click)="login()">
-
-                Login
-
-            </button>
-
-
-            <p class="link-text">
-    Don't have an account?
-    <a routerLink="/registration">Register</a>
-</p>
-
-<p class="link-text">
-  <a routerLink="/forgot-password">Forgot Password?</a>
-</p>
-        </form>
+      </div>
 
     </div>
+
+  </div>
+
+
+  <!-- =========================
+       LOGIN SECTION
+  ========================== -->
+
+  <div class="login-section">
+
+    <p-card styleClass="login-card">
+
+      <!-- Card Header -->
+
+      <ng-template pTemplate="header">
+
+        <div class="login-header">
+
+          <div class="login-icon">
+            <i class="pi pi-lock"></i>
+          </div>
+
+          <h2>Welcome Back</h2>
+
+          <p>
+            Sign in to continue to your account
+          </p>
+
+        </div>
+
+      </ng-template>
+
+
+      <!-- =========================
+           FORM
+      ========================== -->
+
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+        class="login-form"
+      >
+
+
+        <!-- Email -->
+
+        <div class="form-group">
+
+          <label for="email">
+            Email Address
+          </label>
+
+          <p-iconfield>
+
+            <p-inputicon class="pi pi-envelope"></p-inputicon>
+
+            <input
+              id="email"
+              type="email"
+              pInputText
+              formControlName="email"
+              placeholder="Enter your email"
+              class="form-control"
+              autocomplete="email"
+            />
+
+          </p-iconfield>
+
+
+          @if (
+            loginForm.get('email')?.touched &&
+            loginForm.get('email')?.hasError('required')
+          ) {
+
+            <small class="error">
+              Email is required.
+            </small>
+
+          }
+
+
+          @if (
+            loginForm.get('email')?.touched &&
+            loginForm.get('email')?.hasError('email')
+          ) {
+
+            <small class="error">
+              Enter a valid email address.
+            </small>
+
+          }
+
+        </div>
+
+
+        <!-- Password -->
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <p-password
+            inputId="password"
+            formControlName="password"
+            [feedback]="false"
+            [toggleMask]="true"
+            placeholder="Enter your password"
+            styleClass="password-field"
+            inputStyleClass="password-input"
+            autocomplete="current-password"
+          >
+          </p-password>
+
+
+          @if (
+            loginForm.get('password')?.touched &&
+            loginForm.get('password')?.hasError('required')
+          ) {
+
+            <small class="error">
+              Password is required.
+            </small>
+
+          }
+
+
+          @if (
+            loginForm.get('password')?.touched &&
+            loginForm.get('password')?.hasError('minlength')
+          ) {
+
+            <small class="error">
+              Password must be at least 6 characters.
+            </small>
+
+          }
+
+        </div>
+
+
+        <!-- Forgot Password -->
+
+        <div class="forgot-container">
+
+          <a
+            routerLink="/forgot-password"
+            class="forgot-link"
+          >
+            Forgot Password?
+          </a>
+
+        </div>
+
+
+        <!-- Backend Error -->
+
+        @if (errorMessage()) {
+
+          <p-message
+            severity="error"
+            icon="pi pi-exclamation-circle"
+            styleClass="login-message"
+          >
+            {{ errorMessage() }}
+          </p-message>
+
+        }
+
+
+        <!-- Login Button -->
+
+        <p-button
+          type="submit"
+          label="Login"
+          icon="pi pi-sign-in"
+          [loading]="isLoading()"
+          [disabled]="isLoading()"
+          [raised]="true"
+          styleClass="login-button"
+        >
+        </p-button>
+
+
+        <!-- Register -->
+
+        <p class="register-text">
+
+          Don't have an account?
+
+          <a routerLink="/registration">
+            Create an account
+          </a>
+
+        </p>
+
+      </form>
+
+    </p-card>
+
+  </div>
+
 </div>

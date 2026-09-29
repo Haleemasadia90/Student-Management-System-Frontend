@@ -13,7 +13,11 @@
   color: #1e293b;
 }
 
-/* ===== Info Cards Grid ===== */
+
+/* ========================================
+   INFO CARDS GRID
+======================================== */
+
 .dashboard-cards {
   margin-top: 50px;
   display: grid;
@@ -21,26 +25,119 @@
   gap: 20px;
 }
 
+
+/* ========================================
+   DASHBOARD CARD
+   Original sizing preserved
+======================================== */
+
 .dashboard-card {
   background: white;
   border-radius: 12px;
   padding: 22px;
+
   display: flex;
   align-items: center;
   gap: 16px;
+
   border: 1px solid #e2e8f0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
   min-width: 0;
 }
+
+
+/* ========================================
+   PRIME ICON
+   Colorful but same original sizing
+======================================== */
 
 .card-icon {
   font-size: 30px;
   flex-shrink: 0;
+
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
 }
+
+
+/* ========================================
+   ICON COLORS
+======================================== */
+
+/* Student ID */
+.id-icon {
+  color: #7c3aed;
+  background: #ede9fe;
+}
+
+/* Username */
+.username-icon {
+  color: #2563eb;
+  background: #dbeafe;
+}
+
+/* Email */
+.email-icon {
+  color: #db2777;
+  background: #fce7f3;
+}
+
+/* Department */
+.department-icon {
+  color: #ea580c;
+  background: #ffedd5;
+}
+
+/* Batch */
+.batch-icon {
+  color: #4f46e5;
+  background: #e0e7ff;
+}
+
+/* Enrolled Courses */
+.enrolled-icon {
+  color: #16a34a;
+  background: #dcfce7;
+}
+
+/* Available Courses */
+.available-icon {
+  color: #0891b2;
+  background: #cffafe;
+}
+
+/* Current Semester */
+.semester-icon {
+  color: #d97706;
+  background: #fef3c7;
+}
+
+/* Total Semesters */
+.progress-icon {
+  color: #9333ea;
+  background: #f3e8ff;
+}
+
+
+/* ========================================
+   CARD CONTENT
+======================================== */
 
 .dashboard-card > div:last-child {
   min-width: 0;
 }
+
+
+/* ========================================
+   CARD TEXT
+======================================== */
 
 .dashboard-card p {
   margin: 0 0 5px;
@@ -54,11 +151,21 @@
   color: #1e293b;
 }
 
+
+/* ========================================
+   SMALL CARD VALUES
+======================================== */
+
 .card-value-sm {
   font-size: 15px !important;
   word-break: break-word;
   white-space: normal;
 }
+
+
+/* ========================================
+   LOADING
+======================================== */
 
 .loading-text {
   text-align: center;
@@ -67,7 +174,11 @@
   margin-top: 40px;
 }
 
-/* ===== Profile Upload (agar kahin use ho) ===== */
+
+/* ========================================
+   PROFILE UPLOAD
+======================================== */
+
 .profile-upload-section {
   display: flex;
   flex-direction: column;
@@ -100,7 +211,11 @@
   background: #e0e7ff;
 }
 
-/* ===== Chart Wrapper — Ye card ko CENTER karta hai ===== */
+
+/* ========================================
+   CHART WRAPPER
+======================================== */
+
 .chart-wrapper {
   display: flex;
   justify-content: center;
@@ -129,7 +244,11 @@
   text-align: center;
 }
 
-/* ===== Pie Chart ===== */
+
+/* ========================================
+   PIE CHART
+======================================== */
+
 .pie-chart-wrapper {
   display: flex;
   flex-direction: column;
@@ -142,9 +261,11 @@
   height: 160px;
   border-radius: 50%;
   position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   flex-shrink: 0;
 }
 
@@ -153,6 +274,7 @@
   height: 104px;
   background: white;
   border-radius: 50%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -170,10 +292,16 @@
   color: #94a3b8;
 }
 
+
+/* ========================================
+   PIE LEGEND
+======================================== */
+
 .pie-legend {
   display: flex;
   flex-direction: column;
   gap: 14px;
+
   width: 100%;
   max-width: 200px;
 }
@@ -215,19 +343,37 @@
   color: #1e293b;
 }
 
-/* ===============================
-   RESPONSIVE
-   =============================== */
 
-/* Tablet */
+/* ========================================
+   EMPTY STATE
+======================================== */
+
+.empty-text {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+
+/* ========================================
+   TABLET
+======================================== */
+
 @media (max-width: 900px) {
+
   .dashboard-cards {
     grid-template-columns: repeat(2, 1fr);
   }
+
 }
 
-/* Small tablet / large mobile */
+
+/* ========================================
+   SMALL TABLET
+======================================== */
+
 @media (max-width: 640px) {
+
   .pie-chart {
     width: 140px;
     height: 140px;
@@ -245,10 +391,16 @@
   .chart-card {
     max-width: 320px;
   }
+
 }
 
-/* Mobile */
+
+/* ========================================
+   MOBILE
+======================================== */
+
 @media (max-width: 560px) {
+
   .dashboard-cards {
     grid-template-columns: 1fr;
   }
@@ -269,4 +421,5 @@
   .edit-profile-card {
     padding: 18px;
   }
+
 }

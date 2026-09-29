@@ -5,105 +5,128 @@
   border-radius: 10px;
 }
 
+
 .fee-manager-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
+
 
 .fee-manager-header h4 {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 700;
   color: #1e293b;
 }
 
-.add-btn-small {
-  background: #0d6efd;
-  color: white;
-  border: none;
-  padding: 5px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
-}
+
+/* Table */
 
 .fee-table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
 }
 
-.fee-table th {
-  text-align: left;
-  padding: 8px;
-  color: #64748b;
-  font-size: 11px;
-  text-transform: uppercase;
-}
 
-.fee-table td {
-  padding: 8px;
-  border-top: 1px solid #e2e8f0;
-}
-
-.fee-status {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 999px;
-  text-transform: uppercase;
-}
-
-.status-paid { background: #dcfce7; color: #16a34a; }
-.status-pending { background: #fef9c3; color: #ca8a04; }
-.status-overdue { background: #fee2e2; color: #dc2626; }
-
-.edit-btn-small, .delete-btn-small, .save-btn-small, .cancel-btn-small {
-  border: none;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  cursor: pointer;
-  margin-right: 4px;
-}
-
-.edit-btn-small { background: #fef3c7; color: #92400e; }
-.delete-btn-small { background: #fee2e2; color: #dc2626; }
-.save-btn-small { background: #0d6efd; color: white; }
-.cancel-btn-small { background: #e2e8f0; color: #334155; }
-
-.fee-form {
-  margin-top: 12px;
-  padding: 12px;
-  background: white;
-  border-radius: 8px;
-}
-
-.form-row {
+.action-buttons {
   display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
 }
 
-.form-control {
-  flex: 1;
-  min-width: 120px;
-  padding: 7px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 13px;
-}
+
+/* Empty */
 
 .empty-text {
+  min-height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
   color: #94a3b8;
+
   font-size: 13px;
 }
 
+.empty-text i {
+  font-size: 16px;
+}
+
+
+/* Form */
+
+.fee-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  padding-top: 5px;
+}
+
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+
+.form-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+
+/* Status */
+
+.status-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 14px;
+
+  background: #f8fafc;
+
+  border-radius: 8px;
+
+  border: 1px solid #e2e8f0;
+}
+
+
+.status-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+
 .error-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
   color: #dc2626;
+
   font-size: 12px;
-  display: block;
-  margin-bottom: 8px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+  .fee-manager {
+    padding: 10px;
+  }
+
+  .fee-manager-header {
+    gap: 10px;
+  }
+
 }

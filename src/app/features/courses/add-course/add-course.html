@@ -1,78 +1,171 @@
 <div class="form-container">
+
   <h3>Add New Course</h3>
 
   <form [formGroup]="courseForm">
+
+   
     <div class="form-group">
-      <label for="title">Title</label>
-      <input type="text" id="title" formControlName="title" class="form-control" />
-      @if (courseForm.get('title')?.touched && courseForm.get('title')?.hasError('required')) {
-        <small class="error">Title is required.</small>
+      <p-floatLabel>
+        <input
+          id="title"
+          type="text"
+          pInputText
+          formControlName="title"
+          variant="filled"
+        />
+        <label for="title">Title</label>
+      </p-floatLabel>
+
+      @if (
+        courseForm.get('title')?.touched &&
+        courseForm.get('title')?.hasError('required')
+      ) {
+        <small class="error">
+          Title is required.
+        </small>
       }
     </div>
 
+
+    <!-- Description -->
     <div class="form-group">
-      <label for="description">Description</label>
-      <input type="text" id="description" formControlName="description" class="form-control" />
-      @if (courseForm.get('description')?.touched && courseForm.get('description')?.hasError('required')) {
-        <small class="error">Description is required.</small>
+      <p-floatLabel>
+        <input
+          id="description"
+          type="text"
+          pInputText
+          formControlName="description"
+          variant="filled"
+        />
+        <label for="description">Description</label>
+      </p-floatLabel>
+
+      @if (
+        courseForm.get('description')?.touched &&
+        courseForm.get('description')?.hasError('required')
+      ) {
+        <small class="error">
+          Description is required.
+        </small>
       }
     </div>
 
+
+    <!-- Course Code -->
     <div class="form-group">
-      <label for="courseCode">Course Code</label>
-      <input type="text" id="courseCode" formControlName="courseCode" class="form-control" placeholder="e.g. CS-201" />
-      @if (courseForm.get('courseCode')?.touched && courseForm.get('courseCode')?.hasError('required')) {
-        <small class="error">Course code is required.</small>
+      <p-floatLabel>
+        <input
+          id="courseCode"
+          type="text"
+          pInputText
+          formControlName="courseCode"
+          placeholder="e.g. CS-201"
+          variant="filled"
+        />
+        <label for="courseCode">Course Code</label>
+      </p-floatLabel>
+
+      @if (
+        courseForm.get('courseCode')?.touched &&
+        courseForm.get('courseCode')?.hasError('required')
+      ) {
+        <small class="error">
+          Course code is required.
+        </small>
       }
     </div>
 
+
+    <!-- Credit Hours -->
     <div class="form-group">
-      <label for="creditHours">Credit Hours</label>
-      <input type="number" id="creditHours" formControlName="creditHours" class="form-control" />
-      @if (courseForm.get('creditHours')?.touched && courseForm.get('creditHours')?.hasError('min')) {
-        <small class="error">Credit hours must be at least 1.</small>
+      <p-floatLabel>
+
+        <p-inputNumber
+          inputId="creditHours"
+          formControlName="creditHours"
+          [min]="1"
+          [showButtons]="true"
+          variant="filled">
+        </p-inputNumber>
+
+        <label for="creditHours">
+          Credit Hours
+        </label>
+
+      </p-floatLabel>
+
+      @if (
+        courseForm.get('creditHours')?.touched &&
+        courseForm.get('creditHours')?.hasError('min')
+      ) {
+        <small class="error">
+          Credit hours must be at least 1.
+        </small>
       }
     </div>
 
-    <div class="form-group">
-      <label for="department">Department</label>
-      <select id="department" formControlName="departmentId" class="form-control">
-        <option [ngValue]="null">Select Department</option>
-        @for (dept of departments(); track dept.id) {
-          <option [ngValue]="dept.id">{{ dept.name }}</option>
-        }
-      </select>
-      @if (courseForm.get('departmentId')?.touched && courseForm.get('departmentId')?.hasError('required')) {
-        <small class="error">Department is required.</small>
-      }
-    </div>
 
-    <div class="form-group">
-      <label for="status">Status</label>
-      <select id="status" formControlName="status" class="form-control">
-        <option value="ACTIVE">Active</option>
-        <option value="INACTIVE">Inactive</option>
-        <option value="UPCOMING">Upcoming</option>
-      </select>
-    </div>
+   <!-- Department -->
+<div class="form-group">
+  <p-floatLabel>
+    <p-select
+  inputId="department"
+  formControlName="departmentId"
+  [options]="departments()"
+  optionLabel="name"
+  optionValue="id"
+  [showClear]="true"
+  
+  styleClass="custom-select">
+</p-select>
+    <label for="department">Department</label>
+  </p-floatLabel>
 
-    
-    @if (successMessage()) {
-      <small style="color: green; display: block; margin-top: 10px;">{{ successMessage() }}</small>
-    }
-    @if (errorMessage()) {
-      <small class="error" style="display: block; margin-top: 10px;">{{ errorMessage() }}</small>
-    }
-
-    <!-- <button type="button" (click)="save()" [disabled]="isLoading()" class="save-btn">
-      {{ isLoading() ? 'Saving...' : 'Save Course' }}
-    </button> -->
-<p-button
-  [label]="isLoading() ? 'Saving...' : 'Save Course'"
-  [loading]="isLoading()"
-  [disabled]="isLoading()"
-  (onClick)="save()"
-  iconPos="right">
-</p-button>
-  </form>
+  @if (
+    courseForm.get('departmentId')?.touched &&
+    courseForm.get('departmentId')?.hasError('required')
+  ) {
+    <small class="error">
+      Department is required.
+    </small>
+  }
 </div>
+
+
+<!-- Status -->
+<div class="form-group">
+  <p-floatLabel>
+    <p-select
+      inputId="status"
+      formControlName="status"
+      [options]="statusOptions"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Select Status"
+      styleClass="custom-select">
+    </p-select>
+
+    <label for="status">Status</label>
+  </p-floatLabel>
+</div>
+  
+    <div class="button-container">
+
+      <p-button
+        label="Save Course"
+       
+        [loading]="isLoading()"
+        [disabled]="isLoading()"
+        [raised]="true"
+        (onClick)="save()">
+      </p-button>
+
+    </div>
+
+  </form>
+
+</div>
+
+
+<p-toast position="top-right"></p-toast>
