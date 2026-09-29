@@ -3,20 +3,35 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentService } from '../department-service';
 import { Department } from '../../../models/department.model';
+import { FloatLabelModule } from 'primeng/floatlabel';
+
+import { ButtonModule } from 'primeng/button';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-department-manager',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FloatLabelModule, InputTextModule, ButtonModule, IconFieldModule, InputIconModule, InputGroupModule, ToastModule, ConfirmDialog],
   templateUrl: './department-manager.html',
+  providers: [MessageService, ConfirmationService],
   styleUrl: './department-manager.css',
+  
 })
 export class DepartmentManager implements OnInit {
   readonly departmentService = inject(DepartmentService);
+  readonly messageService = inject(MessageService);
+  readonly confirmationService = inject(ConfirmationService);
 
   departments = signal<Department[]>([]);
   searchTerm = signal('');
   showAddModal = signal(false);
+  editingDepartmentId = signal<number | null>(null);
 
   departmentForm = new FormGroup({
     name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
@@ -47,36 +62,86 @@ openAddModal(): void {
     this.showAddModal.set(true);
   }
 
+
+  openEditModal(department: Department): void {
+
+    this.editingDepartmentId.set(department.id);
+    this.errorMessage.set('');
+    this.departmentForm.patchValue({name: department.name});
+    this.showAddModal.set(true);
+
+  }
+
   closeAddModal(): void {
     this.showAddModal.set(false);
   }
 
 
   save(): void {
-    if (this.departmentForm.invalid) {
-      this.departmentForm.markAllAsTouched();
-      return;
-    }
-
-    this.errorMessage.set('');
-    const deptData = this.departmentForm.getRawValue();
-
-    this.departmentService.createDepartment(deptData).subscribe({
-      next: () => {
-        this.departmentForm.reset();
-        this.loadDepartments();
-      },
-      error: (err) => this.errorMessage.set(err.error || 'Failed to add department.')
-    });
+  if (this.departmentForm.invalid) {
+    this.departmentForm.markAllAsTouched();
+    return;
   }
+
+  this.errorMessage.set('');
+
+  const deptData = this.departmentForm.getRawValue();
+
+  this.departmentService.createDepartment(deptData).subscribe({
+    next: () => {
+      this.departmentForm.reset();
+      this.showAddModal.set(false);
+      this.loadDepartments();
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Department added successfully.'
+      });
+    },
+    error: (err) => {
+      this.errorMessage.set(
+        err.error || 'Failed to add department.'
+      );
+
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: err.error || 'Failed to add department.'
+      });
+    }
+  });
+}
 
   deleteDepartment(id: number): void {
-    const confirmDelete = confirm("Delete this department? Courses linked to it may be affected.");
-    if (!confirmDelete) return;
+  this.confirmationService.confirm({
+    message: 'Are you sure you want to delete this department?',
+    header: 'Delete Department',
+    icon: 'pi pi-exclamation-triangle',
+    acceptLabel: 'Delete',
+    rejectLabel: 'Cancel',
 
-    this.departmentService.deleteDepartment(id).subscribe({
-      next: () => this.loadDepartments(),
-      error: (err) => console.error('Error deleting department:', err)
-    });
-  }
+    accept: () => {
+      this.departmentService.deleteDepartment(id).subscribe({
+        next: () => {
+          this.loadDepartments();
+
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Department deleted successfully.'
+          });
+        },
+
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: err.error || 'Failed to delete department.'
+          });
+        }
+      });
+    }
+  });
+}
 }

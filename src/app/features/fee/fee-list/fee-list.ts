@@ -8,10 +8,27 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { StudentService } from '../../student/student-service';
 import { Student } from '../../../models/student.model';
 
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { ButtonModule } from 'primeng/button';
+
 @Component({
   selector: 'app-fee-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+
+  imports: [
+    CommonModule,
+    FormsModule,
+
+    TableModule,
+    InputTextModule,
+    IconFieldModule,
+    InputIconModule,
+    ButtonModule
+  ],
+
   templateUrl: './fee-list.html',
   styleUrl: './fee-list.css',
 })
@@ -21,31 +38,38 @@ export class FeeList implements OnInit, OnDestroy {
   readonly router = inject(Router);
 
   students = signal<Student[]>([]);
-  searchName: string = '';
-
+  searchName = '';
 
   private searchSubject = new Subject<string>();
 
   ngOnInit(): void {
+
     this.getStudents();
 
-   
     this.searchSubject.pipe(
-      debounceTime(300),        
-      distinctUntilChanged(),     
+      debounceTime(300),
+      distinctUntilChanged(),
+
       switchMap((name: string) => {
+
         if (!name || !name.trim()) {
-        
           return this.studentService.getAllStudents();
         }
+
         return this.studentService.searchStudentsByName(name);
       })
+
     ).subscribe({
-      next: (data: Student[]) => this.students.set(data),
+
+      next: (data: Student[]) => {
+        this.students.set(data);
+      },
+
       error: (err) => {
         console.error('Error searching student:', err);
         this.students.set([]);
       }
+
     });
   }
 
@@ -54,9 +78,17 @@ export class FeeList implements OnInit, OnDestroy {
   }
 
   getStudents(): void {
+
     this.studentService.getAllStudents().subscribe({
-      next: (data: Student[]) => this.students.set(data),
-      error: (err) => console.error('Error loading students:', err)
+
+      next: (data: Student[]) => {
+        this.students.set(data);
+      },
+
+      error: (err) => {
+        console.error('Error loading students:', err);
+      }
+
     });
   }
 
@@ -65,7 +97,6 @@ export class FeeList implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-  
     this.searchSubject.complete();
   }
 }

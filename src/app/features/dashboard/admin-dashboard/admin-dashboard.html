@@ -1,7 +1,9 @@
 <div class="dashboard-cards">
 
   <div class="dashboard-card">
-    <div class="card-icon">👨‍🎓</div>
+    <div class="card-icon students-icon">
+      <i class="pi pi-graduation-cap"></i>
+    </div>
     <div>
       <p>Total Students</p>
       <h3>{{ totalStudents() }}</h3>
@@ -9,7 +11,9 @@
   </div>
 
   <div class="dashboard-card">
-    <div class="card-icon">📚</div>
+    <div class="card-icon courses-icon">
+      <i class="pi pi-book"></i>
+    </div>
     <div>
       <p>Total Courses</p>
       <h3>{{ totalCourses() }}</h3>
@@ -17,7 +21,9 @@
   </div>
 
   <div class="dashboard-card">
-    <div class="card-icon">🏛️</div>
+    <div class="card-icon departments-icon">
+      <i class="pi pi-building"></i>
+    </div>
     <div>
       <p>Total Departments</p>
       <h3>{{ totalDepartments() }}</h3>
@@ -25,8 +31,11 @@
   </div>
 
   @if (feeSummary()) {
+
     <div class="dashboard-card">
-      <div class="card-icon">💰</div>
+      <div class="card-icon pending-icon">
+        <i class="pi pi-wallet"></i>
+      </div>
       <div>
         <p>Total Pending Fees</p>
         <h3>{{ feeSummary()!.totalDue }}</h3>
@@ -34,7 +43,9 @@
     </div>
 
     <div class="dashboard-card">
-      <div class="card-icon">✅</div>
+      <div class="card-icon collected-icon">
+        <i class="pi pi-check-circle"></i>
+      </div>
       <div>
         <p>Total Collected</p>
         <h3>{{ feeSummary()!.totalPaid }}</h3>
@@ -42,12 +53,15 @@
     </div>
 
     <div class="dashboard-card">
-      <div class="card-icon">📊</div>
+      <div class="card-icon rate-icon">
+        <i class="pi pi-chart-bar"></i>
+      </div>
       <div>
         <p>Collection Rate</p>
         <h3>{{ feeSummary()!.paidPercentage }}%</h3>
       </div>
     </div>
+
   }
 
 </div>

@@ -1,88 +1,169 @@
-
-
-
 <div class="list-section">
-  <div class="list-header">
-    <h3 class="list-title">STUDENTS</h3>
-    
-    
-  </div>
 
+  <p-toast></p-toast>
+
+  <p-confirmDialog></p-confirmDialog>
+
+  <div class="list-header">
+
+    <h3 class="list-title">
+      STUDENTS
+    </h3>
+
+  </div>
 
   <div class="search-container">
 
     <input
-        type="number"
-        class="search-input"
-        placeholder="Enter Student ID"
-        [(ngModel)]="searchId">
+      pInputText
+      type="text"
+      class="search-input"
+      placeholder="Enter Student email"
+      [(ngModel)]="searchEmail"
+    />
 
-    <button
-        class="search-btn"
-        (click)="searchStudent()">
-        Search
-    </button>
+    <p-button
+      label="Search"
+      icon="pi pi-search"
+      severity="success"
+      [raised]="true"
+      (onClick)="searchStudent()">
+    </p-button>
 
-    <button
-        class="show-btn"
-        (click)="getStudents()">
-        Show All
-    </button>
+    <p-button
+      label="Show All"
+      icon="pi pi-refresh"
+      severity="secondary"
+      [raised]="true"
+      (onClick)="getStudents()">
+    </p-button>
 
-</div>
-
-
-
-  
-  <div class="table-scroll">
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Department</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-       @if (students().length > 0) {
-  @for (s of students(); track s.id) {
-    <tr>
-      <td>{{ s.id }}</td>
-      <td>{{ s.username }}</td>
-      <td>{{ s.email }}</td>
-        <td>{{ s.department }}</td>
-      <td>
-        <div class="button-group">
-          <button (click)="toggleFeeManager(s.id)" class="fee-btn">
-                  {{ expandedStudentId() === s.id ? 'Hide Fee' : 'Manage Fee' }}
-                </button>
-          <button (click)="deleteStudent(s.id)" class="delete-btn">Delete</button>
-        </div>
-      </td>
-    </tr>
-    @if (expandedStudentId() === s.id) {
-    <tr>
-      <td colspan="5">
-      <app-fee-manager [studentId]="s.id" [admissionYear]="s.admissionYear ?? 0"></app-fee-manager>
-      </td>
-    </tr>
-  }
-  }
-} @else {
-  <tr>
-    <td colspan="5" class="empty-row">No records found.</td>
-  </tr>
-}
-    </tbody>
-
-
-   
-  </table>
   </div>
+
+  <div class="table-scroll">
+
+    <p-table
+      [value]="students()"
+      styleClass="student-table"
+      responsiveLayout="scroll"
+    >
+      <ng-template pTemplate="header">
+
+        <tr>
+
+          <th>ID</th>
+
+          <th>Username</th>
+
+          <th>Email</th>
+
+          <th>Department</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-s
+      >
+
+        <tr>
+
+          <td>
+            {{ s.id }}
+          </td>
+
+          <td>
+            {{ s.username }}
+          </td>
+
+          <td>
+            {{ s.email }}
+          </td>
+
+          <td>
+            {{ s.department }}
+          </td>
+
+          <td>
+
+            <div class="button-group">
+
+              <p-button
+                [label]="
+                  expandedStudentId() === s.id
+                    ? 'Hide Fee'
+                    : 'Manage Fee'
+                "
+                [icon]="
+                  expandedStudentId() === s.id
+                    ? 'pi pi-chevron-up'
+                    : 'pi pi-wallet'
+                "
+                severity="info"
+                [raised]="true"
+                size="small"
+                (onClick)="toggleFeeManager(s.id)">
+              </p-button>
+
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [raised]="true"
+                size="small"
+                ariaLabel="Delete student"
+                (onClick)="deleteStudent(s.id)">
+              </p-button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+
+
+
+        @if (expandedStudentId() === s.id) {
+
+          <tr>
+
+            <td colspan="5">
+
+              <app-fee-manager
+                [studentId]="s.id"
+                [admissionYear]="s.admissionYear ?? 0">
+              </app-fee-manager>
+
+            </td>
+
+          </tr>
+
+        }
+
+      </ng-template>
+
+
+
+      <ng-template pTemplate="emptymessage">
+
+        <tr>
+
+          <td
+            colspan="5"
+            class="empty-row"
+          >
+            No records found.
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+    </p-table>
+
+  </div>
+
 </div>
-
-
-  

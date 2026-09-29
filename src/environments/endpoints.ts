@@ -5,10 +5,13 @@ export const ENDPOINTS = {
     deleteStudent:'/api/students/:id',
     getStudentById:'/api/students/:id',
     getMyRecord:'/api/students/me',
-     searchByName: '/api/students/search',
+   searchByName: '/api/students/search',
    uploadPhoto:'/api/students/upload-photo',
    updateProfile: '/api/students/update-profile',
      getTotalStudents: '/api/students/count',
+     getStudentByEmail: '/api/students/email/:email',
+profilePictureUrl: '/uploads/profile-pictures/'
+
     
    },
 
@@ -19,7 +22,7 @@ export const ENDPOINTS = {
       updateCourse:'/api/courses/:id',
       deleteCourse:'/api/courses/:id',
        getTotalCourses: '/api/courses/count', 
-      
+      getCoursesPaged: '/api/courses/paged', 
 
    },
 
@@ -40,6 +43,7 @@ export const ENDPOINTS = {
    department:{
       getAllDepartments:'/api/departments',
       createDepartment:'/api/departments',
+      updateDepartment: '/api/departments/:id',
       deleteDepartments:'/api/departments/:id',
        getTotalDepartments: '/api/departments/count',
    },
@@ -50,6 +54,8 @@ export const ENDPOINTS = {
       changePassword:'/api/auth/change-password',
       forgotPassword:'/api/auth/forgot-password',
       resetPassword:'/api/auth/reset-password',
+      refreshToken: '/api/auth/refresh-token',
+      logout: '/api/auth/logout'
    }
 
 };

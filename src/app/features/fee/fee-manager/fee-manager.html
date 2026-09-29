@@ -1,78 +1,281 @@
+<p-toast></p-toast>
+
+<p-confirmdialog></p-confirmdialog>
+
+
 <div class="fee-manager">
+
   <div class="fee-manager-header">
-    <h4>Fee Records</h4>
-    <button (click)="openAddForm()" class="add-btn-small">+ Add Fee</button>
+
+    <h4>
+      Fee Records
+    </h4>
+
+    <p-button
+      label="Add Fee"
+      icon="pi pi-plus"
+      size="small"
+      (onClick)="openAddForm()"
+    />
+
   </div>
 
+
   @if (fees().length > 0) {
-    <table class="fee-table">
-      <thead>
+
+    <p-table
+      [value]="fees()"
+      responsiveLayout="scroll"
+      styleClass="fee-table"
+    >
+
+      <ng-template pTemplate="header">
+
         <tr>
+
           <th>Semester</th>
           <th>Total</th>
           <th>Paid</th>
           <th>Due</th>
           <th>Status</th>
           <th>Actions</th>
+
         </tr>
-      </thead>
-      <tbody>
-        @for (fee of fees(); track fee.id) {
-          <tr>
-            <td>{{ fee.semester }}</td>
-            <td>{{ fee.totalFee }}</td>
-            <td>{{ fee.paidFee }}</td>
-            <td>{{ fee.dueAmount }}</td>
-            <td>
-              <span class="fee-status" [class]="'status-' + fee.status.toLowerCase()">{{ fee.status }}</span>
-            </td>
-            <td>
-              <button (click)="openEditForm(fee)" class="edit-btn-small">Edit</button>
-              <button (click)="deleteFee(fee.id)" class="delete-btn-small">Delete</button>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+
+      </ng-template>
+
+
+      <ng-template
+        pTemplate="body"
+        let-fee
+      >
+
+        <tr>
+
+          <td>
+            {{ fee.semester }}
+          </td>
+
+          <td>
+            {{ fee.totalFee }}
+          </td>
+
+          <td>
+            {{ fee.paidFee }}
+          </td>
+
+          <td>
+            {{ fee.dueAmount }}
+          </td>
+
+
+          <td>
+
+            <p-tag
+              [value]="fee.status"
+              [severity]="
+                fee.status === 'PAID'
+                  ? 'success'
+                  : fee.status === 'PENDING'
+                    ? 'warn'
+                    : 'danger'
+              "
+            />
+
+          </td>
+
+
+          <td>
+
+            <div class="action-buttons">
+
+              <p-button
+                icon="pi pi-pencil"
+                severity="warn"
+                [text]="true"
+                [rounded]="true"
+                size="small"
+                pTooltip="Edit"
+                (onClick)="openEditForm(fee)"
+              />
+
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                [rounded]="true"
+                size="small"
+                pTooltip="Delete"
+                (onClick)="deleteFee(fee.id)"
+              />
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+    </p-table>
+
   } @else {
-    <p class="empty-text">No fee records yet.</p>
+
+    <div class="empty-text">
+
+      <i class="pi pi-wallet"></i>
+
+      <span>
+        No fee records yet.
+      </span>
+
+    </div>
+
   }
 
-  
-  @if (showAddForm) {
-    <div class="fee-form">
 
-      @if (!admissionYear) {
-        <p class="error-text">⚠️ Admission year not found for this student — cannot generate semester list.</p>
+  <!-- ADD / EDIT DIALOG -->
+
+  <p-dialog
+    [(visible)]="showAddForm"
+    [modal]="true"
+    [style]="{ width: '520px' }"
+    [draggable]="false"
+    [resizable]="false"
+
+    [header]="
+      editingFeeId
+        ? 'Edit Fee Record'
+        : 'Add Fee Record'
+    "
+  >
+
+    <form
+      [formGroup]="feeForm"
+      class="fee-form"
+    >
+
+      <!-- Semester -->
+
+      <div class="form-field">
+
+        <label for="semester">
+          Semester
+        </label>
+
+        <p-select
+          inputId="semester"
+          formControlName="semester"
+          [options]="availableSemesters()"
+          placeholder="Select Semester"
+          [fluid]="true"
+        />
+
+      </div>
+
+
+      <!-- Total Fee -->
+
+      <div class="form-field">
+
+        <label for="totalFee">
+          Total Fee
+        </label>
+
+        <p-inputnumber
+          inputId="totalFee"
+          formControlName="totalFee"
+          mode="decimal"
+          [min]="0"
+          [fluid]="true"
+          placeholder="Enter total fee"
+        />
+
+      </div>
+
+
+      <!-- Paid Fee -->
+
+      <div class="form-field">
+
+        <label for="paidFee">
+          Paid Fee
+        </label>
+
+        <p-inputnumber
+          inputId="paidFee"
+          formControlName="paidFee"
+          mode="decimal"
+          [min]="0"
+          [fluid]="true"
+          placeholder="Enter paid fee"
+        />
+
+      </div>
+
+
+      <!-- Status Preview -->
+
+      <div class="status-preview">
+
+        <span class="status-label">
+          Current Status
+        </span>
+
+        <p-tag
+          [value]="computedStatus()"
+          [severity]="
+            computedStatus() === 'PAID'
+              ? 'success'
+              : computedStatus() === 'PENDING'
+                ? 'warn'
+                : 'danger'
+          "
+        />
+
+      </div>
+
+
+      @if (
+        availableSemesters().length === 0 &&
+        !editingFeeId
+      ) {
+
+        <small class="error-text">
+
+          <i class="pi pi-info-circle"></i>
+
+          All 8 semesters already have fee records
+          for this student.
+
+        </small>
+
       }
 
-      <form [formGroup]="feeForm">
-        <div class="form-row">
 
-          <select formControlName="semester" class="form-control">
-            <option value="" disabled>Select Semester</option>
-            @for (sem of availableSemesters(); track sem) {
-              <option [value]="sem">{{ sem }}</option>
-            }
-          </select>
+    </form>
 
-            <input type="number" formControlName="totalFee" placeholder="Total Fee" class="form-control" />
-        <input type="number" formControlName="paidFee" placeholder="Paid Fee" class="form-control" />
 
-        <span class="fee-status" [class]="'status-' + computedStatus().toLowerCase()">
-          {{ computedStatus() }}
-        </span>
-        </div>
+    <!-- Dialog Footer -->
 
-        @if (availableSemesters().length === 0 && !editingFeeId) {
-          <small class="error-text">All 8 semesters already have fee records for this student.</small>
-        }
+    <ng-template pTemplate="footer">
 
-        <div class="form-actions">
-          <button type="button" (click)="save()" class="save-btn-small">Save</button>
-          <button type="button" (click)="closeForm()" class="cancel-btn-small">Cancel</button>
-        </div>
-      </form>
-    </div>
-  }
+      <p-button
+        label="Cancel"
+        icon="pi pi-times"
+        severity="secondary"
+        [outlined]="true"
+        (onClick)="closeForm()"
+      />
+
+      <p-button
+        label="Save"
+        icon="pi pi-check"
+        (onClick)="save()"
+      />
+
+    </ng-template>
+
+  </p-dialog>
+
 </div>

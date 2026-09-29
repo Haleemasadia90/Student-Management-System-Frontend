@@ -1,56 +1,111 @@
-
-
-
-
 <div class="list-section">
 
   <div class="list-header">
-    <h3 class="list-title">FEE RECORDS</h3>
+
+    <h3 class="list-title">
+      FEE RECORDS
+    </h3>
+
   </div>
 
+
+  <!-- Search -->
   <div class="search-container">
-  <input
 
-    type="text"
-    class="search-input"
-    placeholder="Search by name..."
-    [(ngModel)]="searchName"
-    (ngModelChange)="onSearchChange($event)">
+    <p-iconfield>
+
+      <p-inputicon class="pi pi-search"></p-inputicon>
+
+      <input
+        pInputText
+        type="text"
+        placeholder="Search by name..."
+        [(ngModel)]="searchName"
+        (ngModelChange)="onSearchChange($event)"
+      />
+
+    </p-iconfield>
 
   </div>
 
-  <div class="table-scroll">
-  <table class="data-table">
-    <thead>
+
+  <!-- Students Table -->
+  <p-table
+    [value]="students()"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    responsiveLayout="scroll"
+    styleClass="fee-student-table"
+  >
+
+    <ng-template pTemplate="header">
+
       <tr>
-        <th>Student ID</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Department</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
 
-    <tbody>
-      @if (students().length > 0) {
-        @for (s of students(); track s.id) {
-          <tr>
-            <td>{{ s.id }}</td>
-            <td>{{ s.username }}</td>
-            <td>{{ s.email }}</td>
-            <td>{{ s.department }}</td>
-            <td>
-              <button class="view-btn" (click)="viewFeeDetail(s.id)">View</button>
-            </td>
-          </tr>
-        }
-      } @else {
-        <tr>
-          <td colspan="5" class="empty-row">No students found.</td>
-        </tr>
-      }
-    </tbody>
-  </table>
-  </div>
+        <th>Student ID</th>
+
+        <th>Username</th>
+
+        <th>Email</th>
+
+        <th>Department</th>
+
+        <th>Actions</th>
+
+      </tr>
+
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-student>
+
+      <tr>
+
+        <td>
+          {{ student.id }}
+        </td>
+
+        <td>
+          {{ student.username }}
+        </td>
+
+        <td>
+          {{ student.email }}
+        </td>
+
+        <td>
+          {{ student.department }}
+        </td>
+
+        <td>
+
+          <p-button
+            label="View"
+            icon="pi pi-eye"
+            size="small"
+          
+            [raised]="true"
+            (onClick)="viewFeeDetail(student.id)"
+          />
+
+        </td>
+
+      </tr>
+
+    </ng-template>
+
+
+    <ng-template pTemplate="emptymessage">
+
+      <tr>
+
+        <td colspan="5" class="empty-row">
+          No students found.
+        </td>
+
+      </tr>
+
+    </ng-template>
+
+  </p-table>
 
 </div>

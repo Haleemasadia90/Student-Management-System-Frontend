@@ -3,115 +3,796 @@
   font-family: 'Inter', Arial, sans-serif;
 }
 
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.my-fee-page {
+  width: 100%;
+  max-width: 950px;
+
+  margin: 0 auto;
+
+  padding: 0 20px 40px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
 .page-header {
-  margin-bottom: 20px;
+  margin-top: 45px;
+  margin-bottom: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
 }
 
 .page-header h2 {
-  text-align: center;
   margin: 0;
-  font-size: 22px;
+
   color: #1e293b;
-}
 
+  font-size: 24px;
 
-.fee-list-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-.fee-list-card {
-  width: 100%;
-  max-width: 480px;
-}
-
-.edit-profile-card {
-  background: white;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.section-title {
-  margin: 0 0 16px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1e293b;
-}
-
-
-.fee-item {
-  background: #f8fafc;
-  border-radius: 10px;
-  padding: 14px;
-  margin-bottom: 10px;
-}
-
-.fee-item:last-child {
-  margin-bottom: 0;
-}
-
-.fee-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.fee-semester {
-  font-weight: 600;
-  color: #1e293b;
-  font-size: 14px;
-}
-
-.fee-status {
-  font-size: 11px;
   font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 999px;
-  text-transform: uppercase;
 }
 
-.status-paid {
+.page-header p {
+  margin: 5px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* Header Icon */
+
+.page-title-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #eef2ff;
+
+  color: #4f46e5;
+
+  border-radius: 10px;
+}
+
+.page-title-icon i {
+  font-size: 18px;
+}
+
+
+/* =========================================================
+   PRIME NG CARD
+========================================================= */
+
+:host ::ng-deep .fee-card {
+  margin-bottom: 24px;
+
+  background: #ffffff !important;
+
+  border: 1px solid #eef0f2 !important;
+
+  border-radius: 14px !important;
+
+  box-shadow:
+    0 3px 12px rgba(15, 23, 42, 0.05) !important;
+
+  overflow: hidden;
+}
+
+
+/* Remove PrimeNG default body padding */
+
+:host ::ng-deep .fee-card .p-card-body {
+  padding: 0 !important;
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 20px 24px;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.card-header h4 {
+  margin: 0;
+
+  color: #1e293b;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+.card-header span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   CARD HEADER ICON
+========================================================= */
+
+.header-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  flex-shrink: 0;
+}
+
+.header-icon i {
+  font-size: 17px;
+}
+
+
+/* Summary */
+
+.summary-icon {
+  background: #eef2ff;
+
+  color: #4f46e5;
+}
+
+
+/* Records */
+
+.records-icon {
+  background: #ecfeff;
+
+  color: #0891b2;
+}
+
+
+/* =========================================================
+   SUMMARY CONTENT
+========================================================= */
+
+.summary-content {
+  display: flex;
+
+  align-items: center;
+
+  gap: 50px;
+
+  padding: 24px;
+}
+
+
+/* =========================================================
+   PIE CHART
+========================================================= */
+
+.pie-section {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 14px;
+
+  min-width: 170px;
+}
+
+.pie-chart {
+  width: 135px;
+  height: 135px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+}
+
+
+/* Inner circle */
+
+.pie-chart::before {
+  content: '';
+
+  position: absolute;
+
+  width: 90px;
+  height: 90px;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+}
+
+
+/* Center text */
+
+.pie-center {
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.pie-center strong {
+  color: #1e293b;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+.pie-center span {
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  margin-top: 2px;
+}
+
+
+/* =========================================================
+   PIE LEGEND
+========================================================= */
+
+.pie-legend {
+  display: flex;
+
+  gap: 16px;
+}
+
+.legend-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+}
+
+.paid-dot {
+  background: #16a34a;
+}
+
+.due-dot {
+  background: #dc2626;
+}
+
+
+/* =========================================================
+   SUMMARY STATS
+========================================================= */
+
+.summary-stats {
+  flex: 1;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 12px;
+}
+
+.summary-stat {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 14px;
+
+  background: #f8fafc;
+
+  border: 1px solid #f1f5f9;
+
+  border-radius: 10px;
+}
+
+
+/* Stat icon */
+
+.stat-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  flex-shrink: 0;
+}
+
+.stat-icon i {
+  font-size: 14px;
+}
+
+
+/* Total */
+
+.total-stat .stat-icon {
+  background: #eef2ff;
+
+  color: #4f46e5;
+}
+
+
+/* Paid */
+
+.paid-stat .stat-icon {
   background: #dcfce7;
+
   color: #16a34a;
 }
 
-.status-pending {
-  background: #fef9c3;
-  color: #ca8a04;
-}
 
-.status-overdue {
+/* Due */
+
+.due-stat .stat-icon {
   background: #fee2e2;
+
   color: #dc2626;
 }
 
-.fee-item-body p {
-  margin: 4px 0;
-  font-size: 13px;
-  color: #475569;
-}
 
-.empty-text {
+/* Stat text */
+
+.summary-stat span {
+  display: block;
+
   color: #94a3b8;
-  font-size: 14px;
-  text-align: center;
-  padding: 10px 0;
+
+  font-size: 10px;
+
+  margin-bottom: 3px;
 }
 
- 
-@media (max-width: 560px) {
-  .fee-list-card {
-    max-width: 100%;
-    margin: 0 12px;
+.summary-stat strong {
+  display: block;
+
+  color: #1e293b;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FEE TABLE
+========================================================= */
+
+.fee-table-wrapper {
+  max-height: 350px;
+
+  overflow-y: auto;
+
+  padding: 0 0 5px;
+}
+
+
+/* Scrollbar */
+
+.fee-table-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fee-table-wrapper::-webkit-scrollbar-track {
+  background: #f1f5f9;
+
+  border-radius: 10px;
+}
+
+.fee-table-wrapper::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 10px;
+}
+
+.fee-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* Firefox */
+
+.fee-table-wrapper {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #cbd5e1
+    #f1f5f9;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+:host ::ng-deep
+.fee-table
+.p-datatable-thead
+> tr
+> th {
+
+  background: #f8fafc !important;
+
+  color: #64748b !important;
+
+  font-size: 11px !important;
+
+  font-weight: 700 !important;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+
+  padding: 12px 14px !important;
+
+  border: none !important;
+
+  border-bottom:
+    2px solid #edf2f7 !important;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+:host ::ng-deep
+.fee-table
+.p-datatable-tbody
+> tr
+> td {
+
+  padding: 13px 14px !important;
+
+  border: none !important;
+
+  border-bottom:
+    1px solid #f1f5f9 !important;
+
+  color: #334155 !important;
+
+  font-size: 13px !important;
+
+  background: #ffffff !important;
+}
+
+
+/* Hover */
+
+:host ::ng-deep
+.fee-table
+.p-datatable-tbody
+> tr:hover
+> td {
+
+  background: #f8fafc !important;
+}
+
+
+/* =========================================================
+   SEMESTER
+========================================================= */
+
+.semester-cell {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  color: #334155;
+
+  font-weight: 600;
+}
+
+.semester-icon {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+
+  border-radius: 7px;
+}
+
+.semester-icon i {
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   AMOUNTS
+========================================================= */
+
+.amount-cell {
+  color: #475569;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.paid-amount {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #16a34a;
+}
+
+.paid-amount i {
+  font-size: 10px;
+}
+
+.due-amount {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #dc2626;
+}
+
+.due-amount i {
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   PRIME NG TAG
+========================================================= */
+
+:host ::ng-deep .fee-table .p-tag {
+  font-size: 10px !important;
+
+  font-weight: 700 !important;
+
+  padding: 4px 9px !important;
+
+  border-radius: 999px !important;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-card {
+  margin-top: 10px;
+}
+
+.empty-state {
+  min-height: 220px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 30px;
+}
+
+.empty-icon {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f1f5f9;
+
+  color: #94a3b8;
+
+  border-radius: 12px;
+
+  margin-bottom: 12px;
+}
+
+.empty-icon i {
+  font-size: 22px;
+}
+
+.empty-state h4 {
+  margin: 0 0 5px;
+
+  color: #334155;
+
+  font-size: 15px;
+}
+
+.empty-state p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading-state {
+  min-height: 300px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+:host ::ng-deep .loading-spinner {
+  width: 35px !important;
+
+  height: 35px !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .my-fee-page {
+    padding: 0 12px 30px;
   }
 
-  .edit-profile-card {
+
+  .page-header {
+    margin-top: 30px;
+  }
+
+
+  .page-header h2 {
+    font-size: 21px;
+  }
+
+
+  .summary-content {
+    flex-direction: column;
+
+    gap: 25px;
+
     padding: 18px;
+  }
+
+
+  .summary-stats {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+  }
+
+
+  .fee-table-wrapper {
+    max-height: 300px;
+  }
+
+
+  :host ::ng-deep
+  .fee-table
+  .p-datatable-thead
+  > tr
+  > th,
+
+  :host ::ng-deep
+  .fee-table
+  .p-datatable-tbody
+  > tr
+  > td {
+
+    padding: 10px !important;
+  }
+
+}
+
+
+@media (max-width: 560px) {
+
+  .page-header {
+    align-items: flex-start;
+  }
+
+  .page-title-icon {
+    width: 38px;
+    height: 38px;
   }
 
   .page-header h2 {
     font-size: 19px;
   }
+
+  .page-header p {
+    font-size: 11px;
+  }
+
 }

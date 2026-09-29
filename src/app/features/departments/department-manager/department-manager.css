@@ -1,12 +1,15 @@
 .dept-manager {
-  margin-top: 50px;
-  max-width: 480px;
+  margin: 10px auto 0;
+  max-width: 500px;
   background: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  
 }
+
+/* =========================
+   HEADER
+========================= */
 
 .dept-header {
   display: flex;
@@ -23,25 +26,23 @@
   padding-left: 10px;
 }
 
-.add-btn {
-  background: #0d6efd;
-  color: white;
-  border: none;
-  padding: 7px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
+/* =========================
+   SEARCH
+========================= */
+
+p-inputGroup {
+  display: flex;
+  width: 90%;
+  margin: 25px auto 28px;
 }
 
-.search-input {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 14px;
-  box-sizing: border-box;
+p-inputGroup input {
+  flex: 1;
 }
+
+/* =========================
+   DEPARTMENT LIST
+========================= */
 
 .dept-list {
   list-style: none;
@@ -60,15 +61,64 @@
   font-size: 14px;
 }
 
-.delete-btn-small {
-  background: #fee2e2;
-  color: #dc2626;
-  border: none;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
+.department-name {
+  color: #1e293b;
+  font-weight: 500;
 }
+
+/* =========================
+   EDIT + DELETE BUTTONS
+========================= */
+
+.department-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Make raised buttons visible and compact */
+:host ::ng-deep .department-actions .p-button {
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 6px !important;
+}
+
+/* Make icons visible */
+:host ::ng-deep .department-actions .p-button .p-button-icon {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
+  margin: 0 !important;
+}
+
+/* Pencil icon */
+:host ::ng-deep .department-actions .p-button-info {
+  color: #ffffff !important;
+}
+
+/* Trash icon */
+:host ::ng-deep .department-actions .p-button-danger {
+  color: #ffffff !important;
+}
+
+/* Button label, if a label is ever used */
+:host ::ng-deep .department-actions .p-button .p-button-label {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* =========================
+   EMPTY MESSAGE
+========================= */
 
 .empty-text {
   color: #94a3b8;
@@ -77,6 +127,10 @@
   padding: 10px;
 }
 
+/* =========================
+   ERROR
+========================= */
+
 .error {
   display: block;
   color: #dc3545;
@@ -84,17 +138,19 @@
   margin: 6px 0;
 }
 
-/* Modal Styles */
+/* =========================
+   MODAL
+========================= */
+
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.4);
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   z-index: 1000;
 }
 
@@ -103,47 +159,66 @@
   padding: 24px;
   border-radius: 12px;
   width: 340px;
+
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  text-align: center;
 }
 
 .modal-box h4 {
-  margin: 0 0 16px;
+  margin: 0 0 24px;
   color: #1e293b;
 }
 
-.form-control {
+/* =========================
+   FLOAT LABEL INPUT
+========================= */
+
+.modal-box p-floatLabel {
+  display: block;
   width: 100%;
-  padding: 9px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  box-sizing: border-box;
 }
+
+.modal-box p-floatLabel input {
+  width: 100%;
+}
+
+/* =========================
+   MODAL BUTTONS
+========================= */
 
 .modal-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
 }
 
-.save-btn {
-  flex: 1;
-  background: #0d6efd;
-  color: white;
-  border: none;
-  padding: 9px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-}
+/* =========================
+   RESPONSIVE
+========================= */
 
-.cancel-btn {
-  flex: 1;
-  background: #e2e8f0;
-  color: #334155;
-  border: none;
-  padding: 9px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
+@media (max-width: 600px) {
+  .dept-manager {
+    margin: 25px 15px 0;
+    max-width: none;
+  }
+
+  .dept-header {
+    gap: 10px;
+  }
+
+  .dept-header h3 {
+    font-size: 15px;
+  }
+
+  .dept-list li {
+    padding: 10px;
+  }
+
+  .modal-box {
+    width: calc(100% - 30px);
+    max-width: 340px;
+  }
 }
