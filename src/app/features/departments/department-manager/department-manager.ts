@@ -13,11 +13,12 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @Component({
   selector: 'app-department-manager',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FloatLabelModule, InputTextModule, ButtonModule, IconFieldModule, InputIconModule, InputGroupModule, ToastModule, ConfirmDialog],
+  imports: [CommonModule, ReactiveFormsModule, FloatLabelModule, InputTextModule, ButtonModule, IconFieldModule, InputIconModule, InputGroupModule, ToastModule, ConfirmDialog,ScrollPanelModule],
   templateUrl: './department-manager.html',
   providers: [MessageService, ConfirmationService],
   styleUrl: './department-manager.css',

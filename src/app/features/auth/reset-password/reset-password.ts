@@ -50,6 +50,10 @@ export class ResetPassword implements OnInit {
   errorMessage = signal('');
   isLoading = signal(false);
 
+  // Controls which step is visible
+  otpVerified = signal(false);
+
+
   form = new FormGroup({
 
     otp: new FormControl('', {
@@ -93,10 +97,23 @@ export class ResetPassword implements OnInit {
   }
 
 
-  submit(): void {
+  /**
+   * STEP 1
+   * Verify OTP
+   */
+  continueWithOtp(): void {
 
     this.successMessage.set('');
     this.errorMessage.set('');
+
+    const otpControl = this.form.controls.otp;
+
+    if (otpControl.invalid) {
+
+      otpControl.markAsTouched();
+
+      return;
+    }
 
     if (!this.email) {
 
@@ -108,9 +125,68 @@ export class ResetPassword implements OnInit {
     }
 
 
-    if (this.form.invalid) {
+    this.isLoading.set(true);
 
-      this.form.markAllAsTouched();
+
+    this.authService
+      .verifyOtp({
+
+        email: this.email,
+        otp: otpControl.value
+
+      })
+      .subscribe({
+
+        next: () => {
+
+          this.isLoading.set(false);
+
+          this.otpVerified.set(true);
+
+          this.successMessage.set(
+            'OTP verified successfully. Now create your new password.'
+          );
+
+        },
+
+        error: (err) => {
+
+          this.isLoading.set(false);
+
+          this.errorMessage.set(
+            err.error || 'Invalid or expired OTP.'
+          );
+
+        }
+
+      });
+  }
+
+
+  /**
+   * STEP 2
+   * Reset password
+   */
+  resetPassword(): void {
+
+    this.successMessage.set('');
+    this.errorMessage.set('');
+
+
+    const newPasswordControl =
+      this.form.controls.newPassword;
+
+    const confirmPasswordControl =
+      this.form.controls.confirmPassword;
+
+
+    if (
+      newPasswordControl.invalid ||
+      confirmPasswordControl.invalid
+    ) {
+
+      newPasswordControl.markAsTouched();
+      confirmPasswordControl.markAsTouched();
 
       return;
     }
@@ -123,7 +199,6 @@ export class ResetPassword implements OnInit {
     } = this.form.getRawValue();
 
 
-    // Confirm password check
     if (newPassword !== confirmPassword) {
 
       this.errorMessage.set(
@@ -156,21 +231,21 @@ export class ResetPassword implements OnInit {
           );
 
 
+          // Automatically navigate to login
           setTimeout(() => {
 
             this.router.navigate(['/login']);
 
-          }, 2000);
+          }, 1500);
 
         },
-
 
         error: (err) => {
 
           this.isLoading.set(false);
 
           this.errorMessage.set(
-            err.error || 'Invalid or expired OTP.'
+            err.error || 'Unable to reset password.'
           );
 
         }

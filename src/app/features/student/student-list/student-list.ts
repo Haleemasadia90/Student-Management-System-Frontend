@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { StudentService } from '../student-service';
 import { FeeManager } from '../../fee/fee-manager/fee-manager';
 import { FormsModule } from '@angular/forms';
-
+import { PaginatorModule } from 'primeng/paginator';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
@@ -15,7 +15,16 @@ import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [CommonModule,FormsModule,FeeManager,ButtonModule,InputTextModule, TableModule,ConfirmDialogModule,ToastModule
+  imports: [
+    CommonModule,
+    FormsModule,
+    FeeManager,
+    ButtonModule,
+    InputTextModule,
+    TableModule,
+    ConfirmDialogModule,
+    ToastModule,
+    PaginatorModule
   ],
   templateUrl: './student-list.html',
   styleUrl: './student-list.css',
@@ -32,16 +41,35 @@ export class StudentList implements OnInit {
 
   searchEmail!: string;
 
+  currentPage = signal(0);
+
+  pageSize = signal(10);
+
+  totalRecords = signal(0);
+
+
   ngOnInit(): void {
     this.getStudents();
   }
 
+
   getStudents(): void {
-    this.studentService.getAllStudents().subscribe({
-      next: (data: Student[]) => {
-        this.students.set([...data]);
+
+    this.studentService.getStudentsPaged(
+      this.currentPage(),
+      this.pageSize()
+    ).subscribe({
+
+      next: (response) => {
+
+        this.students.set([...response.data.content]);
+
+        this.totalRecords.set(response.data.totalElements);
+
       },
+
       error: (err) => {
+
         console.error(err);
 
         this.messageService.add({
@@ -49,19 +77,37 @@ export class StudentList implements OnInit {
           summary: 'Error',
           detail: 'Failed to load students.'
         });
+
       }
+
     });
   }
 
+
+  onPageChange(event: any): void {
+
+    this.currentPage.set(event.page);
+
+    this.pageSize.set(event.rows);
+
+    this.getStudents();
+
+  }
+
+
   toggleFeeManager(id: number): void {
+
     this.expandedStudentId.set(
       this.expandedStudentId() === id ? null : id
     );
+
   }
+
 
   deleteStudent(id: number): void {
 
     this.confirmationService.confirm({
+
       message: 'Are you sure you want to delete this student?',
       header: 'Delete Student',
       icon: 'pi pi-exclamation-triangle',
@@ -85,6 +131,7 @@ export class StudentList implements OnInit {
               summary: 'Success',
               detail: 'Student deleted successfully.'
             });
+
           },
 
           error: (error) => {
@@ -99,45 +146,58 @@ export class StudentList implements OnInit {
               summary: 'Error',
               detail: 'Failed to delete student.'
             });
+
           }
 
         });
 
       }
-    });
-  }
 
-searchStudent(): void {
-
-  if (!this.searchEmail) {
-
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Search',
-      detail: 'Please enter a Student Email.'
     });
 
-    return;
   }
 
-  this.studentService.getStudentByEmail(this.searchEmail).subscribe({
 
-    next: (data) => {
-      this.students.set([data]);
-    },
+  searchStudent(): void {
 
-    error: () => {
-
-      this.students.set([]);
+    if (!this.searchEmail) {
 
       this.messageService.add({
         severity: 'warn',
-        summary: 'Not Found',
-        detail: 'Student not found.'
+        summary: 'Search',
+        detail: 'Please enter a Student Email.'
       });
 
+      return;
     }
 
-  });
-}
+
+    this.studentService.getStudentByEmail(this.searchEmail).subscribe({
+
+      next: (data) => {
+
+        this.students.set([data]);
+
+        this.totalRecords.set(1);
+
+      },
+
+      error: () => {
+
+        this.students.set([]);
+
+        this.totalRecords.set(0);
+
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Not Found',
+          detail: 'Student not found.'
+        });
+
+      }
+
+    });
+
+  }
+
 }

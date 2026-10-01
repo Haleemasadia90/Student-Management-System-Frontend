@@ -52,6 +52,8 @@
        DEPARTMENT LIST
        ============================== -->
 
+  <p-scrollpanel styleClass="department-scroll">
+
   <ul class="dept-list">
 
     @for (dept of filteredDepartments(); track dept.id) {
@@ -63,26 +65,22 @@
           {{ dept.name }}
         </span>
 
-
         <!-- Actions -->
         <div class="department-actions">
 
-
           <p-button
             icon="pi pi-pencil"
-            severity="info"          
-             [raised]="true"
+            severity="info"
+            [raised]="true"
             (onClick)="openEditModal(dept)">
           </p-button>
 
-
-
           <p-button
-    icon="pi pi-trash"
-    [raised]="true"
-    severity="danger"
-    (onClick)="deleteDepartment(dept.id)">
-  </p-button>
+            icon="pi pi-trash"
+            severity="danger"
+            [raised]="true"
+            (onClick)="deleteDepartment(dept.id)">
+          </p-button>
 
         </div>
 
@@ -97,6 +95,8 @@
     }
 
   </ul>
+
+</p-scrollpanel>
 
 
   <!-- ==============================

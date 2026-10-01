@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'app-fee-list',
@@ -26,7 +27,8 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     IconFieldModule,
     InputIconModule,
-    ButtonModule
+    ButtonModule,
+    PaginatorModule
   ],
 
   templateUrl: './fee-list.html',
@@ -40,7 +42,13 @@ export class FeeList implements OnInit, OnDestroy {
   students = signal<Student[]>([]);
   searchName = '';
 
+  // Pagination
+  currentPage = signal(0);
+  pageSize = signal(10);
+  totalRecords = signal(0);
+
   private searchSubject = new Subject<string>();
+
 
   ngOnInit(): void {
 
@@ -53,7 +61,12 @@ export class FeeList implements OnInit, OnDestroy {
       switchMap((name: string) => {
 
         if (!name || !name.trim()) {
-          return this.studentService.getAllStudents();
+
+          return this.studentService.getStudentsPaged(
+            this.currentPage(),
+            this.pageSize()
+          );
+
         }
 
         return this.studentService.searchStudentsByName(name);
@@ -61,42 +74,101 @@ export class FeeList implements OnInit, OnDestroy {
 
     ).subscribe({
 
-      next: (data: Student[]) => {
-        this.students.set(data);
+      next: (data: any) => {
+
+        // Search result
+        if (Array.isArray(data)) {
+
+          this.students.set(data);
+
+          this.totalRecords.set(data.length);
+
+        }
+
+        // Paginated result
+        else {
+
+          this.students.set(data.data.content);
+
+          this.totalRecords.set(data.data.totalElements);
+
+        }
+
       },
 
       error: (err) => {
+
         console.error('Error searching student:', err);
+
         this.students.set([]);
+
+        this.totalRecords.set(0);
+
       }
 
     });
   }
 
+
   onSearchChange(value: string): void {
+
     this.searchSubject.next(value);
+
   }
+
 
   getStudents(): void {
 
-    this.studentService.getAllStudents().subscribe({
+    this.studentService.getStudentsPaged(
+      this.currentPage(),
+      this.pageSize()
+    ).subscribe({
 
-      next: (data: Student[]) => {
-        this.students.set(data);
+      next: (response) => {
+
+        this.students.set(response.data.content);
+
+        this.totalRecords.set(response.data.totalElements);
+
       },
 
       error: (err) => {
+
         console.error('Error loading students:', err);
+
+        this.students.set([]);
+
+        this.totalRecords.set(0);
+
       }
 
     });
+
   }
+
+
+  onPageChange(event: any): void {
+
+    this.currentPage.set(event.page);
+
+    this.pageSize.set(event.rows);
+
+    this.getStudents();
+
+  }
+
 
   viewFeeDetail(studentId: number): void {
+
     this.router.navigate(['/admin/finance', studentId]);
+
   }
 
+
   ngOnDestroy(): void {
+
     this.searchSubject.complete();
+
   }
+
 }

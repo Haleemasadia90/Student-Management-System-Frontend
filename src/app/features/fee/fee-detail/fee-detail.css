@@ -80,6 +80,7 @@
   min-width: 48px;
 
   border-radius: 50% !important;
+  object-fit: cover;
 
   background: #4f46e5 !important;
   color: #ffffff !important;

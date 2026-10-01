@@ -143,4 +143,17 @@ navigateToLogin(): void {
 }
 
 
+verifyOtp(data: {
+  email: string;
+  otp: string;
+}) {
+  return this.http.post(
+    this.baseUrl + ENDPOINTS.auth.verifyOtp,
+    data,
+    {
+      responseType: 'text'
+    }
+  );
+}
+
 }

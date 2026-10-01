@@ -4,6 +4,9 @@ import { Student } from '../../models/student.model';
 import { environment } from '../../../environments/environment';
 import { ENDPOINTS } from '../../../environments/endpoints';
 import { Injectable, inject, signal } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiResponse, PageResponse } from "../../models/Paginator";
+
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +19,18 @@ getAllStudents() {
   return this.http.get<Student[]>(this.baseUrl+ENDPOINTS.students.getAllStudents);
 }
 
+ getStudentsPaged(
+    page: number,
+    size: number
+  ): Observable<ApiResponse<PageResponse<Student>>> {
 
+    return this.http.get<ApiResponse<PageResponse<Student>>>(
+      this.baseUrl +
+      ENDPOINTS.students.getAllStudentsPaged +
+      `?page=${page}&size=${size}`
+    );
+  }
+  
 searchStudentsByName(name: string) {
   return this.http.get<Student[]>(
     this.baseUrl + ENDPOINTS.students.searchByName,

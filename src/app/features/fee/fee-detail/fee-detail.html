@@ -19,6 +19,15 @@
   @if (student()) {
 
     <div class="student-info-card">
+@if (student()?.profilePicture) {
+
+      <img
+        [src]="'http://localhost:8080/uploads/profile-pictures/' + student()!.profilePicture"
+        alt="Student Profile"
+        class="student-avatar"
+      />
+
+    } @else {
 
       <p-avatar
         [label]="student()!.username.charAt(0).toUpperCase()"
@@ -26,6 +35,9 @@
         size="large"
         styleClass="student-avatar"
       />
+
+    }
+
 
       <div class="student-info-text">
 
