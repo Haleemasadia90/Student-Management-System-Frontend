@@ -2,6 +2,7 @@
 export const ENDPOINTS = {
    students:{
     getAllStudents:'/api/students',
+     getAllStudentsPaged: '/api/students/paged',
     deleteStudent:'/api/students/:id',
     getStudentById:'/api/students/:id',
     getMyRecord:'/api/students/me',
@@ -53,6 +54,7 @@ profilePictureUrl: '/uploads/profile-pictures/'
       signup:'/api/auth/signup',
       changePassword:'/api/auth/change-password',
       forgotPassword:'/api/auth/forgot-password',
+      verifyOtp: '/api/auth/verify-otp',
       resetPassword:'/api/auth/reset-password',
       refreshToken: '/api/auth/refresh-token',
       logout: '/api/auth/logout'

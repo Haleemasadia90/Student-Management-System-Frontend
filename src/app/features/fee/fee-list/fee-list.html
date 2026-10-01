@@ -10,6 +10,7 @@
 
 
   <!-- Search -->
+
   <div class="search-container">
 
     <p-iconfield>
@@ -30,6 +31,7 @@
 
 
   <!-- Students Table -->
+
   <p-table
     [value]="students()"
     [tableStyle]="{ 'min-width': '60rem' }"
@@ -41,7 +43,7 @@
 
       <tr>
 
-        <th>Student ID</th>
+        <th>S.No</th>
 
         <th>Username</th>
 
@@ -56,12 +58,12 @@
     </ng-template>
 
 
-    <ng-template pTemplate="body" let-student>
+    <ng-template pTemplate="body" let-student let-i="rowIndex">
 
       <tr>
 
         <td>
-          {{ student.id }}
+          {{ i+1 }}
         </td>
 
         <td>
@@ -82,7 +84,6 @@
             label="View"
             icon="pi pi-eye"
             size="small"
-          
             [raised]="true"
             (onClick)="viewFeeDetail(student.id)"
           />
@@ -107,5 +108,17 @@
     </ng-template>
 
   </p-table>
+
+
+  <!-- Pagination -->
+
+  <p-paginator
+    [first]="currentPage() * pageSize()"
+    [rows]="pageSize()"
+    [totalRecords]="totalRecords()"
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
 
 </div>
