@@ -3,11 +3,6 @@
   font-family: 'Inter', Arial, sans-serif;
 }
 
-
-/* =========================================================
-   MAIN PAGE
-========================================================= */
-
 .my-courses-page {
   width: 100%;
   max-width: 950px;
@@ -16,10 +11,6 @@
   box-sizing: border-box;
 }
 
-
-/* =========================================================
-   PAGE HEADER
-========================================================= */
 
 .page-header {
   margin-top: 45px;
@@ -41,10 +32,6 @@
 }
 
 
-/* =========================================================
-   PRIME NG CARDS
-========================================================= */
-
 :host ::ng-deep .course-card {
   margin-bottom: 24px;
 
@@ -61,16 +48,10 @@
 }
 
 
-/* Remove default PrimeNG spacing */
-
 :host ::ng-deep .course-card .p-card-body {
   padding: 0 !important;
 }
 
-
-/* =========================================================
-   CARD HEADER
-========================================================= */
 
 .card-header {
   display: flex;
@@ -103,11 +84,6 @@
   font-size: 12px;
 }
 
-
-/* =========================================================
-   HEADER ICONS
-========================================================= */
-
 .header-icon {
   width: 40px;
   height: 40px;
@@ -127,7 +103,6 @@
 }
 
 
-/* Enrolled */
 
 .enrolled-icon {
   background: #eef2ff;
@@ -136,8 +111,6 @@
 }
 
 
-/* Available */
-
 .available-icon {
   background: #ecfeff;
 
@@ -145,16 +118,6 @@
 }
 
 
-/* =========================================================
-   SCROLLABLE CONTENT
-========================================================= */
-
-/*
-   Both cards have their own internal scrollbar.
-
-   Header remains visible.
-   Only the card content scrolls.
-*/
 
 .scrollable-card-content {
   max-height: 300px;
@@ -165,11 +128,6 @@
 
   box-sizing: border-box;
 }
-
-
-/* =========================================================
-   CUSTOM SCROLLBAR
-========================================================= */
 
 .scrollable-card-content::-webkit-scrollbar {
   width: 6px;
@@ -192,8 +150,6 @@
 }
 
 
-/* Firefox scrollbar */
-
 .scrollable-card-content {
   scrollbar-width: thin;
 
@@ -202,10 +158,6 @@
     #f1f5f9;
 }
 
-
-/* =========================================================
-   CREDIT SECTION
-========================================================= */
 
 .credit-section {
   margin-bottom: 20px;
@@ -238,10 +190,6 @@
 }
 
 
-/* =========================================================
-   PROGRESS BAR
-========================================================= */
-
 :host ::ng-deep .credit-progress {
   height: 8px !important;
 
@@ -256,10 +204,6 @@
   border-radius: 999px !important;
 }
 
-
-/* =========================================================
-   ENROLLED COURSE LIST
-========================================================= */
 
 .course-list {
   display: flex;
@@ -292,8 +236,6 @@
 }
 
 
-/* Course Icon */
-
 .course-icon {
   width: 28px;
   height: 28px;
@@ -316,17 +258,9 @@
   font-size: 12px;
 }
 
-
-/* =========================================================
-   AVAILABLE COURSES TABLE
-========================================================= */
-
 :host ::ng-deep .courses-table {
   width: 100%;
 }
-
-
-/* Table Header */
 
 :host ::ng-deep .courses-table .p-datatable-thead > tr > th {
   background: #f8fafc !important;
@@ -350,8 +284,6 @@
 }
 
 
-/* Table Body */
-
 :host ::ng-deep .courses-table .p-datatable-tbody > tr > td {
   padding: 12px 14px !important;
 
@@ -368,8 +300,6 @@
 }
 
 
-/* Hover */
-
 :host ::ng-deep
 .courses-table
 .p-datatable-tbody
@@ -379,10 +309,6 @@
   background: #f8fafc !important;
 }
 
-
-/* =========================================================
-   COURSE TITLE
-========================================================= */
 
 .course-title {
   display: flex;
@@ -396,8 +322,6 @@
   color: #334155;
 }
 
-
-/* Small Course Icon */
 
 .small-course-icon {
   width: 30px;
@@ -420,10 +344,6 @@
 }
 
 
-/* =========================================================
-   COURSE CODE
-========================================================= */
-
 .course-code {
   font-family: monospace;
 
@@ -439,10 +359,6 @@
 }
 
 
-/* =========================================================
-   CREDIT HOURS
-========================================================= */
-
 .credit-hours {
   color: #475569;
 
@@ -451,10 +367,6 @@
   font-weight: 600;
 }
 
-
-/* =========================================================
-   PRIME NG TAG
-========================================================= */
 
 :host ::ng-deep .p-tag {
   font-size: 10px !important;
@@ -466,10 +378,6 @@
   border-radius: 999px !important;
 }
 
-
-/* =========================================================
-   ENROLL BUTTON
-========================================================= */
 
 :host ::ng-deep .courses-table .p-button {
   font-size: 11px !important;
@@ -488,20 +396,12 @@
 }
 
 
-/* =========================================================
-   ACTION PLACEHOLDER
-========================================================= */
-
 .action-placeholder {
   color: #cbd5e1;
 
   font-size: 14px;
 }
 
-
-/* =========================================================
-   EMPTY STATE
-========================================================= */
 
 .empty-state {
   display: flex;
@@ -534,20 +434,12 @@
 }
 
 
-/* =========================================================
-   ERROR MESSAGE
-========================================================= */
-
 :host ::ng-deep .course-error {
   margin-top: 16px;
 
   font-size: 12px !important;
 }
 
-
-/* =========================================================
-   LOADING
-========================================================= */
 
 .loading-state {
   min-height: 300px;
@@ -574,10 +466,6 @@
 }
 
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
 @media (max-width: 768px) {
 
   .my-courses-page {
@@ -592,8 +480,6 @@
     font-size: 21px;
   }
 
-
-  /* Smaller scroll area on mobile */
 
   .scrollable-card-content {
     max-height: 280px;
@@ -623,3 +509,42 @@
   }
 
 }
+.semester-selection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 20px;
+  flex-wrap: wrap;
+}
+
+.semester-selection label {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.semester-selection select {
+  min-width: 190px;
+  padding: 10px 12px;
+  border: 1px solid #d6d3e0;
+  border-radius: 8px;
+  background: #fff;
+  color: #2c3e50;
+  font: inherit;
+  outline: none;
+}
+
+.semester-selection select:focus {
+  border-color: #6c4ab6;
+  box-shadow: 0 0 0 3px rgba(108, 74, 182, 0.12);
+}
+
+.error-message {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: #b42318;
+  background: #fef3f2;
+}
+
+
+

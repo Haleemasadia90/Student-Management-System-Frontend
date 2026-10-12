@@ -294,14 +294,18 @@ export class Registration implements OnInit {
           this.isLoading.set(false);
 
           this.successMessage.set(
-            'Registration successful!'
+            'Registration successful! OTP has been sent to your email.'
           );
 
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 1000);
-        },
-
+         setTimeout(() => {
+    this.router.navigate(['/reset-password'], {
+      queryParams: {
+        mode: 'registration',
+        email: formValue.email
+      }
+    });
+  }, 500);
+},
         error: (err) => {
 
           this.isLoading.set(false);

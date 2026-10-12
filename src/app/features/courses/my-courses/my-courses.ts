@@ -1,100 +1,251 @@
+// import { Component, inject, OnInit, signal } from '@angular/core';
+// import { CommonModule } from '@angular/common';
+
+// import { StudentService } from '../../student/student-service';
+// import { CourseService } from '../course-service';
+
+// import { Student } from '../../../models/student.model';
+// import { Course } from '../../../models/course.model';
+
+// /* PrimeNG */
+// import { CardModule } from 'primeng/card';
+// import { ProgressBarModule } from 'primeng/progressbar';
+// import { ButtonModule } from 'primeng/button';
+// import { TagModule } from 'primeng/tag';
+// import { TableModule } from 'primeng/table';
+// import { MessageModule } from 'primeng/message';
+// import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
+
+// @Component({
+//   selector: 'app-my-courses',
+//   standalone: true,
+//   imports: [
+//     CommonModule,
+//     CardModule,
+//     ProgressBarModule,
+//     ButtonModule,
+//     TagModule,
+//     TableModule,
+//     MessageModule,
+//     ProgressSpinnerModule
+//   ],
+//   templateUrl: './my-courses.html',
+//   styleUrl: './my-courses.css'
+// })
+// export class MyCourses implements OnInit {
+
+//   readonly studentService = inject(StudentService);
+//   readonly courseService = inject(CourseService);
+
+//   myRecord = signal<Student | null>(null);
+//   availableCourses = signal<Course[]>([]);
+//   errorMessage = signal('');
+
+//   ngOnInit(): void {
+//     this.studentService.getMyRecord().subscribe({
+//       next: (data) => {
+//         this.myRecord.set(data);
+
+//         if (data.departmentId) {
+//           this.loadAvailableCourses(data.departmentId);
+//         }
+//       },
+
+//       error: (err) => {
+//         console.error('Error fetching record:', err);
+//       }
+//     });
+//   }
+
+//   loadAvailableCourses(departmentId: number): void {
+//     this.courseService.getAllCourses(departmentId).subscribe({
+//       next: (data) => {
+//         this.availableCourses.set(data);
+//       },
+
+//       error: (err) => {
+//         console.error('Error loading courses:', err);
+//       }
+//     });
+//   }
+
+//   enroll(courseId: number): void {
+//     this.errorMessage.set('');
+
+//     this.studentService.enrollInCourse(courseId).subscribe({
+//       next: (updatedRecord) => {
+//         this.myRecord.set(updatedRecord);
+//       },
+
+//       error: (err) => {
+//         this.errorMessage.set(
+//           err.error || 'Enrollment failed.'
+//         );
+//       }
+//     });
+//   }
+
+//   getCreditPercentage(): number {
+//     const record = this.myRecord();
+
+//     if (!record || !record.maxCreditHours) {
+//       return 0;
+//     }
+
+//     return Math.min(
+//       (record.totalCreditHours / record.maxCreditHours) * 100,
+//       100
+//     );
+//   }
+// }
+
+
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { StudentService } from '../../student/student-service';
 import { CourseService } from '../course-service';
+import { EnrollmentService } from '../../../core/httpServices/enrollment-service';
 
 import { Student } from '../../../models/student.model';
 import { Course } from '../../../models/course.model';
+import { Enrollment } from '../../../models/enrollment.model';
 
-/* PrimeNG */
 import { CardModule } from 'primeng/card';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { TableModule } from 'primeng/table';
 import { MessageModule } from 'primeng/message';
+import { SelectModule } from 'primeng/select';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
+const MAX_CREDIT_HOURS = 18;
 
 @Component({
   selector: 'app-my-courses',
   standalone: true,
   imports: [
-    CommonModule,
-    CardModule,
-    ProgressBarModule,
-    ButtonModule,
-    TagModule,
-    TableModule,
-    MessageModule,
-    ProgressSpinnerModule
+    CommonModule, FormsModule, CardModule, ProgressBarModule, ButtonModule,
+    TagModule, TableModule, MessageModule, SelectModule, ProgressSpinnerModule
   ],
   templateUrl: './my-courses.html',
   styleUrl: './my-courses.css'
 })
 export class MyCourses implements OnInit {
-
-  readonly studentService = inject(StudentService);
-  readonly courseService = inject(CourseService);
+  private readonly studentService = inject(StudentService);
+  private readonly courseService = inject(CourseService);
+  private readonly enrollmentService = inject(EnrollmentService);
 
   myRecord = signal<Student | null>(null);
   availableCourses = signal<Course[]>([]);
+  enrollments = signal<Enrollment[]>([]);
+  creditHours = signal(0);
   errorMessage = signal('');
+  loadingEnrollments = signal(false);
+
+  readonly maxCreditHours = MAX_CREDIT_HOURS;
+
+  semester = '';
+  semesters: { label: string; value: string }[] = [];
 
   ngOnInit(): void {
     this.studentService.getMyRecord().subscribe({
       next: (data) => {
         this.myRecord.set(data);
+        this.buildSemesters(data.admissionYear);
+
+        const current = (data as any).currentSemester;
+        this.semester = this.semesters.some(s => s.value === current)
+          ? current
+          : this.semesters[0]?.value ?? '';
 
         if (data.departmentId) {
           this.loadAvailableCourses(data.departmentId);
         }
+        this.loadEnrollments();
       },
-
-      error: (err) => {
-        console.error('Error fetching record:', err);
-      }
+      error: (err) => console.error('Error fetching record:', err)
     });
+  }
+
+  // identical to the admin panel
+  private buildSemesters(admissionYear: number | null | undefined): void {
+    const year = Number(admissionYear);
+    if (!Number.isInteger(year) || year < 1900) {
+      this.semesters = [];
+      return;
+    }
+    const result: { label: string; value: string }[] = [];
+    for (let i = 0; i < 4; i++) {
+      result.push(
+        { label: `Fall ${year + i}`, value: `Fall ${year + i}` },
+        { label: `Summer ${year + i}`, value: `Summer ${year + i}` }
+      );
+    }
+    this.semesters = result;
   }
 
   loadAvailableCourses(departmentId: number): void {
     this.courseService.getAllCourses(departmentId).subscribe({
-      next: (data) => {
-        this.availableCourses.set(data);
-      },
+      next: (data) =>
+        this.availableCourses.set(
+          data.filter(c => c.status?.trim().toUpperCase() === 'ACTIVE')
+        ),
+      error: (err) => console.error('Error loading courses:', err)
+    });
+  }
 
+  onSemesterChange(): void {
+    this.errorMessage.set('');
+    this.loadEnrollments();
+  }
+
+  loadEnrollments(): void {
+    if (!this.semester) {
+      this.enrollments.set([]);
+      this.creditHours.set(0);
+      return;
+    }
+
+    this.loadingEnrollments.set(true);
+    this.enrollmentService.getMyEnrollmentsBySemester(this.semester).subscribe({
+      next: (data) => {
+        this.enrollments.set(data);
+        this.creditHours.set(data.reduce((s, e) => s + e.creditHours, 0));
+        this.loadingEnrollments.set(false);
+      },
       error: (err) => {
-        console.error('Error loading courses:', err);
+        console.error('Error loading enrollments:', err);
+        this.loadingEnrollments.set(false);
       }
     });
   }
 
-  enroll(courseId: number): void {
+  isEnrolled(courseId: number): boolean {
+    return this.enrollments().some(e => e.courseId === courseId);
+  }
+
+  wouldExceedLimit(course: Course): boolean {
+    return this.creditHours() + course.creditHours > MAX_CREDIT_HOURS;
+  }
+
+  enroll(course: Course): void {
     this.errorMessage.set('');
 
-    this.studentService.enrollInCourse(courseId).subscribe({
-      next: (updatedRecord) => {
-        this.myRecord.set(updatedRecord);
-      },
-
-      error: (err) => {
+    this.enrollmentService.enrollMyCourse(course.id, this.semester).subscribe({
+      next: () => this.loadEnrollments(),
+      error: (err) =>
         this.errorMessage.set(
-          err.error || 'Enrollment failed.'
-        );
-      }
+          err?.error?.message ??
+          (typeof err?.error === 'string' ? err.error : 'Enrollment failed.')
+        )
     });
   }
 
   getCreditPercentage(): number {
-    const record = this.myRecord();
-
-    if (!record || !record.maxCreditHours) {
-      return 0;
-    }
-
-    return Math.min(
-      (record.totalCreditHours / record.maxCreditHours) * 100,
-      100
-    );
+    return Math.min((this.creditHours() / MAX_CREDIT_HOURS) * 100, 100);
   }
 }

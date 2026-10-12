@@ -118,7 +118,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
        * Access token may have expired.
        */
 
-      if (error.status === 401 || error.status===403 ) {
+      if (error.status === 401  ) {
 
 
         return handle401Error(
@@ -128,6 +128,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         );
       }
 
+      if (error.status === 403) {
+
+  console.error(
+    '❌ Access denied (403):',
+    req.url
+  );
+
+  return throwError(() => error);
+}
 
       /*
        * Other errors

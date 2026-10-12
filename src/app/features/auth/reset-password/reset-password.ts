@@ -1,12 +1,25 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
+
 import {
   FormControl,
   FormGroup,
   Validators,
   ReactiveFormsModule
 } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink
+} from '@angular/router';
 
 import { AuthService } from '../../../core/httpServices/auth-service';
 
@@ -16,48 +29,68 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
+import { InputOtpModule } from 'primeng/inputotp';
+
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
+
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterLink,
+
     CardModule,
     InputTextModule,
     PasswordModule,
     ButtonModule,
     MessageModule,
-    IconFieldModule,
-    InputIconModule
+    InputOtpModule
   ],
+
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.css'
 })
-export class ResetPassword implements OnInit {
+export class ResetPassword implements OnInit, OnDestroy {
 
   readonly authService = inject(AuthService);
 
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
+
   email = '';
 
+  isRegistrationMode = false;
+
+
   successMessage = signal('');
+
   errorMessage = signal('');
+
   isLoading = signal(false);
 
-  // Controls which step is visible
+
   otpVerified = signal(false);
+
+
+
+  resendDisabled = signal(true);
+
+  resendSeconds = signal(30);
+
+  resendLoading = signal(false);
+
+  private resendTimer: ReturnType<typeof setInterval> | null = null;
+
 
 
   form = new FormGroup({
 
     otp: new FormControl('', {
       nonNullable: true,
+
       validators: [
         Validators.required,
         Validators.pattern(/^\d{6}$/)
@@ -66,6 +99,7 @@ export class ResetPassword implements OnInit {
 
     newPassword: new FormControl('', {
       nonNullable: true,
+
       validators: [
         Validators.required,
         Validators.minLength(8)
@@ -74,6 +108,7 @@ export class ResetPassword implements OnInit {
 
     confirmPassword: new FormControl('', {
       nonNullable: true,
+
       validators: [
         Validators.required
       ]
@@ -82,10 +117,18 @@ export class ResetPassword implements OnInit {
   });
 
 
+
   ngOnInit(): void {
 
     this.email =
       this.route.snapshot.queryParamMap.get('email') || '';
+
+    const mode =
+      this.route.snapshot.queryParamMap.get('mode');
+
+    this.isRegistrationMode =
+      mode === 'registration';
+
 
     if (!this.email) {
 
@@ -93,21 +136,25 @@ export class ResetPassword implements OnInit {
         'Email is missing. Please request a new OTP.'
       );
 
+      return;
     }
+
+
+    this.startResendTimer();
   }
 
-
-  /**
-   * STEP 1
-   * Verify OTP
-   */
   continueWithOtp(): void {
 
     this.successMessage.set('');
+
     this.errorMessage.set('');
 
-    const otpControl = this.form.controls.otp;
 
+    const otpControl =
+      this.form.controls.otp;
+
+
+    // Validate OTP
     if (otpControl.invalid) {
 
       otpControl.markAsTouched();
@@ -115,6 +162,8 @@ export class ResetPassword implements OnInit {
       return;
     }
 
+
+    // Validate email
     if (!this.email) {
 
       this.errorMessage.set(
@@ -128,10 +177,65 @@ export class ResetPassword implements OnInit {
     this.isLoading.set(true);
 
 
+    // =====================================================
+    // REGISTRATION MODE
+    // =====================================================
+
+    if (this.isRegistrationMode) {
+
+      this.authService
+        .verifyRegistrationOtp({
+
+          email: this.email,
+
+          otp: otpControl.value
+
+        })
+        .subscribe({
+
+          next: () => {
+
+            this.isLoading.set(false);
+
+            this.successMessage.set(
+              'Email verified successfully! Registration completed. Redirecting to login...'
+            );
+
+
+            setTimeout(() => {
+
+              this.router.navigate(['/login']);
+
+            }, 1500);
+
+          },
+
+
+          error: (err) => {
+
+            this.isLoading.set(false);
+
+            this.errorMessage.set(
+              err.error || 'Invalid or expired OTP.'
+            );
+
+          }
+
+        });
+
+      return;
+    }
+
+
+    // =====================================================
+    // FORGOT PASSWORD MODE
+    // =====================================================
+
     this.authService
       .verifyOtp({
 
         email: this.email,
+
         otp: otpControl.value
 
       })
@@ -149,6 +253,7 @@ export class ResetPassword implements OnInit {
 
         },
 
+
         error: (err) => {
 
           this.isLoading.set(false);
@@ -163,13 +268,162 @@ export class ResetPassword implements OnInit {
   }
 
 
-  /**
-   * STEP 2
-   * Reset password
-   */
+  // =========================================================
+  // RESEND OTP
+  // =========================================================
+
+  resendOtp(): void {
+
+    if (
+      this.resendDisabled() ||
+      this.resendLoading() ||
+      !this.email
+    ) {
+      return;
+    }
+
+
+    this.successMessage.set('');
+
+    this.errorMessage.set('');
+
+    this.resendLoading.set(true);
+
+
+    // =====================================================
+    // REGISTRATION
+    // =====================================================
+
+    if (this.isRegistrationMode) {
+
+      this.authService
+        .resendRegistrationOtp(this.email)
+        .subscribe({
+
+          next: () => {
+
+            this.resendLoading.set(false);
+
+            this.form.controls.otp.reset();
+
+            this.successMessage.set(
+              'A new registration OTP has been sent to your email.'
+            );
+
+            this.startResendTimer();
+
+          },
+
+
+          error: (err) => {
+
+            this.resendLoading.set(false);
+
+            this.errorMessage.set(
+              err.error || 'Unable to resend OTP.'
+            );
+
+          }
+
+        });
+
+      return;
+    }
+
+
+    // =====================================================
+    // FORGOT PASSWORD
+    // =====================================================
+
+    this.authService
+      .resendForgotPasswordOtp(this.email)
+      .subscribe({
+
+        next: () => {
+
+          this.resendLoading.set(false);
+
+          this.form.controls.otp.reset();
+
+          this.successMessage.set(
+            'A new OTP has been sent to your email.'
+          );
+
+          this.startResendTimer();
+
+        },
+
+
+        error: (err) => {
+
+          this.resendLoading.set(false);
+
+          this.errorMessage.set(
+            err.error || 'Unable to resend OTP.'
+          );
+
+        }
+
+      });
+  }
+
+
+  // =========================================================
+  // RESEND TIMER
+  // =========================================================
+
+  startResendTimer(): void {
+
+    if (this.resendTimer) {
+
+      clearInterval(this.resendTimer);
+
+    }
+
+
+    this.resendSeconds.set(30);
+
+    this.resendDisabled.set(true);
+
+
+    this.resendTimer = setInterval(() => {
+
+      const seconds =
+        this.resendSeconds();
+
+
+      if (seconds <= 1) {
+
+        this.resendSeconds.set(0);
+
+        this.resendDisabled.set(false);
+
+        if (this.resendTimer) {
+
+          clearInterval(this.resendTimer);
+
+          this.resendTimer = null;
+
+        }
+
+        return;
+      }
+
+
+      this.resendSeconds.set(seconds - 1);
+
+    }, 1000);
+  }
+
+
+  // =========================================================
+  // STEP 2 - RESET PASSWORD
+  // =========================================================
+
   resetPassword(): void {
 
     this.successMessage.set('');
+
     this.errorMessage.set('');
 
 
@@ -186,6 +440,7 @@ export class ResetPassword implements OnInit {
     ) {
 
       newPasswordControl.markAsTouched();
+
       confirmPasswordControl.markAsTouched();
 
       return;
@@ -216,7 +471,9 @@ export class ResetPassword implements OnInit {
       .resetPassword({
 
         email: this.email,
+
         otp: otp,
+
         newPassword: newPassword
 
       })
@@ -231,7 +488,6 @@ export class ResetPassword implements OnInit {
           );
 
 
-          // Automatically navigate to login
           setTimeout(() => {
 
             this.router.navigate(['/login']);
@@ -239,6 +495,7 @@ export class ResetPassword implements OnInit {
           }, 1500);
 
         },
+
 
         error: (err) => {
 
@@ -252,4 +509,21 @@ export class ResetPassword implements OnInit {
 
       });
   }
+
+
+  // =========================================================
+  // DESTROY
+  // =========================================================
+
+  ngOnDestroy(): void {
+
+    if (this.resendTimer) {
+
+      clearInterval(this.resendTimer);
+
+      this.resendTimer = null;
+
+    }
+  }
+
 }

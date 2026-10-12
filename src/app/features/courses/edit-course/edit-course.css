@@ -1,0 +1,106 @@
+.form-container {
+  width: 100%;
+  max-width: 520px;
+  margin: 35px auto;
+  padding: 32px;
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f7f5ff 100%
+  );
+
+  border: 1px solid #e4defa;
+  border-radius: 18px;
+
+  box-shadow:
+    0 12px 30px rgba(67, 56, 202, 0.10),
+    0 3px 8px rgba(0, 0, 0, 0.04);
+
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.form-container h3 {
+  margin: 0 0 32px;
+  text-align: center;
+  font-size: 21px;
+  font-weight: 700;
+  color: #312e81;
+  letter-spacing: 0.3px;
+}
+
+.form-container form {
+  width: 100%;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.form-group p-floatLabel {
+  display: block;
+  width: 100%;
+}
+
+.form-group input[pInputText] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group p-select {
+  width: 100%;
+}
+
+.form-group p-inputNumber {
+  display: block;
+  width: 100%;
+}
+
+.form-group p-inputNumber input {
+  width: 100%;
+}
+
+.error {
+  display: block;
+  margin-top: 7px;
+  padding-left: 3px;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.button-container p-button {
+  min-width: 155px;
+}
+
+:host ::ng-deep .p-toast {
+  z-index: 9999;
+}
+
+@media (max-width: 600px) {
+
+  .form-container {
+    width: calc(100% - 30px);
+    margin: 20px auto;
+    padding: 24px;
+  }
+
+  .form-container h3 {
+    font-size: 19px;
+    margin-bottom: 28px;
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+}

@@ -156,4 +156,38 @@ verifyOtp(data: {
   );
 }
 
+
+
+
+verifyRegistrationOtp(data: { email: string; otp: string }) {
+  return this.http.post(
+    this.baseUrl + ENDPOINTS.auth.verifyRegistrationOtp,
+    data,
+    {
+      responseType: 'text'
+    }
+  );
+}
+
+
+resendRegistrationOtp(email: string) {
+  return this.http.post(
+    this.baseUrl + ENDPOINTS.auth.resendRegistrationOtp,
+    { email },
+    {
+      responseType: 'text'
+    }
+  );
+}
+
+
+resendForgotPasswordOtp(email: string) {
+  return this.http.post(
+    this.baseUrl + ENDPOINTS.auth.resendForgotPasswordOtp,
+    { email },
+    {
+      responseType: 'text'
+    }
+  );
+}
 }

@@ -1,61 +1,236 @@
+// import { Injectable, inject } from '@angular/core';
+// import { ENDPOINTS } from '../../../environments/endpoints';
+// import { HttpClient } from '@angular/common/http';
+// import { Fee, FeeRequest, FeeSummary } from '../../models/fee.model';
+// import { environment } from '../../../environments/environment';
+
+// @Injectable({
+//   providedIn: 'root',
+// })
+// export class FeeService {
+//   baseUrl = environment.apiUrl;
+//   readonly http = inject(HttpClient);
+
+  
+
+//   getAllFees() {
+//   return this.http.get<Fee[]>(
+//     this.baseUrl + ENDPOINTS.fee.getAllFees);}
+
+
+//   createFee(studentId:number, fee: FeeRequest){
+//     return this.http.post<Fee>(this.baseUrl+ENDPOINTS.fee.createFee.replace(':studentId',studentId.toString()),fee);
+//   }
+
+//   getFeesByStudentId(studentId:number){
+//     return this.http.get<Fee[]>(this.baseUrl+ENDPOINTS.fee.getFeesByStudentId.replace(':studentId',studentId.toString()));
+//   }
+
+//   getMyFees(){
+//     return this.http.get<Fee[]>(this.baseUrl+ENDPOINTS.fee.getMyFees);
+//   }
+
+//   updateFees(feeId:number,fee:FeeRequest){
+//     return this.http.put<Fee>(this.baseUrl+ENDPOINTS.fee.updateFee.replace(':feeId',feeId.toString()),fee);
+//   }
+
+//   deleteFee(feeId:number){
+//     return this.http.delete(this.baseUrl + ENDPOINTS.fee.deleteFee.replace(':feeId',feeId.toString()));
+//   }
+
+
+//    getStudentCreditHours(studentId: number) {
+
+//     return this.http.get<number>(
+//       this.baseUrl +
+//       ENDPOINTS.fee.getStudentCreditHours.replace(
+//         ':studentId',
+//         studentId.toString()
+//       )
+//     );
+//   }
+
+
+//    calculateStudentFee(studentId: number) {
+
+//     return this.http.get<number>(
+//       this.baseUrl +
+//       ENDPOINTS.fee.calculateStudentFee.replace(
+//         ':studentId',
+//         studentId.toString()
+//       )
+//     );
+//   }
+//   // fee summary
+//   getMyFeeSummary() {
+//     return this.http.get<FeeSummary>(this.baseUrl + ENDPOINTS.fee.getMyFeeSummary);}
+
+
+//     // get fee summary by student id
+//     getStudentFeeSummary(studentId: number) {
+//       return this.http.get<FeeSummary>(this.baseUrl + ENDPOINTS.fee.getFeeSummaryByStudentId.replace(':studentId', studentId.toString()));
+//     }
+
+//     // get available semesters
+//     getAvailableSemesters(studentId: number) {
+//       return this.http.get<string[]>(this.baseUrl + ENDPOINTS.fee.getAvailableSemesters.replace(':studentId', studentId.toString()));
+//     }
+
+//     // get overall fee summary
+//     getOverallFeeSummary() {
+//       return this.http.get<FeeSummary>(this.baseUrl + ENDPOINTS.fee.getOverallFeeSummary);
+//     }
+//   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ENDPOINTS } from '../../../environments/endpoints';
-import { HttpClient } from '@angular/common/http';
 import { Fee, FeeRequest, FeeSummary } from '../../models/fee.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class FeeService {
-  baseUrl = environment.apiUrl;
-  readonly http = inject(HttpClient);
-
-  
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = environment.apiUrl;
 
   getAllFees() {
-  return this.http.get<Fee[]>(
-    this.baseUrl + ENDPOINTS.fee.getAllFees);}
-
-
-  createFee(studentId:number, fee: FeeRequest){
-    return this.http.post<Fee>(this.baseUrl+ENDPOINTS.fee.createFee.replace(':studentId',studentId.toString()),fee);
+    return this.http.get<Fee[]>(
+      `${this.baseUrl}${ENDPOINTS.fee.getAllFees}`
+    );
   }
 
-  getFeesByStudentId(studentId:number){
-    return this.http.get<Fee[]>(this.baseUrl+ENDPOINTS.fee.getFeesByStudentId.replace(':studentId',studentId.toString()));
+  createFee(studentId: number, fee: FeeRequest) {
+    const url = ENDPOINTS.fee.createFee.replace(
+      ':studentId',
+      studentId.toString()
+    );
+
+    return this.http.post<Fee>(`${this.baseUrl}${url}`, fee);
   }
 
-  getMyFees(){
-    return this.http.get<Fee[]>(this.baseUrl+ENDPOINTS.fee.getMyFees);
+  getFeesByStudentId(studentId: number) {
+    const url = ENDPOINTS.fee.getFeesByStudentId.replace(
+      ':studentId',
+      studentId.toString()
+    );
+
+    return this.http.get<Fee[]>(`${this.baseUrl}${url}`);
   }
 
-  updateFees(feeId:number,fee:FeeRequest){
-    return this.http.put<Fee>(this.baseUrl+ENDPOINTS.fee.updateFee.replace(':feeId',feeId.toString()),fee);
+  getMyFees() {
+    return this.http.get<Fee[]>(
+      `${this.baseUrl}${ENDPOINTS.fee.getMyFees}`
+    );
   }
 
-  deleteFee(feeId:number){
-    return this.http.delete(this.baseUrl + ENDPOINTS.fee.deleteFee.replace(':feeId',feeId.toString()));
+  updateFees(feeId: number, fee: FeeRequest) {
+    const url = ENDPOINTS.fee.updateFee.replace(
+      ':feeId',
+      feeId.toString()
+    );
+
+    return this.http.put<Fee>(`${this.baseUrl}${url}`, fee);
   }
 
+  deleteFee(feeId: number) {
+    const url = ENDPOINTS.fee.deleteFee.replace(
+      ':feeId',
+      feeId.toString()
+    );
 
-  // fee summary
+    return this.http.delete(`${this.baseUrl}${url}`);
+  }
+
+  // Credit hours for the selected semester
+  getStudentCreditHours(studentId: number, semester: string) {
+    const url = ENDPOINTS.fee.getStudentCreditHours.replace(
+      ':studentId',
+      studentId.toString()
+    );
+
+    const params = new HttpParams().set('semester', semester);
+
+    return this.http.get<number>(
+      `${this.baseUrl}${url}`,
+      { params }
+    );
+  }
+
+  calculateStudentFee(studentId: number) {
+    const url = ENDPOINTS.fee.calculateStudentFee.replace(
+      ':studentId',
+      studentId.toString()
+    );
+
+    return this.http.get<number>(`${this.baseUrl}${url}`);
+  }
+
   getMyFeeSummary() {
-    return this.http.get<FeeSummary>(this.baseUrl + ENDPOINTS.fee.getMyFeeSummary);}
-
-
-    // get fee summary by student id
-    getStudentFeeSummary(studentId: number) {
-      return this.http.get<FeeSummary>(this.baseUrl + ENDPOINTS.fee.getFeeSummaryByStudentId.replace(':studentId', studentId.toString()));
-    }
-
-    // get available semesters
-    getAvailableSemesters(studentId: number) {
-      return this.http.get<string[]>(this.baseUrl + ENDPOINTS.fee.getAvailableSemesters.replace(':studentId', studentId.toString()));
-    }
-
-    // get overall fee summary
-    getOverallFeeSummary() {
-      return this.http.get<FeeSummary>(this.baseUrl + ENDPOINTS.fee.getOverallFeeSummary);
-    }
+    return this.http.get<FeeSummary>(
+      `${this.baseUrl}${ENDPOINTS.fee.getMyFeeSummary}`
+    );
   }
+
+  getStudentFeeSummary(studentId: number) {
+    const url = ENDPOINTS.fee.getFeeSummaryByStudentId.replace(
+      ':studentId',
+      studentId.toString()
+    );
+
+    return this.http.get<FeeSummary>(`${this.baseUrl}${url}`);
+  }
+
+  getAvailableSemesters(studentId: number) {
+    const url = ENDPOINTS.fee.getAvailableSemesters.replace(
+      ':studentId',
+      studentId.toString()
+    );
+
+    return this.http.get<string[]>(`${this.baseUrl}${url}`);
+  }
+
+  getOverallFeeSummary() {
+    return this.http.get<FeeSummary>(
+      `${this.baseUrl}${ENDPOINTS.fee.getOverallFeeSummary}`
+    );
+  }
+
+  getMyFeesBySemester(semester: string) {
+  const params = new HttpParams().set('semester', semester);
+
+  return this.http.get<Fee[]>(
+    `${this.baseUrl}/api/fee/me/semester`,
+    { params }
+  );
+}
+
+getMyAvailableSemesters() {
+  return this.http.get<string[]>(
+    `${this.baseUrl}/api/fee/me/semesters`
+  );
+}
+
+getMyFeeSummaryBySemester(semester: string) {
+  const params = new HttpParams().set('semester', semester);
+
+  return this.http.get<FeeSummary>(
+    `${this.baseUrl}/api/fee/me/summary`,
+    { params }
+  );
+}
+}

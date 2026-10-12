@@ -1,8 +1,6 @@
 <div class="login-page">
 
-  <!-- =========================
-       LEFT BRAND SECTION
-  ========================== -->
+
 
   <div class="login-brand-section">
 
@@ -46,10 +44,6 @@
   </div>
 
 
-  <!-- =========================
-       LOGIN SECTION
-  ========================== -->
-
   <div class="login-section">
 
     <p-card styleClass="login-card">
@@ -75,18 +69,12 @@
       </ng-template>
 
 
-      <!-- =========================
-           FORM
-      ========================== -->
-
       <form
         [formGroup]="loginForm"
         (ngSubmit)="login()"
         class="login-form"
       >
 
-
-        <!-- Email -->
 
         <div class="form-group">
 
@@ -137,7 +125,6 @@
         </div>
 
 
-        <!-- Password -->
 
         <div class="form-group">
 
@@ -198,7 +185,6 @@
         </div>
 
 
-        <!-- Backend Error -->
 
         @if (errorMessage()) {
 

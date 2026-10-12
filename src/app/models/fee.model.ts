@@ -3,6 +3,8 @@ export interface Fee {
   studentId:number;
   studentUsername: string;
   semester: string;
+  ratePerCreditHour: number;
+  fixedSemesterCharge: number;
   totalFee: number;
   paidFee: number;
   dueAmount: number;
@@ -11,9 +13,11 @@ export interface Fee {
 
 export interface FeeRequest {
   semester: string;
-  totalFee: number;
+   ratePerCreditHour: number;
+  fixedSemesterCharge: number;
+ 
   paidFee: number;
-  status: string;
+ 
 }
 
 export interface FeeSummary {

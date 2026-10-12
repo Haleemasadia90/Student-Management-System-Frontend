@@ -1,118 +1,67 @@
-<!-- <div class="list-section">
-  <div class="list-header">
-        <h3 class="list-title">COURSES</h3>
-
-    @if (!showAddForm()) {
-      <p-button
-        label="Add Course"
-        icon="pi pi-plus"
-        [raised]="true"
-        (onClick)="toggleAddForm()">
-      </p-button>
-    } @else {
-      <p-button
-        icon="pi pi-times"
-        [rounded]="true"
-        severity="danger"
-        (onClick)="toggleAddForm()">
-      </p-button>
-    }
-  </div>
-
-  @if (showAddForm()) {
-    <app-add-course
-      (courseAdded)="onCourseAdded()">
-    </app-add-course>
-  }
-
-
-  <p-table
-    [value]="courses()"
-    [paginator]="true"
-    [rows]="10"
-    [rowsPerPageOptions]="[10, 25, 50]"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} courses"
-    [tableStyle]="{ 'min-width': '50rem' }">
-
-    <ng-template pTemplate="header">
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Course Code</th>
-        <th>Credit Hours</th>
-        <th>Status</th>
-        <th>Department</th>
-        <th>Actions</th>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-c>
-      <tr>
-        <td>{{ c.id }}</td>
-        <td>{{ c.title }}</td>
-        <td>{{ c.courseCode }}</td>
-        <td>{{ c.creditHours }}</td>
-        <td>{{ c.status }}</td>
-        <td>{{ c.departmentName }}</td>
-        <td>
-          <p-button
-            label="Delete"
-            icon="pi pi-trash"
-            [raised]="true"
-            severity="danger"
-            (onClick)="deleteCourse(c.id)">
-          </p-button>
-        </td>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="7" class="empty-row">No courses found.</td>
-      </tr>
-    </ng-template>
-
-  </p-table>
-</div>
-
-<p-confirmdialog></p-confirmdialog>
-<p-toast position="top-right"></p-toast> -->
-
-
-
-
-
-
-
 
 <div class="list-section">
+
+  <!-- Page Header -->
   <div class="list-header">
     <h3 class="list-title">COURSES</h3>
 
-    @if (!showAddForm()) {
-      <p-button
-        label="Add Course"
-        icon="pi pi-plus"
-        [raised]="true"
-        (onClick)="toggleAddForm()">
-      </p-button>
-    } @else {
-      <p-button
-        icon="pi pi-times"
-        [rounded]="true"
-        severity="danger"
-        (onClick)="toggleAddForm()">
-      </p-button>
-    }
+    <p-button
+      label="Add Course"
+      icon="pi pi-plus"
+      [raised]="true"
+      (onClick)="openAddDrawer()">
+    </p-button>
   </div>
 
-  @if (showAddForm()) {
-    <app-add-course
-      (courseAdded)="onCourseAdded()">
-    </app-add-course>
-  }
+  <!-- Add / Edit Course Drawer -->
+  <p-drawer
+    [(visible)]="drawerVisible"
+    position="right"
+    [modal]="true"
+    [dismissible]="true"
+    [closeOnEscape]="true"
+    [style]="{
+      width: '450px',
+      maxWidth: '100vw'
+    }"
+    (onHide)="closeDrawer()">
 
+    <ng-template #header>
+      <div class="drawer-header">
+        <i
+          [class]="isEditMode
+            ? 'pi pi-pencil'
+            : 'pi pi-book'">
+        </i>
+
+        <span>
+          {{ isEditMode ? 'Edit Course' : 'Add New Course' }}
+        </span>
+      </div>
+    </ng-template>
+
+    <!-- Add Course Form -->
+    @if (drawerVisible && !isEditMode) {
+      <app-add-course
+        (courseAdded)="onCourseAdded()">
+      </app-add-course>
+    }
+
+    <!-- Edit Course Form -->
+    @if (
+      drawerVisible &&
+      isEditMode &&
+      selectedCourseId() !== null
+    ) {
+      <app-edit-course
+        [courseId]="selectedCourseId()!"
+        (courseUpdated)="onCourseUpdated()">
+      </app-edit-course>
+    }
+
+  </p-drawer>
+
+  <!-- Courses Table -->
   <p-table
     [value]="courses()"
     [lazy]="true"
@@ -127,10 +76,10 @@
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} courses"
     [tableStyle]="{ 'min-width': '50rem' }">
 
+    <!-- Table Header -->
     <ng-template pTemplate="header">
       <tr>
-        <!-- <th>ID</th> -->
-          <th>S.No</th>
+        <th>S.No</th>
         <th>Title</th>
         <th>Course Code</th>
         <th>Credit Hours</th>
@@ -140,35 +89,57 @@
       </tr>
     </ng-template>
 
+    <!-- Table Body -->
     <ng-template pTemplate="body" let-c let-i="rowIndex">
       <tr>
-        <!-- <td>{{ c.id }}</td> -->
-         <td>{{  i + 1 }}</td>
+        <td>{{ i + 1 }}</td>
         <td>{{ c.title }}</td>
         <td>{{ c.courseCode }}</td>
         <td>{{ c.creditHours }}</td>
         <td>{{ c.status }}</td>
         <td>{{ c.departmentName }}</td>
+
         <td>
-          <p-button
-            label="Delete"
-            icon="pi pi-trash"
-            [raised]="true"
-            severity="danger"
-            (onClick)="deleteCourse(c.id)">
-          </p-button>
+          <div class="action-buttons">
+
+            <!-- Edit Course -->
+            <p-button
+              label="Edit"
+              icon="pi pi-pencil"
+              [raised]="true"
+              severity="info"
+              (onClick)="editCourse(c.id)">
+            </p-button>
+
+            <!-- Delete Course -->
+            <p-button
+              label="Delete"
+              icon="pi pi-trash"
+              [raised]="true"
+              severity="danger"
+              (onClick)="deleteCourse(c.id)">
+            </p-button>
+
+          </div>
         </td>
       </tr>
     </ng-template>
 
+    <!-- Empty Table Message -->
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="7" class="empty-row">No courses found.</td>
+        <td colspan="7" class="empty-row">
+          No courses found.
+        </td>
       </tr>
     </ng-template>
 
   </p-table>
+
 </div>
 
+<!-- Confirmation Dialog -->
 <p-confirmdialog></p-confirmdialog>
+
+<!-- Toast Notifications -->
 <p-toast position="top-right"></p-toast>

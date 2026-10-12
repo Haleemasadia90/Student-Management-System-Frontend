@@ -91,4 +91,7 @@ getStudentByEmail(email: string) {
 getProfilePictureUrl(fileName: string): string {
   return this.baseUrl + ENDPOINTS.students.profilePictureUrl + fileName;
 }
+
+
+
 }
