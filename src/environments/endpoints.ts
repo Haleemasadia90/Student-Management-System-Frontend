@@ -38,6 +38,9 @@ profilePictureUrl: '/uploads/profile-pictures/'
       getFeeSummaryByStudentId: '/api/fee/student/:studentId/summary', // for admin module
       getAvailableSemesters:'/api/fee/student/:studentId/available-semesters',
        getOverallFeeSummary: '/api/fee/summary',
+       getStudentCreditHours: '/api/fee/student/:studentId/credit-hours',
+
+calculateStudentFee: '/api/fee/student/:studentId/calculate',
    },
       
 
@@ -55,10 +58,23 @@ profilePictureUrl: '/uploads/profile-pictures/'
       changePassword:'/api/auth/change-password',
       forgotPassword:'/api/auth/forgot-password',
       verifyOtp: '/api/auth/verify-otp',
+      verifyRegistrationOtp: '/api/auth/verify-registration-otp',
+      resendRegistrationOtp: '/api/auth/resend-registration-otp',
+resendForgotPasswordOtp: '/api/auth/resend-forgot-password-otp',
       resetPassword:'/api/auth/reset-password',
       refreshToken: '/api/auth/refresh-token',
       logout: '/api/auth/logout'
-   }
+   },
+
+
+enrollments: {
+  base: '/api/enrollments',
+  getByStudent: '/api/enrollments/student/:studentId',
+  getByStudentSemester:
+    '/api/enrollments/student/:studentId/semester',
+  delete: '/api/enrollments/:enrollmentId'
+},
+
 
 };
  

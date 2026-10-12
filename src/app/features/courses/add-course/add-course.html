@@ -81,13 +81,15 @@
     <div class="form-group">
       <p-floatLabel>
 
-        <p-inputNumber
-          inputId="creditHours"
-          formControlName="creditHours"
-          [min]="1"
-          [showButtons]="true"
-          variant="filled">
-        </p-inputNumber>
+       <p-inputNumber
+  inputId="creditHours"
+  formControlName="creditHours"
+  [min]="1"
+  [showButtons]="true"
+  variant="filled"
+  styleClass="w-full"
+  inputStyleClass="w-full">
+</p-inputNumber>
 
         <label for="creditHours">
           Credit Hours

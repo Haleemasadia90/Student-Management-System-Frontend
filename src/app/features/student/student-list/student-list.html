@@ -1,4 +1,4 @@
-<div class="list-section">
+<!-- <div class="list-section">
 
   <p-toast></p-toast>
 
@@ -90,60 +90,65 @@
 
           <td>
 
-            <div class="button-group">
+         
+<div class="button-group">
+  <p-button
+    [label]="expandedCourseStudentId() === s.id
+      ? 'Hide Courses' : 'Manage Courses'"
+    [icon]="expandedCourseStudentId() === s.id
+      ? 'pi pi-chevron-up' : 'pi pi-book'"
+    severity="info"
+    [raised]="true"
+    size="small"
+    (onClick)="toggleCourseManager(s.id)">
+  </p-button>
 
-              <p-button
-                [label]="
-                  expandedStudentId() === s.id
-                    ? 'Hide Fee'
-                    : 'Manage Fee'
-                "
-                [icon]="
-                  expandedStudentId() === s.id
-                    ? 'pi pi-chevron-up'
-                    : 'pi pi-wallet'
-                "
-                severity="info"
-                [raised]="true"
-                size="small"
-                (onClick)="toggleFeeManager(s.id)">
-              </p-button>
+  <p-button
+    [label]="expandedFeeStudentId() === s.id
+      ? 'Hide Fee' : 'Manage Fee'"
+    [icon]="expandedFeeStudentId() === s.id
+      ? 'pi pi-chevron-up' : 'pi pi-wallet'"
+    severity="success"
+    [raised]="true"
+    size="small"
+    (onClick)="toggleFeeManager(s.id)">
+  </p-button>
 
+  <p-button
+    icon="pi pi-trash"
+    severity="danger"
+    [raised]="true"
+    size="small"
+    ariaLabel="Delete student"
+    (onClick)="deleteStudent(s.id)">
+  </p-button>
+</div>
+</td>
+</tr>
 
-              <p-button
-                icon="pi pi-trash"
-                severity="danger"
-                [raised]="true"
-                size="small"
-                ariaLabel="Delete student"
-                (onClick)="deleteStudent(s.id)">
-              </p-button>
+@if (expandedCourseStudentId() === s.id) {
+  <tr>
+    <td colspan="5">
+      <app-course-enrollment
+        [studentId]="s.id"
+        [admissionYear]="s.admissionYear ?? 0">
+      </app-course-enrollment>
+    </td>
+  </tr>
+}
 
-            </div>
+@if (expandedFeeStudentId() === s.id) {
+  <tr>
+    <td colspan="5">
+      <app-fee-manager
+        [studentId]="s.id"
+        [admissionYear]="s.admissionYear ?? 0">
+      </app-fee-manager>
+    </td>
+  </tr>
+}
+</ng-template>
 
-          </td>
-
-        </tr>
-
-
-        @if (expandedStudentId() === s.id) {
-
-          <tr>
-
-            <td colspan="5">
-
-              <app-fee-manager
-                [studentId]="s.id"
-                [admissionYear]="s.admissionYear ?? 0">
-              </app-fee-manager>
-
-            </td>
-
-          </tr>
-
-        }
-
-      </ng-template>
 
 
       <ng-template pTemplate="emptymessage">
@@ -164,7 +169,7 @@
     </p-table>
 
 
-    <!-- PAGINATION -->
+  
 
     <p-paginator
       [first]="currentPage() * pageSize()"
@@ -177,4 +182,204 @@
 
   </div>
 
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="list-section">
+
+  <p-toast></p-toast>
+
+  <p-confirmDialog></p-confirmDialog>
+
+  <div class="list-header">
+    <h3 class="list-title">STUDENTS</h3>
+  </div>
+
+  <div class="search-container">
+
+    <input
+      pInputText
+      type="text"
+      class="search-input"
+      placeholder="Enter Student email"
+      [(ngModel)]="searchEmail"
+    />
+
+    <p-button
+      label="Search"
+      icon="pi pi-search"
+      severity="success"
+      [raised]="true"
+      (onClick)="searchStudent()">
+    </p-button>
+
+    <p-button
+      label="Show All"
+      icon="pi pi-refresh"
+      severity="secondary"
+      [raised]="true"
+      (onClick)="getStudents()">
+    </p-button>
+
+  </div>
+
+
+  <div class="table-scroll">
+
+    <p-table
+      [value]="students()"
+      styleClass="student-table"
+      responsiveLayout="scroll">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>S.No</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+
+
+      <ng-template pTemplate="body" let-s let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ s.username }}</td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.department }}</td>
+
+          <td>
+            <div class="button-group">
+
+              <p-button
+                label="Manage Courses"
+                icon="pi pi-book"
+                severity="info"
+                [raised]="true"
+                size="small"
+                (onClick)="openDrawer(s, 'course')">
+              </p-button>
+
+              <p-button
+                label="Manage Fee"
+                icon="pi pi-wallet"
+                severity="success"
+                [raised]="true"
+                size="small"
+                (onClick)="openDrawer(s, 'fee')">
+              </p-button>
+
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [raised]="true"
+                size="small"
+                ariaLabel="Delete student"
+                (onClick)="deleteStudent(s.id)">
+              </p-button>
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="empty-row">No records found.</td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+
+    <!-- PAGINATION -->
+    <p-paginator
+      [first]="currentPage() * pageSize()"
+      [rows]="pageSize()"
+      [totalRecords]="totalRecords()"
+      [rowsPerPageOptions]="[5, 10, 20, 50]"
+      (onPageChange)="onPageChange($event)">
+    </p-paginator>
+
+  </div>
+
 </div>
+
+
+<!-- DRAWER: Manage Courses / Manage Fee -->
+<p-drawer
+  [visible]="drawerVisible()"
+  (visibleChange)="onDrawerVisibleChange($event)"
+  position="right"
+  [modal]="true"
+  [dismissible]="true"
+  [style]="{ width: 'min(900px, 100vw)' }">
+
+  <ng-template #header>
+    <div class="drawer-header">
+      <i
+        class="pi"
+        [class.pi-book]="drawerMode() === 'course'"
+        [class.pi-wallet]="drawerMode() === 'fee'">
+      </i>
+
+      <div class="drawer-title-wrap">
+        <span class="drawer-title">
+          {{ drawerMode() === 'course' ? 'Manage Courses' : 'Manage Fee' }}
+        </span>
+        <span class="drawer-subtitle">
+          {{ selectedStudent()?.username }} &middot; {{ selectedStudent()?.email }}
+        </span>
+      </div>
+    </div>
+  </ng-template>
+
+  @if (selectedStudent(); as s) {
+
+    @switch (drawerMode()) {
+
+      @case ('course') {
+        <app-course-enrollment
+          [studentId]="s.id"
+          [admissionYear]="s.admissionYear ?? 0">
+        </app-course-enrollment>
+      }
+
+      @case ('fee') {
+        <app-fee-manager
+          [studentId]="s.id"
+          [admissionYear]="s.admissionYear ?? 0">
+        </app-fee-manager>
+      }
+
+    }
+
+  }
+
+  <ng-template #footer>
+    <p-button
+      label="Close"
+      icon="pi pi-times"
+      severity="secondary"
+      [outlined]="true"
+      styleClass="w-full"
+      (onClick)="closeDrawer()">
+    </p-button>
+  </ng-template>
+
+</p-drawer>

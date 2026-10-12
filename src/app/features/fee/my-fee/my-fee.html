@@ -15,7 +15,20 @@
 
   </div>
 
-
+  <div class="semester-selection">
+    <label for="feeSemester">Semester</label>
+    <p-select
+      inputId="feeSemester"
+    [options]="semesterOptions()"
+    optionLabel="label"
+    optionValue="value"
+    [(ngModel)]="semester"
+    placeholder="All semesters"
+    [showClear]="false"
+    styleClass="semester-select"
+    (onChange)="onSemesterChange()">
+    </p-select>
+  </div>
   <!-- ================= LOADING ================= -->
 
   @if (loading()) {

@@ -1,3 +1,4 @@
+
 .fee-manager {
   margin-top: 12px;
   padding: 14px;
@@ -5,14 +6,13 @@
   border-radius: 10px;
 }
 
-
 .fee-manager-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   margin-bottom: 14px;
 }
-
 
 .fee-manager-header h4 {
   margin: 0;
@@ -21,13 +21,9 @@
   color: #1e293b;
 }
 
-
-/* Table */
-
 .fee-table {
   width: 100%;
 }
-
 
 .action-buttons {
   display: flex;
@@ -35,20 +31,13 @@
   gap: 2px;
 }
 
-
-/* Empty */
-
 .empty-text {
   min-height: 100px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 8px;
-
   color: #94a3b8;
-
   font-size: 13px;
 }
 
@@ -56,17 +45,12 @@
   font-size: 16px;
 }
 
-
-/* Form */
-
 .fee-form {
   display: flex;
   flex-direction: column;
   gap: 18px;
-
   padding-top: 5px;
 }
-
 
 .form-field {
   display: flex;
@@ -74,30 +58,22 @@
   gap: 7px;
 }
 
-
 .form-field label {
   font-size: 13px;
   font-weight: 600;
   color: #334155;
 }
 
-
-/* Status */
-
 .status-preview {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  gap: 12px;
   padding: 12px 14px;
-
   background: #f8fafc;
-
   border-radius: 8px;
-
   border: 1px solid #e2e8f0;
 }
-
 
 .status-label {
   font-size: 13px;
@@ -105,28 +81,20 @@
   color: #475569;
 }
 
-
 .error-text {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
-
   color: #dc2626;
-
   font-size: 12px;
 }
 
-
-/* Responsive */
-
 @media (max-width: 600px) {
-
   .fee-manager {
     padding: 10px;
   }
 
   .fee-manager-header {
-    gap: 10px;
+    flex-wrap: wrap;
   }
-
 }

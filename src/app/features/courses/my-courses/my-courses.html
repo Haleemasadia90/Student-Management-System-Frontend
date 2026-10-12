@@ -1,6 +1,5 @@
-<div class="my-courses-page">
+<!-- <div class="my-courses-page">
 
-  <!-- Page Header -->
   <div class="page-header">
     <h2>My Courses</h2>
     <p>Manage your enrolled courses and explore available courses.</p>
@@ -9,8 +8,7 @@
 
   @if (myRecord()) {
 
-    <!-- ================= ENROLLED COURSES CARD ================= -->
-
+   
     <p-card styleClass="course-card enrolled-card">
 
       <ng-template pTemplate="header">
@@ -31,10 +29,10 @@
       </ng-template>
 
 
-      <!-- Scrollable Content -->
+     
       <div class="scrollable-card-content">
 
-        <!-- Credit Tracker -->
+     
         <div class="credit-section">
 
           <div class="credit-info">
@@ -61,7 +59,7 @@
         </div>
 
 
-        <!-- Enrolled Courses -->
+      
         @if (
           myRecord()?.courseTitles &&
           myRecord()!.courseTitles.length > 0
@@ -107,8 +105,6 @@
     </p-card>
 
 
-    <!-- ================= AVAILABLE COURSES CARD ================= -->
-
     <p-card styleClass="course-card available-card">
 
       <ng-template pTemplate="header">
@@ -129,7 +125,6 @@
       </ng-template>
 
 
-      <!-- Scrollable Content -->
       <div class="scrollable-card-content">
 
         @if (availableCourses().length > 0) {
@@ -139,7 +134,7 @@
             styleClass="courses-table"
             responsiveLayout="scroll">
 
-            <!-- Table Header -->
+       
             <ng-template pTemplate="header">
 
               <tr>
@@ -159,14 +154,12 @@
             </ng-template>
 
 
-            <!-- Table Body -->
             <ng-template
               pTemplate="body"
               let-course>
 
               <tr>
 
-                <!-- Course -->
                 <td>
 
                   <div class="course-title">
@@ -184,7 +177,6 @@
                 </td>
 
 
-                <!-- Course Code -->
                 <td>
 
                   <span class="course-code">
@@ -194,7 +186,6 @@
                 </td>
 
 
-                <!-- Credit Hours -->
                 <td>
 
                   <span class="credit-hours">
@@ -204,7 +195,6 @@
                 </td>
 
 
-                <!-- Status -->
                 <td>
 
                   @if (
@@ -218,6 +208,7 @@
                     </p-tag>
 
                   }
+                  
 
                   @else if (
                     myRecord()!.totalCreditHours +
@@ -245,7 +236,6 @@
                 </td>
 
 
-                <!-- Action -->
                 <td>
 
                   @if (
@@ -306,7 +296,7 @@
         }
 
 
-        <!-- Error Message -->
+   
         @if (errorMessage()) {
 
           <p-message
@@ -327,7 +317,7 @@
 
   } @else {
 
-    <!-- Loading -->
+
     <div class="loading-state">
 
       <p-progressSpinner
@@ -340,6 +330,187 @@
         Loading your courses...
       </span>
 
+    </div>
+
+  }
+
+</div> -->
+
+
+
+
+<div class="my-courses-page">
+
+  <div class="page-header">
+    <h2>My Courses</h2>
+    <p>Manage your enrolled courses and explore available courses.</p>
+  </div>
+
+  @if (myRecord()) {
+
+    <div class="semester-selection">
+      <label for="semester">Semester</label>
+      <p-select
+        inputId="semester"
+        [options]="semesters"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="semester"
+        placeholder="Select semester"
+        (onChange)="onSemesterChange()"
+        [disabled]="semesters.length === 0">
+      </p-select>
+    </div>
+
+    <p-card styleClass="course-card enrolled-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <div class="header-icon enrolled-icon">
+            <i class="pi pi-book"></i>
+          </div>
+          <div>
+            <h4>Enrolled Courses</h4>
+            <span>Enrollments for the selected semester</span>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="scrollable-card-content">
+
+        <div class="credit-section">
+          <div class="credit-info">
+            <span class="credit-label">Credit Hours</span>
+            <span class="credit-value">{{ creditHours() }} / {{ maxCreditHours }}</span>
+          </div>
+
+          <p-progressBar
+            [value]="getCreditPercentage()"
+            [showValue]="false"
+            styleClass="credit-progress">
+          </p-progressBar>
+        </div>
+
+        @if (enrollments().length > 0) {
+          <div class="course-list">
+            @for (e of enrollments(); track e.id) {
+              <div class="enrolled-course">
+                <div class="course-icon"><i class="pi pi-bookmark"></i></div>
+                <span>{{ e.courseCode }} – {{ e.courseTitle }} ({{ e.creditHours }} CH)</span>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty-state">
+            <i class="pi pi-book"></i>
+            <p>No courses enrolled for {{ semester || 'this semester' }}.</p>
+          </div>
+        }
+
+      </div>
+    </p-card>
+
+    <p-card styleClass="course-card available-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <div class="header-icon available-icon">
+            <i class="pi pi-graduation-cap"></i>
+          </div>
+          <div>
+            <h4>Available Courses</h4>
+            <span>Active courses in your department</span>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="scrollable-card-content">
+
+        @if (availableCourses().length > 0) {
+
+          <p-table
+            [value]="availableCourses()"
+            styleClass="courses-table"
+            responsiveLayout="scroll">
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Course</th>
+                <th>Code</th>
+                <th>Credit Hours</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-course>
+              <tr>
+                <td>
+                  <div class="course-title">
+                    <div class="small-course-icon"><i class="pi pi-file"></i></div>
+                    <span>{{ course.title }}</span>
+                  </div>
+                </td>
+
+                <td><span class="course-code">{{ course.courseCode }}</span></td>
+
+                <td><span class="credit-hours">{{ course.creditHours }} CH</span></td>
+
+                <td>
+                  @if (isEnrolled(course.id)) {
+                    <p-tag value="Enrolled" severity="success" icon="pi pi-check"></p-tag>
+                  } @else if (wouldExceedLimit(course)) {
+                    <p-tag value="Limit Exceeded" severity="danger"
+                           icon="pi pi-exclamation-triangle"></p-tag>
+                  } @else {
+                    <p-tag value="Available" severity="info"></p-tag>
+                  }
+                </td>
+
+                <td>
+                  @if (isEnrolled(course.id) || wouldExceedLimit(course)) {
+                    <span class="action-placeholder">—</span>
+                  } @else {
+                    <p-button
+                      label="Enroll"
+                      icon="pi pi-plus"
+                      severity="primary"
+                      size="small"
+                      [raised]="true"
+                      [disabled]="!semester"
+                      (onClick)="enroll(course)">
+                    </p-button>
+                  }
+                </td>
+              </tr>
+            </ng-template>
+
+          </p-table>
+
+        } @else {
+          <div class="empty-state">
+            <i class="pi pi-inbox"></i>
+            <p>No courses available in your department yet.</p>
+          </div>
+        }
+
+        @if (errorMessage()) {
+          <p-message
+            severity="error"
+            icon="pi pi-exclamation-circle"
+            styleClass="course-error">
+            {{ errorMessage() }}
+          </p-message>
+        }
+
+      </div>
+    </p-card>
+
+  } @else {
+
+    <div class="loading-state">
+      <p-progressSpinner strokeWidth="4" animationDuration=".8s"
+                         styleClass="loading-spinner">
+      </p-progressSpinner>
+      <span>Loading your courses...</span>
     </div>
 
   }
