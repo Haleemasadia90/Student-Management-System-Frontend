@@ -13,11 +13,6 @@
   color: #1e293b;
 }
 
-
-/* ========================================
-   INFO CARDS GRID
-======================================== */
-
 .dashboard-cards {
   margin-top: 50px;
   display: grid;
@@ -25,11 +20,6 @@
   gap: 20px;
 }
 
-
-/* ========================================
-   DASHBOARD CARD
-   Original sizing preserved
-======================================== */
 
 .dashboard-card {
   background: white;
@@ -46,12 +36,6 @@
   min-width: 0;
 }
 
-
-/* ========================================
-   PRIME ICON
-   Colorful but same original sizing
-======================================== */
-
 .card-icon {
   font-size: 30px;
   flex-shrink: 0;
@@ -67,77 +51,62 @@
 }
 
 
-/* ========================================
-   ICON COLORS
-======================================== */
-
-/* Student ID */
 .id-icon {
   color: #7c3aed;
   background: #ede9fe;
 }
 
-/* Username */
 .username-icon {
   color: #2563eb;
   background: #dbeafe;
 }
 
-/* Email */
+
 .email-icon {
   color: #db2777;
   background: #fce7f3;
 }
 
-/* Department */
+
 .department-icon {
   color: #ea580c;
   background: #ffedd5;
 }
 
-/* Batch */
+
 .batch-icon {
   color: #4f46e5;
   background: #e0e7ff;
 }
 
-/* Enrolled Courses */
 .enrolled-icon {
   color: #16a34a;
   background: #dcfce7;
 }
 
-/* Available Courses */
+
 .available-icon {
   color: #0891b2;
   background: #cffafe;
 }
 
-/* Current Semester */
+
 .semester-icon {
   color: #d97706;
   background: #fef3c7;
 }
 
-/* Total Semesters */
+
 .progress-icon {
   color: #9333ea;
   background: #f3e8ff;
 }
 
 
-/* ========================================
-   CARD CONTENT
-======================================== */
-
 .dashboard-card > div:last-child {
   min-width: 0;
 }
 
-
-/* ========================================
-   CARD TEXT
-======================================== */
 
 .dashboard-card p {
   margin: 0 0 5px;
@@ -152,10 +121,6 @@
 }
 
 
-/* ========================================
-   SMALL CARD VALUES
-======================================== */
-
 .card-value-sm {
   font-size: 15px !important;
   word-break: break-word;
@@ -163,21 +128,12 @@
 }
 
 
-/* ========================================
-   LOADING
-======================================== */
-
 .loading-text {
   text-align: center;
   color: #94a3b8;
   font-size: 14px;
   margin-top: 40px;
 }
-
-
-/* ========================================
-   PROFILE UPLOAD
-======================================== */
 
 .profile-upload-section {
   display: flex;
@@ -212,9 +168,6 @@
 }
 
 
-/* ========================================
-   CHART WRAPPER
-======================================== */
 
 .chart-wrapper {
   display: flex;
@@ -244,10 +197,6 @@
   text-align: center;
 }
 
-
-/* ========================================
-   PIE CHART
-======================================== */
 
 .pie-chart-wrapper {
   display: flex;
@@ -292,10 +241,6 @@
   color: #94a3b8;
 }
 
-
-/* ========================================
-   PIE LEGEND
-======================================== */
 
 .pie-legend {
   display: flex;
@@ -344,20 +289,11 @@
 }
 
 
-/* ========================================
-   EMPTY STATE
-======================================== */
-
 .empty-text {
   text-align: center;
   color: #94a3b8;
   font-size: 14px;
 }
-
-
-/* ========================================
-   TABLET
-======================================== */
 
 @media (max-width: 900px) {
 
@@ -367,10 +303,6 @@
 
 }
 
-
-/* ========================================
-   SMALL TABLET
-======================================== */
 
 @media (max-width: 640px) {
 
@@ -394,10 +326,6 @@
 
 }
 
-
-/* ========================================
-   MOBILE
-======================================== */
 
 @media (max-width: 560px) {
 

@@ -12,9 +12,7 @@
 }
 
 
-/* =========================
-   PAGE HEADER
-========================= */
+
 
 .page-header {
   margin-top: 45px;
@@ -65,9 +63,7 @@
 }
 
 
-/* =========================
-   CARD
-========================= */
+
 
 :host ::ng-deep .profile-card {
   background: #ffffff !important;
@@ -89,9 +85,7 @@
 }
 
 
-/* =========================
-   CARD HEADER
-========================= */
+
 
 .card-header {
   display: flex;
@@ -141,9 +135,6 @@
 }
 
 
-/* =========================
-   CENTER AVATAR
-========================= */
 
 .avatar-section {
   display: flex;
@@ -159,7 +150,6 @@
 }
 
 
-/* Profile Image */
 
 .profile-dp {
   width: 90px;
@@ -186,7 +176,6 @@
 }
 
 
-/* PrimeNG Avatar */
 
 :host ::ng-deep .profile-avatar {
   width: 90px !important;
@@ -215,7 +204,6 @@
 }
 
 
-/* Small hint */
 
 .avatar-hint {
   margin-top: 8px;
@@ -226,9 +214,6 @@
 }
 
 
-/* =========================
-   UPLOAD
-========================= */
 
 .upload-section {
   display: flex;
@@ -269,9 +254,6 @@
 }
 
 
-/* =========================
-   FORM
-========================= */
 
 .profile-form {
   display: flex;
@@ -294,8 +276,6 @@
 }
 
 
-/* PrimeNG Input */
-
 :host ::ng-deep .profile-input {
   width: 100% !important;
 
@@ -316,9 +296,6 @@
 }
 
 
-/* =========================
-   VALIDATION
-========================= */
 
 .error {
   display: block;
@@ -331,10 +308,6 @@
 }
 
 
-/* =========================
-   MESSAGES
-========================= */
-
 :host ::ng-deep .profile-message {
   width: 100%;
 
@@ -343,10 +316,6 @@
   font-size: 12px !important;
 }
 
-
-/* =========================
-   SAVE BUTTON
-========================= */
 
 .save-container {
   display: flex;
@@ -367,9 +336,6 @@
 }
 
 
-/* =========================
-   PROFILE PICTURE POPUP
-========================= */
 
 :host ::ng-deep .profile-picture-dialog {
   width: 420px !important;
@@ -382,7 +348,7 @@
 }
 
 
-/* Remove default dialog padding */
+
 
 :host ::ng-deep
 .profile-picture-dialog
@@ -393,7 +359,7 @@
 }
 
 
-/* Center popup content */
+
 
 .profile-picture-popup {
   display: flex;
@@ -405,7 +371,6 @@
 }
 
 
-/* Large picture */
 
 .large-profile-picture {
   width: 300px;
@@ -425,7 +390,6 @@
 }
 
 
-/* Large fallback avatar */
 
 :host ::ng-deep .large-profile-avatar {
   width: 300px !important;
@@ -444,9 +408,6 @@
 }
 
 
-/* =========================
-   MOBILE
-========================= */
 
 @media (max-width: 650px) {
 

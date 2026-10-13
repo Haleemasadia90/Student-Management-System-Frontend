@@ -1,14 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-  ValidationErrors,
-  AbstractControl
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule, ValidationErrors, AbstractControl} from '@angular/forms';
 
 import { Router, RouterLink } from '@angular/router';
 
@@ -16,7 +9,7 @@ import { AuthService } from '../../../core/httpServices/auth-service';
 import { DepartmentService } from '../../departments/department-service';
 import { Department } from '../../../models/department.model';
 
-// PrimeNG
+
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -38,9 +31,7 @@ import { InputIconModule } from 'primeng/inputicon';
 export class Registration implements OnInit {
 
   currentStep = signal(1);
-
   department = signal<Department[]>([]);
-
   errorMessage = signal('');
   successMessage = signal('');
   isLoading = signal(false);
@@ -53,7 +44,6 @@ export class Registration implements OnInit {
 
   registrationForm = new FormGroup(
     {
-      // Personal Information
       fullName: new FormControl('', {
         nonNullable: true,
         validators: [Validators.required]

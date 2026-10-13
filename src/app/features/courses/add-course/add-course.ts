@@ -1,20 +1,8 @@
-import {
-  Component,
-  inject,
-  signal,
-  Output,
-  EventEmitter,
-  OnInit
-} from '@angular/core';
+import { Component, inject, signal, Output, EventEmitter, OnInit} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import {
-  FormGroup,
-  Validators,
-  FormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormGroup, Validators, FormControl, ReactiveFormsModule} from '@angular/forms';
 
 import { CourseService } from '../course-service';
 import { CourseRequest } from '../../../models/course.model';
@@ -36,16 +24,8 @@ import { SelectModule } from 'primeng/select';
   selector: 'app-add-course',
   standalone: true,
 
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    ToastModule,
-    InputTextModule,
-    SelectModule,
-    InputNumberModule,
-    FloatLabelModule
-  ],
+  imports: [ CommonModule, ReactiveFormsModule,  ButtonModule, ToastModule, InputTextModule,
+      SelectModule, InputNumberModule, FloatLabelModule],
 
   providers: [MessageService],
 

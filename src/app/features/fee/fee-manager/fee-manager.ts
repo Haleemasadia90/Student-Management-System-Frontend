@@ -1,22 +1,9 @@
 
-import {
-  Component,
-  computed,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  signal
-} from '@angular/core';
+import { Component, computed, inject, Input, OnDestroy, OnInit, signal} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
@@ -34,28 +21,14 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
 
-import {
-  MessageService,
-  ConfirmationService
-} from 'primeng/api';
+import { MessageService, ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-fee-manager',
   standalone: true,
 
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    TableModule,
-    ButtonModule,
-    DialogModule,
-    SelectModule,
-    InputNumberModule,
-    TagModule,
-    ToastModule,
-    ConfirmDialogModule,
-    TooltipModule
-  ],
+  imports: [ CommonModule, ReactiveFormsModule, TableModule, ButtonModule, DialogModule,SelectModule,
+     InputNumberModule, TagModule, ToastModule, ConfirmDialogModule, TooltipModule],
 
   templateUrl: './fee-manager.html',
   styleUrl: './fee-manager.css',
@@ -176,14 +149,11 @@ dialogSemesters = signal<string[]>([]);
     this.creditHoursRequestId++;
   }
 
-
-    /** Called by the parent after enrollments change. */
   refresh(): void {
     this.loadFees();
     this.loadAvailableSemesters();
   }
 
-  // Load all fee records for this student
   loadFees(): void {
     this.feeService.getFeesByStudentId(this.studentId).subscribe({
       next: data => {
@@ -201,14 +171,13 @@ dialogSemesters = signal<string[]>([]);
     });
   }
 
-  // Load semesters that have enrollments but no fee record
  loadAvailableSemesters(): void {
   this.feeService.getAvailableSemesters(this.studentId).subscribe({
     next: data => {
       const semesters = data ?? [];
       this.availableSemesters.set(semesters);
 
-      // sirf Add mode mein dialog options update karein
+ 
       if (this.showAddForm && this.editingFeeId === null) {
         this.dialogSemesters.set(semesters);
 
@@ -227,7 +196,7 @@ dialogSemesters = signal<string[]>([]);
     }
   });
 }
-  // Fetch credit hours for the selected semester
+  
   loadStudentCreditHours(semester: string): void {
     if (!semester) {
       this.creditHoursRequestId++;
@@ -242,7 +211,7 @@ dialogSemesters = signal<string[]>([]);
       .getStudentCreditHours(this.studentId, semester)
       .subscribe({
         next: creditHours => {
-          // Ignore an older response if the semester changed meanwhile.
+       
           if (requestId !== this.creditHoursRequestId) {
             return;
           }
@@ -268,8 +237,6 @@ dialogSemesters = signal<string[]>([]);
         }
       });
   }
-
-  // Total = (credit hours × rate) + fixed semester charge
   calculateTotalFee(): void {
     const rate = this.feeForm.controls.ratePerCreditHour.value ?? 0;
     const fixedCharge = this.feeForm.controls.fixedSemesterCharge.value ?? 0;
@@ -292,7 +259,7 @@ dialogSemesters = signal<string[]>([]);
     return 'OVERDUE';
   }
 
-  // Open Add Fee dialog
+ 
 openAddForm(): void {
   this.editingFeeId = null;
   this.enrolledCreditHours = 0;
@@ -343,7 +310,6 @@ openEditForm(fee: Fee): void {
     this.creditHoursRequestId++;
   }
 
-  // Save a new fee or update an existing one
   save(): void {
     if (this.feeForm.invalid) {
       this.feeForm.markAllAsTouched();
@@ -440,7 +406,6 @@ openEditForm(fee: Fee): void {
     });
   }
 
-  // Delete fee record after confirmation
   deleteFee(feeId: number): void {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this fee record?',

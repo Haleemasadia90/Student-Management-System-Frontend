@@ -13,10 +13,6 @@
 }
 
 
-/* =========================================
-   LEFT BRAND SECTION
-========================================= */
-
 .registration-brand-section {
   width: 45%;
   min-height: 100vh;
@@ -85,8 +81,6 @@
 }
 
 
-/* FEATURES */
-
 .feature-list {
   margin-top: 40px;
 
@@ -122,11 +116,6 @@
   font-size: 17px;
 }
 
-
-/* =========================================
-   RIGHT SECTION
-========================================= */
-
 .registration-section {
   width: 55%;
   min-height: 100vh;
@@ -138,10 +127,6 @@
   padding: 40px;
 }
 
-
-/* =========================================
-   CARD
-========================================= */
 
 :host ::ng-deep .registration-card {
   width: 100%;
@@ -164,11 +149,6 @@
 :host ::ng-deep .registration-card .p-card-content {
   padding: 0 !important;
 }
-
-
-/* =========================================
-   HEADER
-========================================= */
 
 .registration-header {
   text-align: center;
@@ -214,10 +194,6 @@
   font-size: 14px;
 }
 
-
-/* =========================================
-   STEPS
-========================================= */
 
 .steps {
   display: flex;
@@ -300,10 +276,6 @@
   background: #dedbe4;
 }
 
-
-/* =========================================
-   STEP CONTENT
-========================================= */
 
 .step-content {
   width: 100%;

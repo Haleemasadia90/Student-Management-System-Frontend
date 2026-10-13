@@ -37,9 +37,6 @@
 }
 
 
-/* ================================
-   DRAWER HEADER
-================================ */
 
 .drawer-header {
   display: flex;
@@ -56,16 +53,12 @@
 }
 
 
-/* ================================
-   DRAWER CONTAINER
-================================ */
 
 :host ::ng-deep .p-drawer {
   background: #f8f7fc;
   max-width: 100vw;
 }
 
-/* Keep drawer header fixed at the top */
 :host ::ng-deep .p-drawer-header {
   position: sticky;
   top: 0;
@@ -79,7 +72,6 @@
   border-bottom: 1px solid #382957;
 }
 
-/* Drawer content area */
 :host ::ng-deep .p-drawer-content {
   background: #f8f7fc;
   padding: 24px 20px;
@@ -88,10 +80,6 @@
   overflow-y: auto;
 }
 
-
-/* ================================
-   DRAWER CLOSE BUTTON
-================================ */
 
 :host ::ng-deep .p-drawer-close-button {
   color: #ffffff;
@@ -105,15 +93,6 @@
 }
 
 
-/* ================================
-   ADD / EDIT COURSE CARD
-================================ */
-
-/*
-  Apply styleClass="course-form-card"
-  to the p-card inside add-course and
-  edit-course templates.
-*/
 
 :host ::ng-deep .course-form-card {
   position: sticky;
@@ -130,45 +109,34 @@
   box-shadow: 0 4px 14px rgba(32, 22, 58, 0.08);
 }
 
-/* Keep card content white */
+
 :host ::ng-deep .course-form-card .p-card-body {
   background: #ffffff;
   border-radius: 12px;
 }
 
-/* Optional card title styling */
+
 :host ::ng-deep .course-form-card .p-card-title {
   color: #20163a;
   font-weight: 700;
 }
 
-/* Form labels */
+
 :host ::ng-deep .course-form-card label {
   color: #334155;
   font-weight: 500;
 }
 
-
-/* ================================
-   BUTTON THEME
-================================ */
-
-/* Purple theme for primary buttons inside the form */
 :host ::ng-deep .course-form-card .p-button:not(.p-button-danger) {
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease;
 }
 
-/* Do not override danger buttons */
 :host ::ng-deep .course-form-card .p-button:not(.p-button-danger):hover {
   filter: brightness(1.08);
 }
 
-
-/* ================================
-   RESPONSIVE LAYOUT
-================================ */
 
 @media (max-width: 768px) {
   .list-section {
@@ -199,10 +167,6 @@
   }
 }
 
-
-/* ================================
-   MOBILE DRAWER
-================================ */
 
 @media (max-width: 576px) {
   .list-header {

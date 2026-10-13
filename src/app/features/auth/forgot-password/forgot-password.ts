@@ -21,17 +21,8 @@ import { InputIconModule } from 'primeng/inputicon';
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    CardModule,
-    InputTextModule,
-    ButtonModule,
-    MessageModule,
-    IconFieldModule,
-    InputIconModule
-  ],
+  imports: [ CommonModule, ReactiveFormsModule, RouterLink, CardModule, InputTextModule,
+     ButtonModule, MessageModule, IconFieldModule, InputIconModule],
   templateUrl: './forgot-password.html',
   styleUrl: './forgot-password.css',
 })
@@ -80,7 +71,6 @@ export class ForgotPassword {
             'OTP has been sent to your email.'
           );
 
-          // Go to reset password page
           this.router.navigate(
             ['/reset-password'],
             {

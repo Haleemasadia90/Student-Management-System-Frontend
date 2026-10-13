@@ -1,21 +1,8 @@
-import {
-  Component,
-  inject,
-  signal,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit
-} from '@angular/core';
+import { Component, inject, signal, Input, Output, EventEmitter, OnInit} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import {
-  FormGroup,
-  Validators,
-  FormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormGroup, Validators, FormControl, ReactiveFormsModule} from '@angular/forms';
 
 import { CourseService } from '../course-service';
 import { Course, CourseRequest } from '../../../models/course.model';
@@ -36,16 +23,7 @@ import { SelectModule } from 'primeng/select';
   selector: 'app-edit-course',
   standalone: true,
 
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    ToastModule,
-    InputTextModule,
-    SelectModule,
-    InputNumberModule,
-    FloatLabelModule
-  ],
+  imports: [ CommonModule,  ReactiveFormsModule, ButtonModule, ToastModule, InputTextModule,   SelectModule, InputNumberModule, FloatLabelModule],
 
   providers: [MessageService],
 
@@ -63,7 +41,6 @@ export class EditCourse implements OnInit {
   @Output() courseUpdated = new EventEmitter<void>();
 
   departments = signal<Department[]>([]);
-
   isLoading = signal(false);
 
   courseForm = new FormGroup({

@@ -1,7 +1,5 @@
 <div class="my-fee-page">
 
-  <!-- ================= PAGE HEADER ================= -->
-
   <div class="page-header">
 
     <div class="page-title-icon">
@@ -29,8 +27,7 @@
     (onChange)="onSemesterChange()">
     </p-select>
   </div>
-  <!-- ================= LOADING ================= -->
-
+ 
   @if (loading()) {
 
     <div class="loading-state">
@@ -51,13 +48,9 @@
   @else {
 
 
-    <!-- ================= FEE SUMMARY ================= -->
-
     @if (summary()) {
 
       <p-card styleClass="fee-card summary-card">
-
-        <!-- Card Header -->
 
         <ng-template pTemplate="header">
 
@@ -81,13 +74,8 @@
 
         </ng-template>
 
-
-        <!-- Summary Content -->
-
         <div class="summary-content">
 
-
-          <!-- PIE CHART -->
 
           <div class="pie-section">
 
@@ -108,9 +96,6 @@
               </div>
 
             </div>
-
-
-            <!-- Legend -->
 
             <div class="pie-legend">
 
@@ -136,12 +121,8 @@
           </div>
 
 
-          <!-- SUMMARY VALUES -->
-
           <div class="summary-stats">
 
-
-            <!-- Total Fee -->
 
             <div class="summary-stat">
 
@@ -162,8 +143,6 @@
             </div>
 
 
-            <!-- Paid Fee -->
-
             <div class="summary-stat">
 
               <div class="stat-icon paid-icon">
@@ -182,8 +161,6 @@
 
             </div>
 
-
-            <!-- Due Amount -->
 
             <div class="summary-stat">
 
@@ -211,14 +188,9 @@
 
     }
 
-
-    <!-- ================= FEE RECORDS ================= -->
-
     @if (myFees().length > 0) {
 
       <p-card styleClass="fee-card records-card">
-
-        <!-- Card Header -->
 
         <ng-template pTemplate="header">
 
@@ -243,7 +215,6 @@
         </ng-template>
 
 
-        <!-- Scrollable Table -->
 
         <div class="fee-table-wrapper">
 
@@ -253,7 +224,6 @@
             responsiveLayout="scroll">
 
 
-            <!-- TABLE HEADER -->
 
             <ng-template pTemplate="header">
 
@@ -274,7 +244,6 @@
             </ng-template>
 
 
-            <!-- TABLE BODY -->
 
             <ng-template
               pTemplate="body"
@@ -282,8 +251,7 @@
 
               <tr>
 
-
-                <!-- Semester -->
+>
 
                 <td>
 
@@ -302,8 +270,6 @@
                 </td>
 
 
-                <!-- Total Fee -->
-
                 <td>
 
                   <span class="total-amount">
@@ -311,9 +277,6 @@
                   </span>
 
                 </td>
-
-
-                <!-- Paid -->
 
                 <td>
 
@@ -330,8 +293,6 @@
                 </td>
 
 
-                <!-- Due -->
-
                 <td>
 
                   <div class="due-amount">
@@ -346,8 +307,6 @@
 
                 </td>
 
-
-                <!-- Status -->
 
                 <td>
 
@@ -407,9 +366,6 @@
       </p-card>
 
     }
-
-
-    <!-- ================= EMPTY STATE ================= -->
 
     @if (myFees().length === 0) {
 

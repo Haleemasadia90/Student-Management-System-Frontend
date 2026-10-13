@@ -1,15 +1,10 @@
 <div class="dept-manager">
 
-  <!-- Toast -->
   <p-toast></p-toast>
 
   
   <p-confirmDialog></p-confirmDialog>
 
-
-  <!-- ==============================
-       HEADER
-       ============================== -->
 
   <div class="dept-header">
 
@@ -25,10 +20,7 @@
   </div>
 
 
-  <!-- ==============================
-       SEARCH
-       ============================== -->
-
+  
   <p-inputGroup>
 
     <input
@@ -48,10 +40,6 @@
   </p-inputGroup>
 
 
-  <!-- ==============================
-       DEPARTMENT LIST
-       ============================== -->
-
   <p-scrollpanel styleClass="department-scroll">
 
   <ul class="dept-list">
@@ -60,12 +48,10 @@
 
       <li>
 
-        <!-- Department Name -->
         <span class="department-name">
           {{ dept.name }}
         </span>
 
-        <!-- Actions -->
         <div class="department-actions">
 
           <p-button
@@ -99,10 +85,6 @@
 </p-scrollpanel>
 
 
-  <!-- ==============================
-       ADD / EDIT MODAL
-       ============================== -->
-
   @if (showAddModal()) {
 
     <div
@@ -115,7 +97,6 @@
         (click)="$event.stopPropagation()"
       >
 
-        <!-- Modal Heading -->
 
         <h4>
 
@@ -132,14 +113,10 @@
         </h4>
 
 
-        <!-- ==============================
-             FORM
-             ============================== -->
 
         <form [formGroup]="departmentForm">
 
 
-          <!-- Department Name -->
 
           <p-floatLabel>
 
@@ -158,8 +135,6 @@
           </p-floatLabel>
 
 
-          <!-- Required Error -->
-
           @if (
             departmentForm.get('name')?.touched &&
             departmentForm.get('name')?.hasError('required')
@@ -171,9 +146,6 @@
 
           }
 
-
-          <!-- Backend Error -->
-
           @if (errorMessage()) {
 
             <small class="error">
@@ -183,13 +155,8 @@
           }
 
 
-          <!-- ==============================
-               BUTTONS
-               ============================== -->
-
           <div class="modal-actions">
 
-            <!-- UPDATE / SAVE -->
 
             @if (editingDepartmentId() !== null) {
 
@@ -211,9 +178,6 @@
               </p-button>
 
             }
-
-
-            <!-- CANCEL -->
 
             <p-button
               label="Cancel"

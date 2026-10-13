@@ -74,29 +74,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         refreshTokenSubject.next(null);
 
 
-        /*
-         * Clear session
-         */
-
         authService.clearLocalSession();
-
-
-        /*
-         * Go to login
-         */
-
         router.navigate(['/login']);
 
 
         return throwError(() => error);
       }
-
-
-      /*
-       * Login/signup/password endpoints
-       *
-       * Don't refresh token for these.
-       */
 
       if (
         error.status === 401 &&
@@ -110,13 +93,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
         return throwError(() => error);
       }
-
-
-      /*
-       * NORMAL PROTECTED API
-       *
-       * Access token may have expired.
-       */
 
       if (error.status === 401  ) {
 
@@ -138,9 +114,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return throwError(() => error);
 }
 
-      /*
-       * Other errors
-       */
 
       return throwError(() => error);
     })
@@ -148,9 +121,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 };
 
 
-/*
- * Handle 401 from protected API
- */
 
 function handle401Error(
   req: HttpRequest<any>,
@@ -159,9 +129,6 @@ function handle401Error(
 ) {
 
 
-  /*
-   * Get refresh token
-   */
 
   const refreshToken =
     authService.getRefreshToken();
@@ -173,9 +140,6 @@ function handle401Error(
   );
 
 
-  /*
-   * No refresh token
-   */
 
   if (!refreshToken) {
 
@@ -200,9 +164,6 @@ function handle401Error(
   }
 
 
-  /*
-   * Start refresh
-   */
 
   if (!isRefreshing) {
 
@@ -218,9 +179,6 @@ function handle401Error(
 
     return authService.refreshAccessToken().pipe(
 
-      /*
-       * Refresh successful
-       */
 
       switchMap((response) => {
 
@@ -236,18 +194,11 @@ function handle401Error(
           response.token;
 
 
-        /*
-         * Send new token to waiting requests
-         */
 
         refreshTokenSubject.next(
           newToken
         );
 
-
-        /*
-         * Retry original request
-         */
 
         const retriedRequest =
           req.clone({
@@ -261,10 +212,6 @@ function handle401Error(
         return next(retriedRequest);
       }),
 
-
-      /*
-       * Refresh failed
-       */
 
       catchError((refreshError) => {
 
@@ -283,16 +230,9 @@ function handle401Error(
         refreshTokenSubject.next(null);
 
 
-        /*
-         * Clear local session
-         */
-
         authService.clearLocalSession();
 
 
-        /*
-         * Redirect to login
-         */
 
         authService.navigateToLogin();
 
@@ -304,12 +244,6 @@ function handle401Error(
     );
   }
 
-
-  /*
-   * Another request is already refreshing.
-   *
-   * Wait for new access token.
-   */
 
   return refreshTokenSubject.pipe(
 

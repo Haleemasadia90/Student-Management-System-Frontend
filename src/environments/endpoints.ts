@@ -66,13 +66,16 @@ resendForgotPasswordOtp: '/api/auth/resend-forgot-password-otp',
       logout: '/api/auth/logout'
    },
 
-
 enrollments: {
-  base: '/api/enrollments',
-  getByStudent: '/api/enrollments/student/:studentId',
-  getByStudentSemester:
-    '/api/enrollments/student/:studentId/semester',
-  delete: '/api/enrollments/:enrollmentId'
+  enrollStudent: '/api/enrollments',
+  getStudentEnrollments: '/api/enrollments/student/:studentId',
+  getStudentEnrollmentsBySemester: '/api/enrollments/student/:studentId/semester',
+  removeEnrollment: '/api/enrollments/:enrollmentId',
+
+  getMyEnrollments: '/api/enrollments/me',
+  getMyEnrollmentsBySemester: '/api/enrollments/me/semester',
+  enrollMyCourse: '/api/enrollments/me',
+  removeMyEnrollment: '/api/enrollments/me/:enrollmentId'
 },
 
 

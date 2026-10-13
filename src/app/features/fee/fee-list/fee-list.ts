@@ -19,17 +19,7 @@ import { PaginatorModule } from 'primeng/paginator';
   selector: 'app-fee-list',
   standalone: true,
 
-  imports: [
-    CommonModule,
-    FormsModule,
-
-    TableModule,
-    InputTextModule,
-    IconFieldModule,
-    InputIconModule,
-    ButtonModule,
-    PaginatorModule
-  ],
+  imports: [ CommonModule, FormsModule, TableModule, InputTextModule,IconFieldModule,InputIconModule,ButtonModule,PaginatorModule],
 
   templateUrl: './fee-list.html',
   styleUrl: './fee-list.css',
@@ -76,7 +66,7 @@ export class FeeList implements OnInit, OnDestroy {
 
       next: (data: any) => {
 
-        // Search result
+      
         if (Array.isArray(data)) {
 
           this.students.set(data);
@@ -85,8 +75,7 @@ export class FeeList implements OnInit, OnDestroy {
 
         }
 
-        // Paginated result
-        else {
+          else {
 
           this.students.set(data.data.content);
 

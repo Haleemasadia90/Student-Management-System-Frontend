@@ -1,6 +1,6 @@
 <div class="registration-page">
 
-  <!-- LEFT BRAND SECTION -->
+
   <div class="registration-brand-section">
 
     <div class="brand-content">
@@ -40,7 +40,6 @@
   </div>
 
 
-  <!-- RIGHT REGISTRATION SECTION -->
   <div class="registration-section">
 
     <p-card styleClass="registration-card">
@@ -61,10 +60,7 @@
       </div>
 
 
-      <!-- STEPS -->
       <div class="steps">
-
-        <!-- STEP 1 -->
         <div
           class="step"
           [class.active]="currentStep() === 1"
@@ -90,14 +86,12 @@
         <div class="step-line"></div>
 
 
-        <!-- STEP 2 -->
         <div
           class="step"
           [class.active]="currentStep() === 2"
           [class.completed]="currentStep() > 2">
 
           <div class="step-circle">
-
             @if (currentStep() > 2) {
               <i class="pi pi-check"></i>
             } @else {
@@ -115,8 +109,6 @@
 
         <div class="step-line"></div>
 
-
-        <!-- STEP 3 -->
         <div
           class="step"
           [class.active]="currentStep() === 3">
@@ -136,11 +128,6 @@
 
       <form [formGroup]="registrationForm">
 
-
-        <!-- ========================= -->
-        <!-- STEP 1 -->
-        <!-- ========================= -->
-
         @if (currentStep() === 1) {
 
           <div class="step-content">
@@ -155,7 +142,6 @@
             </div>
 
 
-            <!-- FULL NAME -->
             <div class="form-group">
 
               <label for="fullName">
@@ -189,8 +175,6 @@
 
             </div>
 
-
-            <!-- EMAIL -->
             <div class="form-group">
 
               <label for="email">
@@ -235,8 +219,6 @@
 
             </div>
 
-
-            <!-- PHONE -->
             <div class="form-group">
 
               <label for="phone">
@@ -269,9 +251,6 @@
               }
 
             </div>
-
-
-            <!-- DATE OF BIRTH -->
             <div class="form-group">
 
               <label for="dateOfBirth">
@@ -304,8 +283,6 @@
 
             </div>
 
-
-            <!-- GENDER -->
             <div class="form-group">
 
               <label for="gender">
@@ -370,11 +347,6 @@
 
         }
 
-
-        <!-- ========================= -->
-        <!-- STEP 2 -->
-        <!-- ========================= -->
-
         @if (currentStep() === 2) {
 
           <div class="step-content">
@@ -389,7 +361,7 @@
             </div>
 
 
-            <!-- DEPARTMENT -->
+          
             <div class="form-group">
 
               <label for="department">
@@ -439,7 +411,7 @@
             </div>
 
 
-            <!-- SEMESTER -->
+          
             <div class="form-group">
 
               <label for="semester">
@@ -510,7 +482,7 @@
             </div>
 
 
-            <!-- ADMISSION YEAR -->
+            
             <div class="form-group">
 
               <label for="admissionYear">
@@ -545,7 +517,6 @@
             </div>
 
 
-            <!-- BUTTONS -->
             <div class="button-group">
 
               <p-button
@@ -575,11 +546,6 @@
 
         }
 
-
-        <!-- ========================= -->
-        <!-- STEP 3 -->
-        <!-- ========================= -->
-
         @if (currentStep() === 3) {
 
           <div class="step-content">
@@ -594,7 +560,6 @@
             </div>
 
 
-            <!-- USERNAME -->
             <div class="form-group">
 
               <label for="username">
@@ -640,7 +605,6 @@
             </div>
 
 
-            <!-- PASSWORD -->
             <div class="form-group">
 
               <label for="password">
@@ -680,8 +644,6 @@
 
             </div>
 
-
-            <!-- CONFIRM PASSWORD -->
             <div class="form-group">
 
               <label for="confirmPassword">
@@ -722,7 +684,6 @@
             </div>
 
 
-            <!-- SUCCESS -->
             @if (successMessage()) {
 
               <p-message
@@ -734,7 +695,6 @@
             }
 
 
-            <!-- ERROR -->
             @if (errorMessage()) {
 
               <p-message
@@ -746,7 +706,6 @@
             }
 
 
-            <!-- BUTTONS -->
             <div class="button-group">
 
               <p-button
@@ -778,8 +737,6 @@
 
         }
 
-
-        <!-- LOGIN LINK -->
         <div class="login-link">
 
           <span>

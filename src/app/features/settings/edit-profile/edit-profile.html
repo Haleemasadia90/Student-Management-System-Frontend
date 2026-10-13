@@ -1,6 +1,5 @@
 <div class="edit-profile-page">
 
-  <!-- Page Header -->
   <div class="page-header">
 
     <div class="page-title-icon">
@@ -36,10 +35,6 @@
     </ng-template>
 
 
-    <!-- =========================
-         CENTER PROFILE PICTURE
-    ========================== -->
-
     <div class="avatar-section">
 
       @if (avatarUrl && !imageLoadFailed()) {
@@ -69,7 +64,6 @@
     </div>
 
 
-    <!-- Change Photo -->
     <div class="upload-section">
 
       <label
@@ -92,16 +86,13 @@
     </div>
 
 
-    <!-- =========================
-         PROFILE FORM
-    ========================== -->
 
     <form
       [formGroup]="profileForm"
       class="profile-form">
 
 
-      <!-- Full Name -->
+    
       <div class="form-group">
 
         <label for="fullName">
@@ -130,7 +121,7 @@
       </div>
 
 
-      <!-- Username -->
+
       <div class="form-group">
 
         <label for="username">
@@ -170,7 +161,6 @@
       </div>
 
 
-      <!-- Phone -->
       <div class="form-group">
 
         <label for="phone">
@@ -225,7 +215,6 @@
       }
 
 
-      <!-- Error -->
       @if (errorMsg()) {
 
         <p-message
@@ -240,7 +229,6 @@
       }
 
 
-      <!-- Save -->
       <div class="save-container">
 
         <p-button
@@ -259,9 +247,6 @@
   </p-card>
 
 
-  <!-- =========================
-       PROFILE PICTURE POPUP
-  ========================== -->
 
   <p-dialog
     [(visible)]="showProfilePicture"

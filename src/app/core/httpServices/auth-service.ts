@@ -115,9 +115,6 @@ logout(): void {
   }
 
 
-  /*
-   * Frontend session clear
-   */
   this.clearLocalSession();
 
 

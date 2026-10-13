@@ -42,8 +42,6 @@ export class CourseService {
   }
 
 
-
-  // paginatoir
   getCoursesPaged(page: number, size: number, sort = 'id,desc') {
   const params = new HttpParams()
     .set('page', page)

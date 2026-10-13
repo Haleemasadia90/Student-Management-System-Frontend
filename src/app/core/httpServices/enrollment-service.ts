@@ -1,4 +1,3 @@
-
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -11,30 +10,35 @@ import { Enrollment } from '../../models/enrollment.model';
   providedIn: 'root'
 })
 export class EnrollmentService {
+
   private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.apiUrl;
+
 
   enrollStudent(
     studentId: number,
     courseId: number,
     semester: string
   ): Observable<Enrollment> {
+
     const params = new HttpParams()
-      .set('studentId', studentId)
-      .set('courseId', courseId)
+      .set('studentId', studentId.toString())
+      .set('courseId', courseId.toString())
       .set('semester', semester);
 
     return this.http.post<Enrollment>(
-      `${this.baseUrl}${ENDPOINTS.enrollments.base}`,
+      `${this.baseUrl}${ENDPOINTS.enrollments.enrollStudent}`,
       null,
       { params }
     );
   }
 
+
   getStudentEnrollments(
     studentId: number
   ): Observable<Enrollment[]> {
-    const url = ENDPOINTS.enrollments.getByStudent
+
+    const url = ENDPOINTS.enrollments.getStudentEnrollments
       .replace(':studentId', studentId.toString());
 
     return this.http.get<Enrollment[]>(
@@ -42,14 +46,17 @@ export class EnrollmentService {
     );
   }
 
+
   getStudentEnrollmentsBySemester(
     studentId: number,
     semester: string
   ): Observable<Enrollment[]> {
-    const url = ENDPOINTS.enrollments.getByStudentSemester
+
+    const url = ENDPOINTS.enrollments.getStudentEnrollmentsBySemester
       .replace(':studentId', studentId.toString());
 
-    const params = new HttpParams().set('semester', semester);
+    const params = new HttpParams()
+      .set('semester', semester);
 
     return this.http.get<Enrollment[]>(
       `${this.baseUrl}${url}`,
@@ -57,24 +64,33 @@ export class EnrollmentService {
     );
   }
 
-  removeEnrollment(enrollmentId: number): Observable<string> {
-    const url = ENDPOINTS.enrollments.delete
+
+  removeEnrollment(
+    enrollmentId: number
+  ): Observable<string> {
+
+    const url = ENDPOINTS.enrollments.removeEnrollment
       .replace(':enrollmentId', enrollmentId.toString());
 
     return this.http.delete(
       `${this.baseUrl}${url}`,
-      { responseType: 'text' }
+      {
+        responseType: 'text'
+      }
     );
   }
+
 
   getSemesterCreditHours(
     studentId: number,
     semester: string
   ): Observable<number> {
+
     const url = ENDPOINTS.fee.getStudentCreditHours
       .replace(':studentId', studentId.toString());
 
-    const params = new HttpParams().set('semester', semester);
+    const params = new HttpParams()
+      .set('semester', semester);
 
     return this.http.get<number>(
       `${this.baseUrl}${url}`,
@@ -83,23 +99,24 @@ export class EnrollmentService {
   }
 
 
+  getMyEnrollments(): Observable<Enrollment[]> {
 
-
-
-
-
-   getMyEnrollments(): Observable<Enrollment[]> {
     return this.http.get<Enrollment[]>(
-      `${this.baseUrl}/api/enrollments/me`
+      `${this.baseUrl}${ENDPOINTS.enrollments.getMyEnrollments}`
     );
   }
+
 
   getMyEnrollmentsBySemester(
     semester: string
   ): Observable<Enrollment[]> {
+
+    const params = new HttpParams()
+      .set('semester', semester);
+
     return this.http.get<Enrollment[]>(
-      `${this.baseUrl}/api/enrollments/me/semester`,
-      { params: { semester } }
+      `${this.baseUrl}${ENDPOINTS.enrollments.getMyEnrollmentsBySemester}`,
+      { params }
     );
   }
 
@@ -108,21 +125,31 @@ export class EnrollmentService {
     courseId: number,
     semester: string
   ): Observable<Enrollment> {
+
     const params = new HttpParams()
-      .set('courseId', courseId)
+      .set('courseId', courseId.toString())
       .set('semester', semester);
 
     return this.http.post<Enrollment>(
-      `${this.baseUrl}/api/enrollments/me`,
+      `${this.baseUrl}${ENDPOINTS.enrollments.enrollMyCourse}`,
       null,
       { params }
     );
   }
 
-  removeMyEnrollment(enrollmentId: number): Observable<string> {
+
+  removeMyEnrollment(
+    enrollmentId: number
+  ): Observable<string> {
+
+    const url = ENDPOINTS.enrollments.removeMyEnrollment
+      .replace(':enrollmentId', enrollmentId.toString());
+
     return this.http.delete(
-      `${this.baseUrl}/api/enrollments/me/${enrollmentId}`,
-      { responseType: 'text' }
+      `${this.baseUrl}${url}`,
+      {
+        responseType: 'text'
+      }
     );
   }
 

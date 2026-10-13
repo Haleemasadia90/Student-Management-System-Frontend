@@ -1,25 +1,10 @@
-import {
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-  signal
-} from '@angular/core';
+import { Component,  inject, OnDestroy, OnInit, signal} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormControl,FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 
-import {
-  ActivatedRoute,
-  Router,
-  RouterLink
-} from '@angular/router';
+import { ActivatedRoute, Router,RouterLink} from '@angular/router';
 
 import { AuthService } from '../../../core/httpServices/auth-service';
 
@@ -36,18 +21,8 @@ import { InputOtpModule } from 'primeng/inputotp';
   selector: 'app-reset-password',
   standalone: true,
 
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-
-    CardModule,
-    InputTextModule,
-    PasswordModule,
-    ButtonModule,
-    MessageModule,
-    InputOtpModule
-  ],
+  imports: [ CommonModule, ReactiveFormsModule, RouterLink,  CardModule, InputTextModule, PasswordModule,  
+    ButtonModule, MessageModule, InputOtpModule],
 
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.css'
@@ -66,20 +41,11 @@ export class ResetPassword implements OnInit, OnDestroy {
 
 
   successMessage = signal('');
-
   errorMessage = signal('');
-
   isLoading = signal(false);
-
-
   otpVerified = signal(false);
-
-
-
   resendDisabled = signal(true);
-
   resendSeconds = signal(30);
-
   resendLoading = signal(false);
 
   private resendTimer: ReturnType<typeof setInterval> | null = null;
@@ -177,10 +143,6 @@ export class ResetPassword implements OnInit, OnDestroy {
     this.isLoading.set(true);
 
 
-    // =====================================================
-    // REGISTRATION MODE
-    // =====================================================
-
     if (this.isRegistrationMode) {
 
       this.authService
@@ -227,10 +189,6 @@ export class ResetPassword implements OnInit, OnDestroy {
     }
 
 
-    // =====================================================
-    // FORGOT PASSWORD MODE
-    // =====================================================
-
     this.authService
       .verifyOtp({
 
@@ -268,10 +226,6 @@ export class ResetPassword implements OnInit, OnDestroy {
   }
 
 
-  // =========================================================
-  // RESEND OTP
-  // =========================================================
-
   resendOtp(): void {
 
     if (
@@ -289,10 +243,6 @@ export class ResetPassword implements OnInit, OnDestroy {
 
     this.resendLoading.set(true);
 
-
-    // =====================================================
-    // REGISTRATION
-    // =====================================================
 
     if (this.isRegistrationMode) {
 
@@ -331,10 +281,6 @@ export class ResetPassword implements OnInit, OnDestroy {
     }
 
 
-    // =====================================================
-    // FORGOT PASSWORD
-    // =====================================================
-
     this.authService
       .resendForgotPasswordOtp(this.email)
       .subscribe({
@@ -368,9 +314,6 @@ export class ResetPassword implements OnInit, OnDestroy {
   }
 
 
-  // =========================================================
-  // RESEND TIMER
-  // =========================================================
 
   startResendTimer(): void {
 
@@ -416,9 +359,6 @@ export class ResetPassword implements OnInit, OnDestroy {
   }
 
 
-  // =========================================================
-  // STEP 2 - RESET PASSWORD
-  // =========================================================
 
   resetPassword(): void {
 
@@ -510,10 +450,6 @@ export class ResetPassword implements OnInit, OnDestroy {
       });
   }
 
-
-  // =========================================================
-  // DESTROY
-  // =========================================================
 
   ngOnDestroy(): void {
 

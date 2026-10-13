@@ -1,7 +1,6 @@
 
 <div class="list-section">
 
-  <!-- Page Header -->
   <div class="list-header">
     <h3 class="list-title">COURSES</h3>
 
@@ -13,7 +12,6 @@
     </p-button>
   </div>
 
-  <!-- Add / Edit Course Drawer -->
   <p-drawer
     [(visible)]="drawerVisible"
     position="right"
@@ -40,14 +38,14 @@
       </div>
     </ng-template>
 
-    <!-- Add Course Form -->
+ 
     @if (drawerVisible && !isEditMode) {
       <app-add-course
         (courseAdded)="onCourseAdded()">
       </app-add-course>
     }
 
-    <!-- Edit Course Form -->
+    
     @if (
       drawerVisible &&
       isEditMode &&
@@ -61,7 +59,7 @@
 
   </p-drawer>
 
-  <!-- Courses Table -->
+ 
   <p-table
     [value]="courses()"
     [lazy]="true"
@@ -76,7 +74,7 @@
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} courses"
     [tableStyle]="{ 'min-width': '50rem' }">
 
-    <!-- Table Header -->
+  
     <ng-template pTemplate="header">
       <tr>
         <th>S.No</th>
@@ -89,7 +87,7 @@
       </tr>
     </ng-template>
 
-    <!-- Table Body -->
+  
     <ng-template pTemplate="body" let-c let-i="rowIndex">
       <tr>
         <td>{{ i + 1 }}</td>
@@ -102,7 +100,6 @@
         <td>
           <div class="action-buttons">
 
-            <!-- Edit Course -->
             <p-button
               label="Edit"
               icon="pi pi-pencil"
@@ -111,7 +108,6 @@
               (onClick)="editCourse(c.id)">
             </p-button>
 
-            <!-- Delete Course -->
             <p-button
               label="Delete"
               icon="pi pi-trash"
@@ -125,7 +121,6 @@
       </tr>
     </ng-template>
 
-    <!-- Empty Table Message -->
     <ng-template pTemplate="emptymessage">
       <tr>
         <td colspan="7" class="empty-row">
@@ -138,8 +133,8 @@
 
 </div>
 
-<!-- Confirmation Dialog -->
+
 <p-confirmdialog></p-confirmdialog>
 
-<!-- Toast Notifications -->
+
 <p-toast position="top-right"></p-toast>

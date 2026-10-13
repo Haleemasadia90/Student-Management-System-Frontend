@@ -58,17 +58,12 @@
 
   }
 
-
-  <!-- ==============================
-       FEE SUMMARY CARDS
-       ============================== -->
-
+  
   @if (summary()) {
 
     <div class="fee-summary-cards">
 
-      <!-- Total Records -->
-
+    
       <p-card styleClass="summary-card">
 
         <span class="summary-label">
@@ -81,8 +76,6 @@
 
       </p-card>
 
-
-      <!-- Total Fee -->
 
       <p-card styleClass="summary-card">
 
@@ -97,8 +90,6 @@
       </p-card>
 
 
-      <!-- Total Paid -->
-
       <p-card styleClass="summary-card">
 
         <span class="summary-label">
@@ -111,8 +102,6 @@
 
       </p-card>
 
-
-      <!-- Total Due -->
 
       <p-card styleClass="summary-card">
 
@@ -131,17 +120,11 @@
   }
 
 
-  <!-- ==============================
-       FEE TABLE
-       ============================== -->
-
   <p-table
     [value]="fees()"
     responsiveLayout="scroll"
     styleClass="fee-detail-table"
   >
-
-    <!-- TABLE HEADER -->
 
     <ng-template pTemplate="header">
 
@@ -171,8 +154,6 @@
 
     </ng-template>
 
-
-    <!-- TABLE BODY -->
 
     <ng-template
       pTemplate="body"
@@ -212,7 +193,6 @@
     </ng-template>
 
 
-    <!-- EMPTY TABLE -->
 
     <ng-template pTemplate="emptymessage">
 

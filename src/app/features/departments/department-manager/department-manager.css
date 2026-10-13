@@ -7,9 +7,6 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
-/* =========================
-   HEADER
-========================= */
 
 .dept-header {
   display: flex;
@@ -26,10 +23,6 @@
   padding-left: 10px;
 }
 
-/* =========================
-   SEARCH
-========================= */
-
 p-inputGroup {
   display: flex;
   width: 90%;
@@ -40,9 +33,6 @@ p-inputGroup input {
   flex: 1;
 }
 
-/* =========================
-   DEPARTMENT LIST
-========================= */
 
 .dept-list {
   list-style: none;
@@ -66,9 +56,6 @@ p-inputGroup input {
   font-weight: 500;
 }
 
-/* =========================
-   EDIT + DELETE BUTTONS
-========================= */
 
 .department-actions {
   display: flex;
@@ -76,7 +63,6 @@ p-inputGroup input {
   gap: 8px;
 }
 
-/* Make raised buttons visible and compact */
 :host ::ng-deep .department-actions .p-button {
   width: 36px !important;
   min-width: 36px !important;
@@ -90,7 +76,6 @@ p-inputGroup input {
   border-radius: 6px !important;
 }
 
-/* Make icons visible */
 :host ::ng-deep .department-actions .p-button .p-button-icon {
   display: inline-block !important;
   visibility: visible !important;
@@ -99,26 +84,19 @@ p-inputGroup input {
   margin: 0 !important;
 }
 
-/* Pencil icon */
 :host ::ng-deep .department-actions .p-button-info {
   color: #ffffff !important;
 }
 
-/* Trash icon */
 :host ::ng-deep .department-actions .p-button-danger {
   color: #ffffff !important;
 }
 
-/* Button label, if a label is ever used */
 :host ::ng-deep .department-actions .p-button .p-button-label {
   display: inline-block !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
-
-/* =========================
-   EMPTY MESSAGE
-========================= */
 
 .empty-text {
   color: #94a3b8;
@@ -127,20 +105,12 @@ p-inputGroup input {
   padding: 10px;
 }
 
-/* =========================
-   ERROR
-========================= */
-
 .error {
   display: block;
   color: #dc3545;
   font-size: 12px;
   margin: 6px 0;
 }
-
-/* =========================
-   MODAL
-========================= */
 
 .modal-overlay {
   position: fixed;
@@ -170,9 +140,6 @@ p-inputGroup input {
   color: #1e293b;
 }
 
-/* =========================
-   FLOAT LABEL INPUT
-========================= */
 
 .modal-box p-floatLabel {
   display: block;
@@ -183,10 +150,6 @@ p-inputGroup input {
   width: 100%;
 }
 
-/* =========================
-   MODAL BUTTONS
-========================= */
-
 .modal-actions {
   display: flex;
   justify-content: center;
@@ -196,21 +159,15 @@ p-inputGroup input {
 }
 
 
-/* =========================
-   DEPARTMENT SCROLLER
-========================= */
-
 :host ::ng-deep .department-scroll {
   width: 100%;
   height: 400px;
 }
 
-/* Scrollbar area */
 :host ::ng-deep .department-scroll .p-scrollpanel-content {
   padding: 0 8px 0 0;
 }
 
-/* Scrollbar */
 :host ::ng-deep .department-scroll .p-scrollpanel-bar {
   background: #c4b5fd;
   opacity: 0.7;

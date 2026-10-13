@@ -1,15 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 
 import { AuthService } from '../../../core/httpServices/auth-service';
 
-/* PrimeNG */
 import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -19,16 +13,7 @@ import { MessageModule } from 'primeng/message';
   selector: 'app-change-password',
   standalone: true,
 
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-
-    /* PrimeNG */
-    CardModule,
-    PasswordModule,
-    ButtonModule,
-    MessageModule
-  ],
+  imports: [ CommonModule, ReactiveFormsModule,  CardModule, PasswordModule, ButtonModule, MessageModule],
 
   templateUrl: './change-password.html',
   styleUrl: './change-password.css',
@@ -37,8 +22,6 @@ export class ChangePassword {
 
   readonly authService = inject(AuthService);
 
-
-  /* ================= FORM ================= */
 
   form = new FormGroup({
 
@@ -67,14 +50,10 @@ export class ChangePassword {
   });
 
 
-  /* ================= MESSAGES ================= */
-
   successMessage = signal('');
 
   errorMessage = signal('');
 
-
-  /* ================= SUBMIT ================= */
 
   submit(): void {
 
@@ -82,8 +61,6 @@ export class ChangePassword {
 
     this.errorMessage.set('');
 
-
-    /* Check form validation */
 
     if (this.form.invalid) {
 
@@ -93,16 +70,12 @@ export class ChangePassword {
     }
 
 
-    /* Get form values */
-
     const {
       oldPassword,
       newPassword,
       confirmPassword
     } = this.form.getRawValue();
 
-
-    /* Check password confirmation */
 
     if (newPassword !== confirmPassword) {
 
@@ -114,8 +87,6 @@ export class ChangePassword {
     }
 
 
-    /* Call backend */
-
     this.authService
       .changePassword({
         oldPassword,
@@ -123,7 +94,6 @@ export class ChangePassword {
       })
       .subscribe({
 
-        /* Success */
 
         next: () => {
 
@@ -134,8 +104,6 @@ export class ChangePassword {
           this.form.reset();
         },
 
-
-        /* Error */
 
         error: (err) => {
 

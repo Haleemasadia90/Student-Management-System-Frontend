@@ -8,21 +8,14 @@ import { Course } from '../../../models/course.model';
 import { AddCourse } from '../add-course/add-course';
 import { EditCourse } from '../edit-course/edit-course';
 
-// PrimeNG Modules
 import { ButtonModule } from 'primeng/button';
-import {
-  TableModule,
-  TableLazyLoadEvent
-} from 'primeng/table';
+import { TableModule, TableLazyLoadEvent} from 'primeng/table';
 import { DrawerModule } from 'primeng/drawer';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
-// PrimeNG Services
-import {
-  MessageService,
-  ConfirmationService
-} from 'primeng/api';
+
+import { MessageService, ConfirmationService} from 'primeng/api';
 
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
@@ -30,30 +23,17 @@ import { SelectModule } from 'primeng/select';
 @Component({
   selector: 'app-course-list',
 
-  imports: [
-    CommonModule,
-    AddCourse,
-    EditCourse,
-    ButtonModule,
-    TableModule,
-    DrawerModule,
-    ToastModule,
-    ConfirmDialogModule,
-    FormsModule,
-    SelectModule
-  ],
+  imports: [ CommonModule, AddCourse,  EditCourse, ButtonModule, TableModule,
+      DrawerModule, ToastModule, ConfirmDialogModule, FormsModule, SelectModule],
 
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 
-  providers: [
-    MessageService,
-    ConfirmationService
-  ]
+  providers: [ MessageService, ConfirmationService]
 })
 export class CourseList {
 
-  // Services
+  
   readonly courseService = inject(CourseService);
 
   readonly messageService = inject(MessageService);
@@ -61,27 +41,18 @@ export class CourseList {
   readonly confirmationService =
     inject(ConfirmationService);
 
-  // Course Table State
   courses = signal<Course[]>([]);
-
   totalRecords = signal(0);
-
   loading = signal(false);
-
-  // Pagination State
   first = signal(0);
-
   rows = signal(10);
 
-  // Drawer State
   drawerVisible = false;
 
   isEditMode = false;
 
   selectedCourseId = signal<number | null>(null);
 
-
-  // Open Drawer for Adding a Course
   openAddDrawer(): void {
     this.selectedCourseId.set(null);
 
@@ -91,7 +62,6 @@ export class CourseList {
   }
 
 
-  // Open Drawer for Editing a Course
   editCourse(id: number): void {
     this.selectedCourseId.set(id);
 
@@ -101,7 +71,6 @@ export class CourseList {
   }
 
 
-  // Close Drawer and Reset Its State
   closeDrawer(): void {
     this.drawerVisible = false;
 
@@ -111,28 +80,20 @@ export class CourseList {
   }
 
 
-  // Called After a Course Is Successfully Added
-  onCourseAdded(): void {
+    onCourseAdded(): void {
     this.closeDrawer();
 
-    // Return to the first page
     this.first.set(0);
 
-    // Refresh the course table
     this.getCourses();
   }
 
 
-  // Called After a Course Is Successfully Updated
   onCourseUpdated(): void {
     this.closeDrawer();
-
-    // Refresh the current page
     this.getCourses();
   }
 
-
-  // Handle PrimeNG Lazy Loading and Pagination
   onLazyLoad(event: TableLazyLoadEvent): void {
     this.first.set(event.first ?? 0);
 
@@ -142,7 +103,7 @@ export class CourseList {
   }
 
 
-  // Fetch Paginated Courses from the Backend
+
   getCourses(): void {
     const page = Math.floor(
       this.first() / this.rows()
@@ -177,7 +138,6 @@ export class CourseList {
   }
 
 
-  // Delete Course with Confirmation
   deleteCourse(id: number): void {
 
     this.confirmationService.confirm({
@@ -204,9 +164,7 @@ export class CourseList {
                 life: 3000
               });
 
-              // Move to the previous page if
-              // the last row on a page was deleted
-              if (
+                      if (
                 this.courses().length === 1 &&
                 this.first() > 0
               ) {
@@ -215,8 +173,7 @@ export class CourseList {
                 );
               }
 
-              // Refresh the table
-              this.getCourses();
+                this.getCourses();
 
             },
 
