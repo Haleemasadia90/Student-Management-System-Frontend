@@ -1,9 +1,11 @@
-
 import {HttpClient} from "@angular/common/http";
 import { Student } from '../../models/student.model';
 import { environment } from '../../../environments/environment';
 import { ENDPOINTS } from '../../../environments/endpoints';
 import { Injectable, inject, signal } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiResponse, PageResponse } from "../../models/Paginator";
+
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,18 @@ getAllStudents() {
   return this.http.get<Student[]>(this.baseUrl+ENDPOINTS.students.getAllStudents);
 }
 
+ getStudentsPaged(
+    page: number,
+    size: number
+  ): Observable<ApiResponse<PageResponse<Student>>> {
 
+    return this.http.get<ApiResponse<PageResponse<Student>>>(
+      this.baseUrl +
+      ENDPOINTS.students.getAllStudentsPaged +
+      `?page=${page}&size=${size}`
+    );
+  }
+  
 searchStudentsByName(name: string) {
   return this.http.get<Student[]>(
     this.baseUrl + ENDPOINTS.students.searchByName,
@@ -63,4 +76,21 @@ updateProfile(data: { username: string }) {
   getTotalStudentsCount() {
   return this.http.get<number>(this.baseUrl + ENDPOINTS.students.getTotalStudents);
 }
+getStudentByEmail(email: string) {
+  return this.http.get<Student>(
+    this.baseUrl +
+    ENDPOINTS.students.getStudentByEmail.replace(
+      ':email',
+      encodeURIComponent(email)
+    )
+  );
+}
+
+
+getProfilePictureUrl(fileName: string): string {
+  return this.baseUrl + ENDPOINTS.students.profilePictureUrl + fileName;
+}
+
+
+
 }

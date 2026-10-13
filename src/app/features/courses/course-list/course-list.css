@@ -1,13 +1,13 @@
+
 .list-section {
   max-width: 1100px;
-  margin: 30px auto;
+  margin: 10px auto;
   padding: 0 20px;
   font-family: 'Inter', Arial, sans-serif;
 }
 
 .list-header {
-      margin-top: 50px;
-  
+  margin-top: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,77 +18,179 @@
   font-size: 22px;
   font-weight: 700;
   color: #1e293b;
-  border-left: 4px solid #0d6efd;
+  border-left: 4px solid #20163a;
   padding-left: 12px;
   margin: 0;
 }
 
-.add-btn {
-  background: #0d6efd;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.add-btn:hover {
-  background: #0b5ed7;
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #f8fafc;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-}
-
-.data-table thead {
-  background: #eef2f7;
-}
-
-.data-table th {
-  text-align: left;
-  padding: 14px 16px;
-  font-size: 13px;
-  letter-spacing: 0.5px;
-  color: #475569;
-  text-transform: uppercase;
-}
-
-.data-table td {
-  padding: 14px 16px;
-  font-size: 14px;
-  color: #1e293b;
-  border-top: 1px solid #e2e8f0;
-}
-
-.data-table tr:hover {
-  background: #f1f5f9;
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .empty-row {
   text-align: center;
   color: #94a3b8;
   padding: 24px !important;
+  font-size: 14px;
 }
 
-.delete-btn {
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.3s;
+
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-.delete-btn:hover {
-  background: #bb2d3b;
+.drawer-header i {
+  font-size: 20px;
+  color: #c4b5fd;
+}
+
+
+
+:host ::ng-deep .p-drawer {
+  background: #f8f7fc;
+  max-width: 100vw;
+}
+
+:host ::ng-deep .p-drawer-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  flex-shrink: 0;
+
+  background: #20163a;
+  color: #ffffff;
+  padding: 22px 20px;
+
+  border-bottom: 1px solid #382957;
+}
+
+:host ::ng-deep .p-drawer-content {
+  background: #f8f7fc;
+  padding: 24px 20px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+:host ::ng-deep .p-drawer-close-button {
+  color: #ffffff;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+:host ::ng-deep .p-drawer-close-button:hover {
+  background: #382957;
+  color: #ffffff;
+}
+
+
+
+:host ::ng-deep .course-form-card {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 1px solid #e5e0f0;
+  border-radius: 12px;
+
+  box-shadow: 0 4px 14px rgba(32, 22, 58, 0.08);
+}
+
+
+:host ::ng-deep .course-form-card .p-card-body {
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+
+:host ::ng-deep .course-form-card .p-card-title {
+  color: #20163a;
+  font-weight: 700;
+}
+
+
+:host ::ng-deep .course-form-card label {
+  color: #334155;
+  font-weight: 500;
+}
+
+:host ::ng-deep .course-form-card .p-button:not(.p-button-danger) {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+:host ::ng-deep .course-form-card .p-button:not(.p-button-danger):hover {
+  filter: brightness(1.08);
+}
+
+
+@media (max-width: 768px) {
+  .list-section {
+    padding: 0 12px;
+  }
+
+  .list-header {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+
+  .list-title {
+    font-size: 20px;
+  }
+
+  .action-buttons {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  :host ::ng-deep .p-drawer-header {
+    padding: 18px 16px;
+  }
+
+  :host ::ng-deep .p-drawer-content {
+    padding: 18px 16px;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .list-header {
+    margin-top: 25px;
+  }
+
+  .list-title {
+    font-size: 18px;
+  }
+
+  :host ::ng-deep .p-drawer {
+    width: 100% !important;
+    max-width: 100vw;
+  }
+
+  :host ::ng-deep .p-drawer-content {
+    padding: 15px;
+  }
+
+  .drawer-header {
+    font-size: 16px;
+  }
+
+  :host ::ng-deep .course-form-card {
+    border-radius: 10px;
+  }
 }

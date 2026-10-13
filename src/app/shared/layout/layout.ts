@@ -1,63 +1,154 @@
-import { Component, Input, signal } from '@angular/core';
-import { NavItem } from '../../models/nav-item.model';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import {Component, inject, Input, signal} from '@angular/core';
+
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+
 import { CommonModule } from '@angular/common';
+
+import { NavItem } from '../../models/nav-item.model';
+
+import { AvatarModule } from 'primeng/avatar';
+import { DialogModule } from 'primeng/dialog';
+import { TagModule } from 'primeng/tag';
+
+import { StudentService } from '../../features/student/student-service';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, AvatarModule, DialogModule, TagModule],
   templateUrl: './layout.html',
-  styleUrl: './layout.css',
+  styleUrl: './layout.css'
 })
 export class Layout {
-  @Input({required:true}) navItems: NavItem[] = [];
-  @Input() panelTitle: string = '';
-  @Input() username: string | null = null;
-  @Input() profilePicture: string | null = null;
-  @Input() logoutFn!: ()=> void;
+  readonly studentService = inject(StudentService);
+
+  @Input({ required: true })
+  navItems: NavItem[] = [];
+
+  @Input()
+  panelTitle: string = '';
+
+  @Input()
+  username: string | null = null;
+
+  @Input()
+  profilePicture: string | null = null;
+
+  @Input()
+  role: string | null = null;
+
+  @Input()
+  logoutFn!: () => void;
+
 
   isSidebarOpen = signal(false);
   isCollapsed = signal(false);
-  imageLoadFailed = signal(false);
   expandedItem = signal<string | null>(null);
 
+
+  imageLoadFailed = signal(false);
+  showProfilePicture = signal(false);
+
+
   get avatarUrl(): string {
-    return 'http://localhost:8080/uploads/profile-pictures/' + this.profilePicture;
-  }
+
+    if (!this.profilePicture) {
+      return '';
+    }
+
+    return this.studentService.getProfilePictureUrl(
+    this.profilePicture
+  );
+}
+
 
   get initials(): string {
-    return this.username ? this.username.charAt(0).toUpperCase() : '?';
+
+    if (!this.username) {
+      return '?';
+    }
+
+    return this.username
+      .charAt(0)
+      .toUpperCase();
   }
 
+
   onImageError(): void {
+
     this.imageLoadFailed.set(true);
   }
 
-  toggleExpand(item: NavItem): void {
-    this.expandedItem.set(this.expandedItem() === item.label ? null : item.label);
+
+
+  openProfilePicture(): void {
+
+    this.showProfilePicture.set(true);
   }
 
+
+
+  closeProfilePicture(): void {
+
+    this.showProfilePicture.set(false);
+  }
+
+
+
   onParentClick(item: NavItem): void {
-    if (item.children) {
+
+    if (
+      item.children &&
+      item.children.length > 0
+    ) {
       this.toggleExpand(item);
     } else {
       this.closeSidebar();
     }
   }
 
-  toggleSidebar(): void {
-    this.isSidebarOpen.update(v => !v);
+
+  toggleExpand(item: NavItem): void {
+
+    this.expandedItem.update(current =>
+      current === item.label
+        ? null
+        : item.label
+    );
   }
 
+
+  toggleSidebar(): void {
+
+    this.isSidebarOpen.update(
+      value => !value
+    );
+  }
+
+
   closeSidebar(): void {
+
     this.isSidebarOpen.set(false);
   }
 
+
   toggleCollapse(): void {
-    this.isCollapsed.update(v => !v);
+
+    this.isCollapsed.update(
+      value => !value
+    );
+
+    if (this.isCollapsed()) {
+
+      this.expandedItem.set(null);
+    }
   }
 
-  logout():void{
-    this.logoutFn();
+
+  logout(): void {
+
+    if (this.logoutFn) {
+      this.logoutFn();
+    }
   }
 }

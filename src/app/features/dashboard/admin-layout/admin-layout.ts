@@ -3,7 +3,6 @@ import { Layout } from '../../../shared/layout/layout';
 import { NavItem } from '../../../models/nav-item.model';
 import { AuthService } from '../../../core/httpServices/auth-service';
 
-
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
@@ -13,44 +12,64 @@ import { AuthService } from '../../../core/httpServices/auth-service';
 })
 export class AdminLayout {
 
-  
+
+
   navItems: NavItem[] = [
+
     {
       label: 'Dashboard',
-      icon: 'ti ti-dashboard',
+      icon: 'pi pi-home',
       route: '/admin/dashboard'
     },
+
     {
       label: 'Students',
-      icon: 'ti ti-users',
+      icon: 'pi pi-users',
       route: '/admin/students'
     },
+
     {
       label: 'Courses',
-      icon: 'ti ti-book',
+      icon: 'pi pi-book',
       route: '/admin/courses'
     },
+
     {
       label: 'Finance',
-      icon: 'ti ti-wallet',
+      icon: 'pi pi-wallet',
       route: '/admin/finance'
     },
 
     {
- label: 'Settings',
-icon: 'ti ti-settings',
+      label: 'Settings',
+      icon: 'pi pi-cog',
+      route: '/admin/departments'
+    }
 
-  route: '/admin/departments'
-},
   ];
+
+
+
 
   username: string | null = null;
 
-  constructor(private authService: AuthService) {
+
+
+  constructor(
+    private authService: AuthService
+  ) {
+
     this.username = this.authService.getUsername();
+
   }
 
+
+
+
   logout(): void {
+
     this.authService.logout();
+
   }
+
 }

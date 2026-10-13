@@ -1,5 +1,4 @@
-import { TrailingSlashPathLocationStrategy } from "@angular/common";
-
+ 
 export interface LoginRequest{
     email:string;
     password:string;
@@ -20,6 +19,7 @@ export interface SignupRequest{
 
 export interface LoginResponse{
     token:string;
+     refreshToken: string; 
     username:string;
     email:string;
     role:string;
@@ -35,6 +35,12 @@ export interface ForgotPasswordRequest {
 }
 
 export interface ResetPasswordRequest {
-  token: string;
+    email: string;
+  otp: string;
   newPassword: string;
+}
+
+export interface RefreshTokenResponse {
+  token: string;
+  refreshToken: string;
 }

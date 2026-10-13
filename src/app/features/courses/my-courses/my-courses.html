@@ -1,56 +1,177 @@
-<div class="page-header">
-  <h2>My Courses</h2>
-</div>
+<div class="my-courses-page">
 
-@if (myRecord()) {
+  <div class="page-header">
+    <h2>My Courses</h2>
+    <p>Manage your enrolled courses and explore available courses.</p>
+  </div>
 
-  <div class="edit-profile-card">
-    <h4 class="section-title">Enrolled Courses</h4>
+  @if (myRecord()) {
 
-    <div class="credit-tracker">
-      <span>{{ myRecord()?.totalCreditHours }} / {{ myRecord()?.maxCreditHours }} Credit Hours</span>
-      <div class="credit-bar">
-        <div class="credit-fill" [style.width.%]="(myRecord()!.totalCreditHours / myRecord()!.maxCreditHours) * 100"></div>
-      </div>
+    <div class="semester-selection">
+      <label for="semester">Semester</label>
+      <p-select
+        inputId="semester"
+        [options]="semesters"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="semester"
+        placeholder="Select semester"
+        (onChange)="onSemesterChange()"
+        [disabled]="semesters.length === 0">
+      </p-select>
     </div>
 
-    @if (myRecord()?.courseTitles && myRecord()!.courseTitles.length > 0) {
-      <ul class="course-list">
-        @for (course of myRecord()!.courseTitles; track course) {
-          <li>{{ course }}</li>
-        }
-      </ul>
-    } @else {
-      <p class="empty-text">You are not enrolled in any courses yet.</p>
-    }
-  </div>
-
-  <div class="edit-profile-card">
-    <h4 class="section-title">Available Courses in My Department</h4>
-
-    @if (availableCourses().length > 0) {
-      @for (course of availableCourses(); track course.id) {
-        <div class="course-row">
-          <span>{{ course.title }} ({{ course.courseCode }}) — {{ course.creditHours }} CH</span>
-
-          @if (myRecord()!.courseTitles.includes(course.title)) {
-            <span class="enrolled-badge">Enrolled</span>
-          } @else if (myRecord()!.totalCreditHours + course.creditHours > myRecord()!.maxCreditHours) {
-            <span class="limit-badge">Limit Exceeded</span>
-          } @else {
-            <button (click)="enroll(course.id)" class="enroll-btn">Enroll</button>
-          }
+    <p-card styleClass="course-card enrolled-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <div class="header-icon enrolled-icon">
+            <i class="pi pi-book"></i>
+          </div>
+          <div>
+            <h4>Enrolled Courses</h4>
+            <span>Enrollments for the selected semester</span>
+          </div>
         </div>
-      }
-    } @else {
-      <p class="empty-text">No courses available in your department yet.</p>
-    }
+      </ng-template>
 
-    @if (errorMessage()) {
-      <small class="error">{{ errorMessage() }}</small>
-    }
-  </div>
+      <div class="scrollable-card-content">
 
-} @else {
-  <p class="loading-text">Loading...</p>
-}
+        <div class="credit-section">
+          <div class="credit-info">
+            <span class="credit-label">Credit Hours</span>
+            <span class="credit-value">{{ creditHours() }} / {{ maxCreditHours }}</span>
+          </div>
+
+          <p-progressBar
+            [value]="getCreditPercentage()"
+            [showValue]="false"
+            styleClass="credit-progress">
+          </p-progressBar>
+        </div>
+
+        @if (enrollments().length > 0) {
+          <div class="course-list">
+            @for (e of enrollments(); track e.id) {
+              <div class="enrolled-course">
+                <div class="course-icon"><i class="pi pi-bookmark"></i></div>
+                <span>{{ e.courseCode }} – {{ e.courseTitle }} ({{ e.creditHours }} CH)</span>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty-state">
+            <i class="pi pi-book"></i>
+            <p>No courses enrolled for {{ semester || 'this semester' }}.</p>
+          </div>
+        }
+
+      </div>
+    </p-card>
+
+    <p-card styleClass="course-card available-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <div class="header-icon available-icon">
+            <i class="pi pi-graduation-cap"></i>
+          </div>
+          <div>
+            <h4>Available Courses</h4>
+            <span>Active courses in your department</span>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="scrollable-card-content">
+
+        @if (availableCourses().length > 0) {
+
+          <p-table
+            [value]="availableCourses()"
+            styleClass="courses-table"
+            responsiveLayout="scroll">
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Course</th>
+                <th>Code</th>
+                <th>Credit Hours</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-course>
+              <tr>
+                <td>
+                  <div class="course-title">
+                    <div class="small-course-icon"><i class="pi pi-file"></i></div>
+                    <span>{{ course.title }}</span>
+                  </div>
+                </td>
+
+                <td><span class="course-code">{{ course.courseCode }}</span></td>
+
+                <td><span class="credit-hours">{{ course.creditHours }} CH</span></td>
+
+                <td>
+                  @if (isEnrolled(course.id)) {
+                    <p-tag value="Enrolled" severity="success" icon="pi pi-check"></p-tag>
+                  } @else if (wouldExceedLimit(course)) {
+                    <p-tag value="Limit Exceeded" severity="danger"
+                           icon="pi pi-exclamation-triangle"></p-tag>
+                  } @else {
+                    <p-tag value="Available" severity="info"></p-tag>
+                  }
+                </td>
+
+                <td>
+                  @if (isEnrolled(course.id) || wouldExceedLimit(course)) {
+                    <span class="action-placeholder">—</span>
+                  } @else {
+                    <p-button
+                      label="Enroll"
+                      icon="pi pi-plus"
+                      severity="primary"
+                      size="small"
+                      [raised]="true"
+                      [disabled]="!semester"
+                      (onClick)="enroll(course)">
+                    </p-button>
+                  }
+                </td>
+              </tr>
+            </ng-template>
+
+          </p-table>
+
+        } @else {
+          <div class="empty-state">
+            <i class="pi pi-inbox"></i>
+            <p>No courses available in your department yet.</p>
+          </div>
+        }
+
+        @if (errorMessage()) {
+          <p-message
+            severity="error"
+            icon="pi pi-exclamation-circle"
+            styleClass="course-error">
+            {{ errorMessage() }}
+          </p-message>
+        }
+
+      </div>
+    </p-card>
+
+  } @else {
+
+    <div class="loading-state">
+      <p-progressSpinner strokeWidth="4" animationDuration=".8s"
+                         styleClass="loading-spinner">
+      </p-progressSpinner>
+      <span>Loading your courses...</span>
+    </div>
+
+  }
+
+</div>

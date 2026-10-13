@@ -2,13 +2,17 @@
 export const ENDPOINTS = {
    students:{
     getAllStudents:'/api/students',
+     getAllStudentsPaged: '/api/students/paged',
     deleteStudent:'/api/students/:id',
     getStudentById:'/api/students/:id',
     getMyRecord:'/api/students/me',
-     searchByName: '/api/students/search',
+   searchByName: '/api/students/search',
    uploadPhoto:'/api/students/upload-photo',
    updateProfile: '/api/students/update-profile',
      getTotalStudents: '/api/students/count',
+     getStudentByEmail: '/api/students/email/:email',
+profilePictureUrl: '/uploads/profile-pictures/'
+
     
    },
 
@@ -19,7 +23,7 @@ export const ENDPOINTS = {
       updateCourse:'/api/courses/:id',
       deleteCourse:'/api/courses/:id',
        getTotalCourses: '/api/courses/count', 
-      
+      getCoursesPaged: '/api/courses/paged', 
 
    },
 
@@ -34,12 +38,16 @@ export const ENDPOINTS = {
       getFeeSummaryByStudentId: '/api/fee/student/:studentId/summary', // for admin module
       getAvailableSemesters:'/api/fee/student/:studentId/available-semesters',
        getOverallFeeSummary: '/api/fee/summary',
+       getStudentCreditHours: '/api/fee/student/:studentId/credit-hours',
+
+calculateStudentFee: '/api/fee/student/:studentId/calculate',
    },
       
 
    department:{
       getAllDepartments:'/api/departments',
       createDepartment:'/api/departments',
+      updateDepartment: '/api/departments/:id',
       deleteDepartments:'/api/departments/:id',
        getTotalDepartments: '/api/departments/count',
    },
@@ -49,8 +57,27 @@ export const ENDPOINTS = {
       signup:'/api/auth/signup',
       changePassword:'/api/auth/change-password',
       forgotPassword:'/api/auth/forgot-password',
+      verifyOtp: '/api/auth/verify-otp',
+      verifyRegistrationOtp: '/api/auth/verify-registration-otp',
+      resendRegistrationOtp: '/api/auth/resend-registration-otp',
+resendForgotPasswordOtp: '/api/auth/resend-forgot-password-otp',
       resetPassword:'/api/auth/reset-password',
-   }
+      refreshToken: '/api/auth/refresh-token',
+      logout: '/api/auth/logout'
+   },
+
+enrollments: {
+  enrollStudent: '/api/enrollments',
+  getStudentEnrollments: '/api/enrollments/student/:studentId',
+  getStudentEnrollmentsBySemester: '/api/enrollments/student/:studentId/semester',
+  removeEnrollment: '/api/enrollments/:enrollmentId',
+
+  getMyEnrollments: '/api/enrollments/me',
+  getMyEnrollmentsBySemester: '/api/enrollments/me/semester',
+  enrollMyCourse: '/api/enrollments/me',
+  removeMyEnrollment: '/api/enrollments/me/:enrollmentId'
+},
+
 
 };
  

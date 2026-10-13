@@ -1,51 +1,118 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
+
 import { AuthService } from '../../../core/httpServices/auth-service';
+
+import { CardModule } from 'primeng/card';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+
+  imports: [ CommonModule, ReactiveFormsModule,  CardModule, PasswordModule, ButtonModule, MessageModule],
+
   templateUrl: './change-password.html',
   styleUrl: './change-password.css',
 })
 export class ChangePassword {
+
   readonly authService = inject(AuthService);
 
+
   form = new FormGroup({
-    oldPassword: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    newPassword: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] }),
-    confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+
+    oldPassword: new FormControl('', {
+      nonNullable: true,
+      validators: [
+        Validators.required
+      ]
+    }),
+
+    newPassword: new FormControl('', {
+      nonNullable: true,
+      validators: [
+        Validators.required,
+        Validators.minLength(6)
+      ]
+    }),
+
+    confirmPassword: new FormControl('', {
+      nonNullable: true,
+      validators: [
+        Validators.required
+      ]
+    })
+
   });
 
+
   successMessage = signal('');
+
   errorMessage = signal('');
 
+
   submit(): void {
+
     this.successMessage.set('');
+
     this.errorMessage.set('');
 
+
     if (this.form.invalid) {
+
       this.form.markAllAsTouched();
+
       return;
     }
 
-    const { oldPassword, newPassword, confirmPassword } = this.form.getRawValue();
+
+    const {
+      oldPassword,
+      newPassword,
+      confirmPassword
+    } = this.form.getRawValue();
+
 
     if (newPassword !== confirmPassword) {
-      this.errorMessage.set('New password and confirm password do not match.');
+
+      this.errorMessage.set(
+        'New password and confirm password do not match.'
+      );
+
       return;
     }
 
-    this.authService.changePassword({ oldPassword, newPassword }).subscribe({
-      next: () => {
-        this.successMessage.set('Password changed successfully.');
-        this.form.reset();
-      },
-      error: (err) => {
-        this.errorMessage.set(err.error || 'Failed to change password.');
-      }
-    });
+
+    this.authService
+      .changePassword({
+        oldPassword,
+        newPassword
+      })
+      .subscribe({
+
+
+        next: () => {
+
+          this.successMessage.set(
+            'Password changed successfully.'
+          );
+
+          this.form.reset();
+        },
+
+
+        error: (err) => {
+
+          this.errorMessage.set(
+            err.error ||
+            'Failed to change password.'
+          );
+        }
+
+      });
   }
 }

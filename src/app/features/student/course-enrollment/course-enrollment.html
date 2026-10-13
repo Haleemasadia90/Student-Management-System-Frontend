@@ -1,0 +1,125 @@
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="enrollment-panel">
+  <div class="enrollment-heading">
+    <div>
+      <h3>Manage Courses</h3>
+      <p>Select a semester to manage this student's enrollments.</p>
+    </div>
+
+    <div class="semester-picker">
+      <label for="semester">Semester</label>
+      <p-select
+        inputId="semester"
+        [options]="semesters"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="semester"
+        placeholder="Select semester"
+        (onChange)="onSemesterChange()"
+        [disabled]="semesters.length === 0">
+      </p-select>
+    </div>
+  </div>
+
+  <div class="credit-summary">
+    <span>Selected semester: <strong>{{ semester || '—' }}</strong></span>
+    <span>
+      Credit hours:
+      <strong>{{ creditHours() }} / 18</strong>
+    </span>
+  </div>
+
+  <h4>Enrolled Courses</h4>
+
+  <p-table
+    [value]="enrollments()"
+    [loading]="loading()"
+    responsiveLayout="scroll">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Course Code</th>
+        <th>Course Title</th>
+        <th>Credit Hours</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-enrollment>
+      <tr>
+        <td>{{ enrollment.courseCode }}</td>
+        <td>{{ enrollment.courseTitle }}</td>
+        <td>{{ enrollment.creditHours }}</td>
+        <td>
+          <p-button
+            label="Remove"
+            icon="pi pi-trash"
+            severity="danger"
+            size="small"
+            [outlined]="true"
+            (onClick)="removeEnrollment(enrollment)">
+          </p-button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4">No courses enrolled for this semester.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <h4>Available Active Courses</h4>
+
+  <p-table
+    [value]="activeCourses()"
+    responsiveLayout="scroll">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Course Code</th>
+        <th>Course Title</th>
+        <th>Credit Hours</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-course>
+      <tr>
+        <td>{{ course.courseCode }}</td>
+        <td>{{ course.title }}</td>
+        <td>{{ course.creditHours }}</td>
+        <td>
+          @if (isEnrolled(course.id)) {
+            <p-button
+              label="Enrolled"
+              icon="pi pi-check"
+              severity="success"
+              size="small"
+              [disabled]="true">
+            </p-button>
+          } @else {
+            <p-button
+              label="Enroll"
+              icon="pi pi-plus"
+              severity="info"
+              size="small"
+              [disabled]="!semester || creditHours() + course.creditHours > 18"
+              (onClick)="enroll(course)">
+            </p-button>
+          }
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4">No active courses available.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,113 +1,325 @@
-
-
-<div class="layout-wrapper">
-
-  <div class="mobile-topbar">
-    <button class="hamburger-btn" (click)="toggleSidebar()">
-      <i class="ti ti-menu-2"></i>
-    </button>
-    <span class="mobile-title">{{ panelTitle }}</span>
-  </div>
+<div
+  class="app-layout"
+  [class.sidebar-collapsed]="isCollapsed()"
+  [class.sidebar-open]="isSidebarOpen()"
+>
 
   @if (isSidebarOpen()) {
-    <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+    <div
+      class="sidebar-overlay"
+      (click)="closeSidebar()">
+    </div>
   }
 
-  <aside class="sidebar" [class.open]="isSidebarOpen()" [class.collapsed]="isCollapsed()">
 
+  <aside class="sidebar">
+
+   
     <div class="sidebar-header">
+
       @if (!isCollapsed()) {
-        <span class="sidebar-title">{{ panelTitle }}</span>
+        <div class="brand-section">
+
+          <div class="brand-icon">
+            <i class="pi pi-building"></i>
+          </div>
+
+          <div class="brand-text">
+            <h3>{{ panelTitle }}</h3>
+            <span>Management System</span>
+          </div>
+
+        </div>
       }
-      <button class="collapse-btn" (click)="toggleCollapse()" title="Toggle sidebar">
-        <i class="ti ti-layout-sidebar-left-collapse"></i>
+
+      
+      <button
+        type="button"
+        class="collapse-button"
+        (click)="toggleCollapse()"
+        title="Toggle sidebar">
+
+        <i
+          class="pi"
+          [class.pi-angle-left]="!isCollapsed()"
+          [class.pi-angle-right]="isCollapsed()">
+        </i>
+
       </button>
-      <button class="close-btn" (click)="closeSidebar()">
-        <i class="ti ti-x"></i>
-      </button>
+
     </div>
+
 
     @if (username) {
-      <div class="user-card">
+
+      <div
+        class="user-card"
+        [class.user-card-collapsed]="isCollapsed()"
+      >
+
         @if (profilePicture && !imageLoadFailed()) {
-          <img [src]="avatarUrl" (error)="onImageError()" class="user-avatar" alt="">
+
+          <img
+            [src]="avatarUrl"
+            (error)="onImageError()"
+            (click)="openProfilePicture()"
+            class="user-avatar"
+            alt="Profile picture"
+          />
+
         } @else {
-          <div class="user-avatar-fallback">{{ initials }}</div>
+
+          <p-avatar
+            [label]="initials"
+            shape="circle"
+            styleClass="user-avatar-fallback"
+            (click)="openProfilePicture()">
+          </p-avatar>
+
         }
+
+
+      
         @if (!isCollapsed()) {
-          <span class="user-name">{{ username }}</span>
+
+          <div class="user-info">
+
+            <span class="user-name">
+              {{ username }}
+            </span>
+
+            @if (role) {
+
+              <p-tag
+                [value]="role"
+                severity="info"
+                styleClass="user-role">
+              </p-tag>
+
+            }
+
+          </div>
+
         }
+
       </div>
+
     }
 
+
     <nav class="sidebar-nav">
+
       @for (item of navItems; track item.label) {
 
-        @if (item.children) {
+        <div class="nav-item-wrapper">
 
-          <button
-            class="nav-item"
-            [class.expanded-parent]="expandedItem() === item.label"
-            [title]="item.label"
-            (click)="onParentClick(item)">
-            <i [class]="item.icon"></i>
-            @if (!isCollapsed()) {
-              <span>{{ item.label }}</span>
-              <i class="ti ti-chevron-right nav-chevron" [class.rotated]="expandedItem() === item.label"></i>
-            }
-          </button>
+      
+          @if (item.children && item.children.length > 0) {
 
-          @if (expandedItem() === item.label && !isCollapsed()) {
-            <div class="nav-submenu">
-              @for (child of item.children; track child.route) {
-                <a
-                  [routerLink]="child.route"
-                  routerLinkActive="active-sublink"
-                  class="nav-subitem"
-                  (click)="closeSidebar()">
-                  <i [class]="child.icon"></i>
-                  <span>{{ child.label }}</span>
-                </a>
+            <button
+              type="button"
+              class="nav-item parent-item"
+              [class.active-parent]="expandedItem() === item.label"
+              (click)="onParentClick(item)"
+              [title]="isCollapsed() ? item.label : ''"
+            >
+
+              <i [class]="item.icon"></i>
+
+              @if (!isCollapsed()) {
+
+                <span class="nav-label">
+                  {{ item.label }}
+                </span>
+
+                <i
+                  class="pi submenu-arrow"
+                  [class.pi-chevron-down]="expandedItem() !== item.label"
+                  [class.pi-chevron-up]="expandedItem() === item.label">
+                </i>
+
               }
-            </div>
+
+            </button>
+
+            @if (
+              expandedItem() === item.label &&
+              !isCollapsed()
+            ) {
+
+              <div class="submenu">
+
+                @for (
+                  child of item.children; track child.label ) {
+
+                  <a
+                    [routerLink]="child.route"
+                    routerLinkActive="active-submenu"
+                    class="submenu-item"
+                    (click)="closeSidebar()"
+                  >
+
+                    <i [class]="child.icon"></i>
+
+                    <span>
+                      {{ child.label }}
+                    </span>
+
+                  </a>
+
+                }
+
+              </div>
+
+            }
+
+          } @else {
+
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-item"
+              (click)="closeSidebar()"
+              [title]="isCollapsed() ? item.label : ''"
+            >
+
+              <i [class]="item.icon"></i>
+
+              @if (!isCollapsed()) {
+
+                <span class="nav-label">
+                  {{ item.label }}
+                </span>
+
+              }
+
+            </a>
+
           }
 
-        } @else {
-          
-          <a
-            [routerLink]="item.route"
-            routerLinkActive="active-link"
-            class="nav-item"
-            [title]="item.label"
-            (click)="closeSidebar()">
-            <i [class]="item.icon"></i>
-            @if (!isCollapsed()) {
-              <span>{{ item.label }}</span>
-            }
-          </a>
-        }
+        </div>
 
       }
+
     </nav>
 
+
+
     <div class="sidebar-footer">
-      <button (click)="logout()" class="logout-btn" [title]="'Logout'">
-        <i class="ti ti-logout"></i>
+
+      <button
+        type="button"
+        class="logout-button"
+        (click)="logout()"
+        [title]="isCollapsed() ? 'Logout' : ''"
+      >
+
+        <i class="pi pi-sign-out"></i>
+
         @if (!isCollapsed()) {
+
           <span>Logout</span>
+
         }
+
       </button>
+
     </div>
+
   </aside>
 
-  <main class="content-area" [class.expanded]="isCollapsed()">
-  <div class="page-topbar">
-    <h2>Welcome, {{ username }}</h2>
-  </div>
 
-  <div class="page-content">
-    <router-outlet></router-outlet>
-  </div>
-</main>
+  <main class="main-content">
+
+   
+    <header class="top-header">
+
+      <button
+        type="button"
+        class="mobile-menu-button"
+        (click)="toggleSidebar()"
+        title="Open menu">
+
+        <i class="pi pi-bars"></i>
+
+      </button>
+
+
+      <div class="header-content">
+
+        <div>
+          <h2>{{ panelTitle }}</h2>
+          <p>Welcome to your dashboard</p>
+        </div>
+
+      </div>
+
+    </header>
+
+
+   
+    <section class="page-content">
+
+      <router-outlet></router-outlet>
+
+    </section>
+
+  </main>
 
 </div>
+
+
+
+<p-dialog
+  [(visible)]="showProfilePicture"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  [dismissableMask]="true"
+  [showHeader]="false"
+  styleClass="sidebar-profile-dialog"
+>
+
+  <div class="profile-popup">
+
+    @if (profilePicture && !imageLoadFailed()) {
+
+      <img
+        [src]="avatarUrl"
+        class="large-profile-picture"
+        alt="Profile picture"
+      />
+
+    } @else {
+
+      <p-avatar
+        [label]="initials"
+        shape="circle"
+        styleClass="large-profile-avatar">
+      </p-avatar>
+
+    }
+
+
+    <div class="popup-user-info">
+
+      <span class="popup-username">
+        {{ username }}
+      </span>
+
+      @if (role) {
+
+        <p-tag
+          [value]="role"
+          severity="info">
+        </p-tag>
+
+      }
+
+    </div>
+
+  </div>
+
+</p-dialog>

@@ -1,0 +1,209 @@
+
+<div class="form-container">
+
+  <h3>Edit Course</h3>
+
+  <form [formGroup]="courseForm">
+
+    
+    <div class="form-group">
+
+      <p-floatLabel>
+
+        <input
+          id="title"
+          type="text"
+          pInputText
+          formControlName="title"
+          variant="filled"
+        />
+
+        <label for="title">
+          Title
+        </label>
+
+      </p-floatLabel>
+
+      @if (
+        courseForm.get('title')?.touched &&
+        courseForm.get('title')?.hasError('required')
+      ) {
+
+        <small class="error">
+          Title is required.
+        </small>
+
+      }
+
+    </div>
+
+    <div class="form-group">
+
+      <p-floatLabel>
+
+        <input
+          id="description"
+          type="text"
+          pInputText
+          formControlName="description"
+          variant="filled"
+        />
+
+        <label for="description">
+          Description
+        </label>
+
+      </p-floatLabel>
+
+      @if (
+        courseForm.get('description')?.touched &&
+        courseForm.get('description')?.hasError('required')
+      ) {
+
+        <small class="error">
+          Description is required.
+        </small>
+
+      }
+
+    </div>
+
+    <div class="form-group">
+
+      <p-floatLabel>
+
+        <input
+          id="courseCode"
+          type="text"
+          pInputText
+          formControlName="courseCode"
+          variant="filled"
+        />
+
+        <label for="courseCode">
+          Course Code
+        </label>
+
+      </p-floatLabel>
+
+      @if (
+        courseForm.get('courseCode')?.touched &&
+        courseForm.get('courseCode')?.hasError('required')
+      ) {
+
+        <small class="error">
+          Course code is required.
+        </small>
+
+      }
+
+    </div>
+
+
+    <div class="form-group">
+
+      <p-floatLabel>
+
+        <p-inputNumber
+          inputId="creditHours"
+          formControlName="creditHours"
+          [min]="1"
+          [showButtons]="true"
+          variant="filled">
+        </p-inputNumber>
+
+        <label for="creditHours">
+          Credit Hours
+        </label>
+
+      </p-floatLabel>
+
+      @if (
+        courseForm.get('creditHours')?.touched &&
+        courseForm.get('creditHours')?.hasError('min')
+      ) {
+
+        <small class="error">
+          Credit hours must be at least 1.
+        </small>
+
+      }
+
+    </div>
+
+
+      <div class="form-group">
+
+      <p-floatLabel>
+
+        <p-select
+          inputId="department"
+          formControlName="departmentId"
+          [options]="departments()"
+          optionLabel="name"
+          optionValue="id"
+          [showClear]="true"
+          styleClass="custom-select">
+        </p-select>
+
+        <label for="department">
+          Department
+        </label>
+
+      </p-floatLabel>
+
+      @if (
+        courseForm.get('departmentId')?.touched &&
+        courseForm.get('departmentId')?.hasError('required')
+      ) {
+
+        <small class="error">
+          Department is required.
+        </small>
+
+      }
+
+    </div>
+
+    <div class="form-group">
+
+      <p-floatLabel>
+
+        <p-select
+          inputId="status"
+          formControlName="status"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Select Status"
+          styleClass="custom-select">
+        </p-select>
+
+        <label for="status">
+          Status
+        </label>
+
+      </p-floatLabel>
+
+    </div>
+
+
+   
+    <div class="button-container">
+
+      <p-button
+        label="Update Course"
+        [loading]="isLoading()"
+        [disabled]="isLoading()"
+        [raised]="true"
+        (onClick)="save()">
+      </p-button>
+
+    </div>
+
+  </form>
+
+</div>
+
+
+<p-toast position="top-right"></p-toast>
