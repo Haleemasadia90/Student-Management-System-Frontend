@@ -42,6 +42,7 @@ import { EnrollmentService } from '../../../core/httpServices/enrollment-service
 export class CourseEnrollment implements OnChanges {
   @Input({ required: true }) studentId!: number;
   @Input() admissionYear = new Date().getFullYear();
+  @Input({ required: true }) departmentId!: number;
 
   /** Fires after an enrollment is added/removed (the fee changes with it). */
   @Output() changed = new EventEmitter<void>();
@@ -62,7 +63,7 @@ export class CourseEnrollment implements OnChanges {
   semesters: { label: string; value: string }[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['studentId'] || changes['admissionYear']) {
+    if (changes['studentId'] || changes['departmentId'] || changes['admissionYear']) {
       this.buildSemesters();
 
       if (!this.semesters.some(s => s.value === this.semester)) {
@@ -95,7 +96,14 @@ export class CourseEnrollment implements OnChanges {
   }
 
   loadCourses(): void {
-    this.courseService.getAllCourses().subscribe({
+
+    if (!this.departmentId) {
+      this.courses.set([]);
+      this.activeCourses.set([]);
+      return;
+    }
+
+    this.courseService.getAllCourses(this.departmentId).subscribe({
       next: (courses: Course[]) => {
         this.courses.set(courses);
         this.activeCourses.set(
@@ -104,6 +112,8 @@ export class CourseEnrollment implements OnChanges {
       },
       error: (error) => {
         console.error('Failed to load courses:', error);
+         this.courses.set([]);
+          this.activeCourses.set([]);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',

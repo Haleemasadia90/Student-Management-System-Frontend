@@ -1,15 +1,16 @@
 
 .fee-detail-section {
+  width: 100%;
   background: #ffffff;
   border-radius: 14px;
   padding: 28px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
 }
 
 .fee-detail-header {
   margin-bottom: 20px;
 }
-
 
 :host ::ng-deep .back-button {
   background: #4f46e5 !important;
@@ -38,11 +39,9 @@
   transform: translateY(1px);
 }
 
-
 .student-info-card {
   display: flex;
   align-items: center;
-
   gap: 16px;
 
   background: #f9fafb;
@@ -52,9 +51,9 @@
   padding: 16px 20px;
 
   margin-bottom: 24px;
+
+  box-sizing: border-box;
 }
-
-
 
 :host ::ng-deep .student-avatar {
   width: 48px !important;
@@ -72,7 +71,9 @@
   font-weight: 700 !important;
 }
 
-
+.student-info-text {
+  min-width: 0;
+}
 
 .student-info-text h3 {
   margin: 0 0 4px 0;
@@ -82,6 +83,8 @@
   color: #1f2937;
 
   font-weight: 700;
+
+  overflow-wrap: anywhere;
 }
 
 .student-info-text p {
@@ -90,20 +93,21 @@
   color: #6b7280;
 
   font-size: 13px;
+
+  overflow-wrap: anywhere;
 }
+
 
 
 .fee-summary-cards {
   display: grid;
 
-  grid-template-columns:
-    repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 
   gap: 14px;
 
   margin-bottom: 24px;
 }
-
 
 :host ::ng-deep .summary-card {
   background: #ffffff !important;
@@ -118,8 +122,8 @@
 
   min-height: auto !important;
 
+  box-sizing: border-box;
 }
-
 
 :host ::ng-deep .summary-card .p-card-body {
   padding: 0 !important;
@@ -128,7 +132,6 @@
 :host ::ng-deep .summary-card .p-card-content {
   padding: 0 !important;
 }
-
 
 .summary-label {
   display: block;
@@ -144,7 +147,6 @@
   margin-bottom: 4px;
 }
 
-
 .summary-value {
   display: block;
 
@@ -153,9 +155,9 @@
   font-weight: 700;
 
   color: #1f2937;
+
+  overflow-wrap: anywhere;
 }
-
-
 
 .summary-value.paid {
   color: #16a34a;
@@ -166,8 +168,20 @@
 }
 
 
+
 :host ::ng-deep .fee-detail-table {
   width: 100%;
+}
+
+
+:host ::ng-deep .fee-detail-table .p-datatable-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+:host ::ng-deep .fee-detail-table .p-datatable-table {
+  min-width: 700px;
 }
 
 :host ::ng-deep .fee-detail-table .p-datatable-thead > tr > th {
@@ -189,15 +203,15 @@
 
   border: none !important;
 
-  border-bottom:
-    2px solid #e5e7eb !important;
+  border-bottom: 2px solid #e5e7eb !important;
+
+  white-space: nowrap;
 }
 
 :host ::ng-deep .fee-detail-table .p-datatable-tbody > tr {
   background: #ffffff;
 
-  transition:
-    background 0.2s ease;
+  transition: background 0.2s ease;
 }
 
 :host ::ng-deep .fee-detail-table .p-datatable-tbody > tr:hover {
@@ -209,14 +223,18 @@
 
   border: none !important;
 
-  border-bottom:
-    1px solid #f0f1f3 !important;
+  border-bottom: 1px solid #f0f1f3 !important;
 
   font-size: 14px;
 
   color: #1f2937;
+
+  white-space: nowrap;
 }
 
+/* =========================================================
+   FEE STATUS
+   ========================================================= */
 
 :host ::ng-deep .fee-status-tag {
   border-radius: 20px !important;
@@ -228,8 +246,9 @@
   padding: 4px 12px !important;
 
   text-transform: uppercase;
-}
 
+  white-space: nowrap;
+}
 
 .empty-row {
   text-align: center !important;
@@ -238,7 +257,6 @@
 
   color: #9ca3af !important;
 }
-
 
 .empty-content {
   display: flex;
@@ -250,7 +268,6 @@
   gap: 8px;
 }
 
-
 .empty-content i {
   font-size: 16px;
 
@@ -258,61 +275,253 @@
 }
 
 
-@media (max-width: 900px) {
 
-  .fee-summary-cards {
-    grid-template-columns:
-      repeat(2, 1fr);
+@media (max-width: 1024px) {
+
+  .fee-detail-section {
+    padding: 22px;
+    border-radius: 12px;
   }
 
+  .fee-detail-header {
+    margin-bottom: 18px;
+  }
+
+  .student-info-card {
+    gap: 14px;
+    padding: 15px 18px;
+    margin-bottom: 20px;
+  }
+
+  :host ::ng-deep .student-avatar {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px;
+    font-size: 18px !important;
+  }
+
+  .student-info-text h3 {
+    font-size: 17px;
+  }
+
+  .fee-summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  :host ::ng-deep .summary-card {
+    padding: 13px 15px !important;
+  }
+
+  .summary-value {
+    font-size: 19px;
+  }
+
+  :host ::ng-deep .fee-detail-table .p-datatable-table {
+    min-width: 680px;
+  }
+
+  :host ::ng-deep .fee-detail-table .p-datatable-thead > tr > th {
+    font-size: 12px !important;
+    padding: 11px 12px !important;
+  }
+
+  :host ::ng-deep .fee-detail-table .p-datatable-tbody > tr > td {
+    font-size: 13px;
+    padding: 11px 12px !important;
+  }
 }
 
 
-@media (max-width: 640px) {
+
+@media (max-width: 768px) {
 
   .fee-detail-section {
-    padding: 20px;
+    padding: 16px;
+    border-radius: 10px;
   }
 
-
-  .fee-summary-cards {
-    grid-template-columns:
-      repeat(2, 1fr);
-
-    gap: 10px;
+  .fee-detail-header {
+    margin-bottom: 16px;
   }
 
+  :host ::ng-deep .back-button {
+    font-size: 13px !important;
+    padding: 7px 13px !important;
+  }
 
   .student-info-card {
-    padding: 14px 16px;
+    gap: 12px;
+    padding: 13px 14px;
+    margin-bottom: 18px;
+    border-radius: 10px;
   }
 
+  :host ::ng-deep .student-avatar {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px;
+    font-size: 17px !important;
+  }
 
   .student-info-text h3 {
     font-size: 16px;
+    margin-bottom: 3px;
   }
-
 
   .student-info-text p {
     font-size: 12px;
   }
 
+  .fee-summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
 
-  :host ::ng-deep .fee-detail-table
-  .p-datatable-thead > tr > th {
+  :host ::ng-deep .summary-card {
+    padding: 12px 13px !important;
+    border-radius: 9px !important;
+  }
 
+  .summary-label {
+    font-size: 10px;
+    letter-spacing: 0.3px;
+  }
+
+  .summary-value {
+    font-size: 17px;
+  }
+
+  :host ::ng-deep .fee-detail-table .p-datatable-wrapper {
+    overflow-x: auto;
+  }
+
+  :host ::ng-deep .fee-detail-table .p-datatable-table {
+    min-width: 620px;
+  }
+
+  :host ::ng-deep .fee-detail-table .p-datatable-thead > tr > th {
     font-size: 11px !important;
-
     padding: 10px !important;
   }
 
-
-  :host ::ng-deep .fee-detail-table
-  .p-datatable-tbody > tr > td {
-
+  :host ::ng-deep .fee-detail-table .p-datatable-tbody > tr > td {
     font-size: 13px;
-
     padding: 10px !important;
   }
 
+  :host ::ng-deep .fee-status-tag {
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+
+  .empty-row {
+    padding: 20px !important;
+    font-size: 12px;
+  }
+
+  .empty-content {
+    gap: 6px;
+  }
+
+  .empty-content i {
+    font-size: 14px;
+  }
+}
+
+
+
+@media (max-width: 480px) {
+
+  .fee-detail-section {
+    padding: 12px;
+    border-radius: 9px;
+  }
+
+  .fee-detail-header {
+    margin-bottom: 13px;
+  }
+
+  :host ::ng-deep .back-button {
+    width: auto;
+    font-size: 12px !important;
+    padding: 7px 11px !important;
+  }
+
+  .student-info-card {
+    gap: 10px;
+    padding: 11px 12px;
+    margin-bottom: 15px;
+    border-radius: 9px;
+  }
+
+  :host ::ng-deep .student-avatar {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px;
+    font-size: 15px !important;
+  }
+
+  .student-info-text h3 {
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .student-info-text p {
+    font-size: 11px;
+  }
+
+  .fee-summary-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  :host ::ng-deep .summary-card {
+    padding: 10px 11px !important;
+    border-radius: 8px !important;
+  }
+
+  .summary-label {
+    font-size: 9px;
+    margin-bottom: 3px;
+  }
+
+  .summary-value {
+    font-size: 15px;
+  }
+
+  :host ::ng-deep .fee-detail-table .p-datatable-table {
+    min-width: 580px;
+  }
+
+  :host ::ng-deep .fee-detail-table .p-datatable-thead > tr > th {
+    font-size: 10px !important;
+    padding: 9px 8px !important;
+  }
+
+  :host ::ng-deep .fee-detail-table .p-datatable-tbody > tr > td {
+    font-size: 12px;
+    padding: 9px 8px !important;
+  }
+
+  :host ::ng-deep .fee-status-tag {
+    font-size: 10px !important;
+    padding: 3px 8px !important;
+  }
+
+  .empty-row {
+    padding: 16px !important;
+    font-size: 11px;
+  }
+
+  .empty-content {
+    gap: 5px;
+  }
+
+  .empty-content i {
+    font-size: 13px;
+  }
 }

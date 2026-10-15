@@ -1,100 +1,372 @@
 
 .fee-manager {
+  width: 100%;
   margin-top: 12px;
   padding: 14px;
+
   background: #f8fafc;
   border-radius: 10px;
+
+  box-sizing: border-box;
 }
+
+
 
 .fee-manager-header {
   display: flex;
+
   justify-content: space-between;
   align-items: center;
+
   gap: 10px;
+
   margin-bottom: 14px;
 }
 
 .fee-manager-header h4 {
   margin: 0;
+
   font-size: 15px;
   font-weight: 700;
+
   color: #1e293b;
 }
+
+
 
 .fee-table {
   width: 100%;
 }
 
+
+:host ::ng-deep .fee-table .p-datatable-wrapper {
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+:host ::ng-deep .fee-table .p-datatable-table {
+  min-width: 600px;
+}
+
 .action-buttons {
   display: flex;
+
   align-items: center;
+
   gap: 2px;
+
+  white-space: nowrap;
 }
+
+:host ::ng-deep .action-buttons .p-button {
+  flex-shrink: 0;
+}
+
+
+  
 
 .empty-text {
   min-height: 100px;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 8px;
+
   color: #94a3b8;
+
   font-size: 13px;
+
+  text-align: center;
 }
 
 .empty-text i {
   font-size: 16px;
 }
 
+
+
 .fee-form {
   display: flex;
+
   flex-direction: column;
+
   gap: 18px;
+
   padding-top: 5px;
 }
 
 .form-field {
   display: flex;
+
   flex-direction: column;
+
   gap: 7px;
 }
 
 .form-field label {
   font-size: 13px;
+
   font-weight: 600;
+
   color: #334155;
 }
 
+
+:host ::ng-deep .form-field input,
+:host ::ng-deep .form-field .p-inputnumber,
+:host ::ng-deep .form-field .p-select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+
+
 .status-preview {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
+
   gap: 12px;
+
   padding: 12px 14px;
+
   background: #f8fafc;
+
   border-radius: 8px;
+
   border: 1px solid #e2e8f0;
+
+  box-sizing: border-box;
 }
 
 .status-label {
   font-size: 13px;
+
   font-weight: 600;
+
   color: #475569;
 }
 
+
+
 .error-text {
   display: flex;
+
   align-items: flex-start;
+
   gap: 6px;
+
   color: #dc2626;
+
   font-size: 12px;
+
+  line-height: 1.4;
 }
 
-@media (max-width: 600px) {
+.error-text i {
+  flex-shrink: 0;
+
+  margin-top: 1px;
+}
+
+
+
+@media (max-width: 1024px) {
+
   .fee-manager {
-    padding: 10px;
+    padding: 13px;
+  }
+
+  .fee-manager-header {
+    gap: 8px;
+  }
+
+  .fee-manager-header h4 {
+    font-size: 14px;
+  }
+
+  :host ::ng-deep .fee-table .p-datatable-table {
+    min-width: 580px;
+  }
+
+  .fee-form {
+    gap: 16px;
+  }
+
+  .form-field label {
+    font-size: 12px;
+  }
+
+  .status-preview {
+    padding: 11px 13px;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+
+  .fee-manager {
+    margin-top: 10px;
+
+    padding: 11px;
+
+    border-radius: 9px;
   }
 
   .fee-manager-header {
     flex-wrap: wrap;
+
+    align-items: flex-start;
+
+    margin-bottom: 12px;
+  }
+
+  .fee-manager-header h4 {
+    font-size: 14px;
+  }
+
+  .fee-table {
+    width: 100%;
+  }
+
+  :host ::ng-deep .fee-table .p-datatable-wrapper {
+    overflow-x: auto;
+  }
+
+  :host ::ng-deep .fee-table .p-datatable-table {
+    min-width: 560px;
+  }
+
+  .action-buttons {
+    gap: 4px;
+  }
+
+  .empty-text {
+    min-height: 90px;
+
+    font-size: 12px;
+
+    padding: 10px;
+  }
+
+  .fee-form {
+    gap: 15px;
+
+    padding-top: 3px;
+  }
+
+  .form-field {
+    gap: 6px;
+  }
+
+  .form-field label {
+    font-size: 12px;
+  }
+
+  .status-preview {
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    padding: 10px 12px;
+  }
+
+  .status-label {
+    font-size: 12px;
+  }
+
+  .error-text {
+    font-size: 11px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .fee-manager {
+    margin-top: 8px;
+
+    padding: 9px;
+
+    border-radius: 8px;
+  }
+
+  .fee-manager-header {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 8px;
+
+    margin-bottom: 10px;
+  }
+
+  .fee-manager-header h4 {
+    font-size: 13px;
+  }
+
+  :host ::ng-deep .fee-table .p-datatable-table {
+    min-width: 520px;
+  }
+
+  .action-buttons {
+    gap: 4px;
+  }
+
+  :host ::ng-deep .action-buttons .p-button {
+    padding: 6px 8px !important;
+
+    font-size: 11px !important;
+  }
+
+  .empty-text {
+    min-height: 80px;
+
+    font-size: 11px;
+
+    gap: 6px;
+  }
+
+  .empty-text i {
+    font-size: 14px;
+  }
+
+  .fee-form {
+    gap: 13px;
+  }
+
+  .form-field {
+    gap: 5px;
+  }
+
+  .form-field label {
+    font-size: 11px;
+  }
+
+  .status-preview {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 7px;
+
+    padding: 9px 10px;
+  }
+
+  .status-label {
+    font-size: 11px;
+  }
+
+  .error-text {
+    font-size: 10px;
+
+    gap: 5px;
   }
 }

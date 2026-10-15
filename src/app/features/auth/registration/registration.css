@@ -1,17 +1,30 @@
 :host {
   display: block;
+  width: 100%;
 }
 
 * {
   box-sizing: border-box;
 }
 
+
+/* =========================
+   REGISTRATION PAGE
+========================= */
+
 .registration-page {
   min-height: 100vh;
+  width: 100%;
+
   display: flex;
+
   background: #f7f5fb;
 }
 
+
+/* =========================
+   BRAND SECTION
+========================= */
 
 .registration-brand-section {
   width: 45%;
@@ -32,6 +45,8 @@
     );
 
   color: white;
+
+  box-sizing: border-box;
 }
 
 .brand-content {
@@ -81,22 +96,30 @@
 }
 
 
+/* =========================
+   FEATURE LIST
+========================= */
+
 .feature-list {
   margin-top: 40px;
 
   display: flex;
   flex-direction: column;
+
   gap: 18px;
 }
 
 .feature-item {
   display: flex;
   align-items: center;
+
   gap: 14px;
 
   color: #f5f3ff;
 
   font-size: 15px;
+
+  line-height: 1.4;
 }
 
 .feature-item i {
@@ -107,6 +130,8 @@
   align-items: center;
   justify-content: center;
 
+  flex-shrink: 0;
+
   border-radius: 10px;
 
   background: rgba(255, 255, 255, 0.1);
@@ -115,6 +140,11 @@
 
   font-size: 17px;
 }
+
+
+/* =========================
+   REGISTRATION SECTION
+========================= */
 
 .registration-section {
   width: 55%;
@@ -125,8 +155,14 @@
   justify-content: center;
 
   padding: 40px;
+
+  box-sizing: border-box;
 }
 
+
+/* =========================
+   REGISTRATION CARD
+========================= */
 
 :host ::ng-deep .registration-card {
   width: 100%;
@@ -140,6 +176,8 @@
     0 15px 45px rgba(32, 22, 58, 0.12) !important;
 
   background: white !important;
+
+  box-sizing: border-box;
 }
 
 :host ::ng-deep .registration-card .p-card-body {
@@ -149,6 +187,11 @@
 :host ::ng-deep .registration-card .p-card-content {
   padding: 0 !important;
 }
+
+
+/* =========================
+   REGISTRATION HEADER
+========================= */
 
 .registration-header {
   text-align: center;
@@ -184,6 +227,8 @@
 
   font-size: 25px;
   font-weight: 700;
+
+  line-height: 1.3;
 }
 
 .registration-header p {
@@ -192,8 +237,14 @@
   color: #77738a;
 
   font-size: 14px;
+
+  line-height: 1.5;
 }
 
+
+/* =========================
+   STEPS
+========================= */
 
 .steps {
   display: flex;
@@ -201,6 +252,15 @@
   justify-content: center;
 
   margin: 25px 0 32px;
+
+  width: 100%;
+
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.steps::-webkit-scrollbar {
+  display: none;
 }
 
 .step {
@@ -211,6 +271,8 @@
   align-items: center;
 
   position: relative;
+
+  flex-shrink: 0;
 }
 
 .step-circle {
@@ -246,6 +308,10 @@
 
   font-size: 12px;
   font-weight: 500;
+
+  text-align: center;
+
+  white-space: nowrap;
 }
 
 .step.active .step-circle,
@@ -273,17 +339,29 @@
 
   margin-top: 17px;
 
+  flex-shrink: 0;
+
   background: #dedbe4;
 }
 
+
+/* =========================
+   STEP CONTENT
+========================= */
 
 .step-content {
   width: 100%;
 }
 
+
+/* =========================
+   SECTION HEADING
+========================= */
+
 .section-heading {
   display: flex;
   align-items: center;
+
   gap: 13px;
 
   margin-bottom: 25px;
@@ -301,6 +379,8 @@
   align-items: center;
   justify-content: center;
 
+  flex-shrink: 0;
+
   border-radius: 11px;
 
   background: #f0ecfa;
@@ -317,6 +397,8 @@
 
   font-size: 18px;
   font-weight: 700;
+
+  line-height: 1.3;
 }
 
 .section-heading p {
@@ -325,12 +407,18 @@
   color: #888391;
 
   font-size: 12px;
+
+  line-height: 1.4;
 }
 
 
-
+/* =========================
+   FORM
+========================= */
 
 .form-group {
+  width: 100%;
+
   margin-bottom: 17px;
 }
 
@@ -343,10 +431,14 @@
 
   font-size: 13px;
   font-weight: 600;
+
+  line-height: 1.4;
 }
 
 
-
+/* =========================
+   INPUT
+========================= */
 
 :host ::ng-deep .form-group .p-inputtext {
   width: 100%;
@@ -360,6 +452,8 @@
   font-size: 13px;
 
   transition: all 0.2s ease;
+
+  box-sizing: border-box;
 }
 
 :host ::ng-deep .form-group .p-inputtext:enabled:focus {
@@ -370,7 +464,9 @@
 }
 
 
-
+/* =========================
+   ICON FIELD
+========================= */
 
 :host ::ng-deep .p-iconfield {
   width: 100%;
@@ -381,6 +477,9 @@
 }
 
 
+/* =========================
+   PASSWORD
+========================= */
 
 :host ::ng-deep .form-group .p-password {
   width: 100%;
@@ -396,6 +495,8 @@
   border-color: #ddd9e5;
 
   font-size: 13px;
+
+  box-sizing: border-box;
 }
 
 :host ::ng-deep
@@ -409,7 +510,9 @@
 }
 
 
-
+/* =========================
+   SELECT
+========================= */
 
 .custom-select {
   appearance: auto !important;
@@ -422,6 +525,9 @@
 }
 
 
+/* =========================
+   ERROR
+========================= */
 
 .error {
   display: block;
@@ -431,8 +537,16 @@
   color: #dc3545;
 
   font-size: 12px;
+
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
 }
 
+
+/* =========================
+   BUTTON GROUP
+========================= */
 
 .button-group {
   display: flex;
@@ -440,13 +554,19 @@
   gap: 12px;
 
   margin-top: 23px;
+
+  width: 100%;
 }
 
 .button-group p-button {
   flex: 1;
+  min-width: 0;
 }
 
 
+/* =========================
+   CONTINUE BUTTON
+========================= */
 
 :host ::ng-deep .continue-btn {
   width: 100%;
@@ -478,6 +598,9 @@
 }
 
 
+/* =========================
+   BACK BUTTON
+========================= */
 
 :host ::ng-deep .back-btn {
   width: 100%;
@@ -490,6 +613,9 @@
 }
 
 
+/* =========================
+   FORM MESSAGE
+========================= */
 
 .form-message {
   width: 100%;
@@ -498,10 +624,15 @@
 }
 
 
+/* =========================
+   LOGIN LINK
+========================= */
+
 .login-link {
   display: flex;
   justify-content: center;
   align-items: center;
+
   gap: 5px;
 
   margin-top: 23px;
@@ -509,6 +640,10 @@
   color: #777282;
 
   font-size: 13px;
+
+  text-align: center;
+
+  flex-wrap: wrap;
 }
 
 .login-link a {
@@ -524,6 +659,41 @@
 }
 
 
+/* =========================
+   LARGE TABLET
+========================= */
+
+@media (max-width: 1100px) {
+
+  .registration-brand-section {
+    width: 42%;
+
+    padding: 45px;
+  }
+
+  .registration-section {
+    width: 58%;
+
+    padding: 30px;
+  }
+
+  .brand-content h1 {
+    font-size: 32px;
+  }
+
+  .brand-content > p {
+    font-size: 15px;
+  }
+
+  .registration-card {
+    max-width: 540px;
+  }
+}
+
+
+/* =========================
+   TABLET
+========================= */
 
 @media (max-width: 1000px) {
 
@@ -543,16 +713,61 @@
     font-size: 30px;
   }
 
-  .registration-card {
+  .brand-content > p {
+    font-size: 14px;
+  }
+
+  .feature-list {
+    margin-top: 30px;
+    gap: 14px;
+  }
+
+  .feature-item {
+    font-size: 13px;
+  }
+
+  .feature-item i {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+  }
+
+  :host ::ng-deep .registration-card {
     max-width: 520px;
+  }
+
+  :host ::ng-deep .registration-card .p-card-body {
+    padding: 28px !important;
+  }
+
+  .registration-header h2 {
+    font-size: 23px;
+  }
+
+  .steps {
+    margin: 22px 0 28px;
+  }
+
+  .step {
+    min-width: 68px;
+  }
+
+  .step-line {
+    width: 45px;
   }
 }
 
+
+/* =========================
+   TABLET / MOBILE
+========================= */
 
 @media (max-width: 800px) {
 
   .registration-page {
     flex-direction: column;
+
+    min-height: 100vh;
   }
 
   .registration-brand-section {
@@ -564,6 +779,7 @@
 
   .brand-content {
     max-width: 600px;
+
     text-align: center;
   }
 
@@ -590,53 +806,492 @@
 
     padding: 30px 20px 40px;
   }
+
+  :host ::ng-deep .registration-card {
+    max-width: 560px;
+  }
 }
 
 
-@media (max-width: 520px) {
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
 
   .registration-brand-section {
-    padding: 28px 20px;
+    padding: 30px 20px;
   }
 
   .brand-icon {
-    width: 58px;
-    height: 58px;
+    width: 62px;
+    height: 62px;
+
+    margin-bottom: 18px;
+
+    border-radius: 17px;
   }
 
   .brand-icon i {
-    font-size: 25px;
+    font-size: 27px;
   }
 
   .brand-content h1 {
-    font-size: 23px;
+    font-size: 25px;
+
+    margin-bottom: 12px;
+  }
+
+  .brand-content > p {
+    font-size: 13px;
+    line-height: 1.6;
   }
 
   .registration-section {
-    padding: 20px 12px 35px;
+    padding: 22px 15px 35px;
+  }
+
+  :host ::ng-deep .registration-card {
+    border-radius: 15px !important;
   }
 
   :host ::ng-deep .registration-card .p-card-body {
-    padding: 22px 18px !important;
+    padding: 24px 20px !important;
+  }
+
+  .registration-header {
+    margin-bottom: 21px;
+  }
+
+  .header-icon {
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 12px;
+
+    border-radius: 13px;
+  }
+
+  .header-icon i {
+    font-size: 21px;
   }
 
   .registration-header h2 {
     font-size: 22px;
   }
 
-  .step {
-    min-width: 65px;
+  .registration-header p {
+    font-size: 13px;
   }
 
-  .step-line {
-    width: 35px;
+  .steps {
+    margin: 22px 0 27px;
+  }
+
+  .step {
+    min-width: 62px;
+  }
+
+  .step-circle {
+    width: 34px;
+    height: 34px;
+
+    font-size: 12px;
+  }
+
+  .step-circle i {
+    font-size: 13px;
   }
 
   .step-label {
+    font-size: 10px;
+    margin-top: 6px;
+  }
+
+  .step-line {
+    width: 30px;
+
+    margin-top: 16px;
+  }
+
+  .section-heading {
+    gap: 10px;
+
+    margin-bottom: 21px;
+
+    padding-bottom: 13px;
+  }
+
+  .section-heading > i {
+    width: 37px;
+    height: 37px;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+  }
+
+  .section-heading h3 {
+    font-size: 16px;
+  }
+
+  .section-heading p {
+    font-size: 11px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  :host ::ng-deep .form-group .p-inputtext {
+    height: 42px;
+    font-size: 12px;
+  }
+
+  :host ::ng-deep .form-group .p-password .p-password-input {
+    height: 42px;
+    font-size: 12px;
+  }
+
+  .error {
     font-size: 11px;
   }
 
   .button-group {
+    gap: 9px;
+
+    margin-top: 20px;
+  }
+
+  :host ::ng-deep .continue-btn,
+  :host ::ng-deep .back-btn {
+    min-height: 42px;
+
+    font-size: 12px !important;
+  }
+
+  .form-message {
+    margin-top: 10px;
+  }
+
+  .login-link {
+    margin-top: 19px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .registration-brand-section {
+    padding: 25px 15px;
+  }
+
+  .brand-icon {
+    width: 55px;
+    height: 55px;
+
+    margin-bottom: 15px;
+
+    border-radius: 15px;
+  }
+
+  .brand-icon i {
+    font-size: 24px;
+  }
+
+  .brand-content h1 {
+    font-size: 22px;
+
+    margin-bottom: 10px;
+  }
+
+  .brand-content > p {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .registration-section {
+    padding: 18px 10px 30px;
+  }
+
+  :host ::ng-deep .registration-card {
+    border-radius: 13px !important;
+  }
+
+  :host ::ng-deep .registration-card .p-card-body {
+    padding: 21px 16px !important;
+  }
+
+  .registration-header {
+    margin-bottom: 18px;
+  }
+
+  .header-icon {
+    width: 46px;
+    height: 46px;
+
+    margin-bottom: 10px;
+
+    border-radius: 12px;
+  }
+
+  .header-icon i {
+    font-size: 19px;
+  }
+
+  .registration-header h2 {
+    font-size: 20px;
+  }
+
+  .registration-header p {
+    font-size: 12px;
+  }
+
+  .steps {
+    margin: 19px 0 23px;
+  }
+
+  .step {
+    min-width: 57px;
+  }
+
+  .step-circle {
+    width: 32px;
+    height: 32px;
+
+    font-size: 11px;
+  }
+
+  .step-circle i {
+    font-size: 12px;
+  }
+
+  .step-label {
+    font-size: 9px;
+  }
+
+  .step-line {
+    width: 22px;
+
+    margin-top: 15px;
+  }
+
+  .section-heading {
     gap: 8px;
+
+    margin-bottom: 18px;
+
+    padding-bottom: 11px;
+  }
+
+  .section-heading > i {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+  }
+
+  .section-heading h3 {
+    font-size: 15px;
+  }
+
+  .section-heading p {
+    font-size: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-group label {
+    font-size: 11px;
+  }
+
+  :host ::ng-deep .form-group .p-inputtext {
+    height: 40px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+
+  :host ::ng-deep .form-group .p-password .p-password-input {
+    height: 40px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+
+  .error {
+    font-size: 10px;
+    margin-top: 4px;
+  }
+
+  .button-group {
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 18px;
+  }
+
+  .button-group p-button {
+    width: 100%;
+    flex: none;
+  }
+
+  :host ::ng-deep .continue-btn,
+  :host ::ng-deep .back-btn {
+    min-height: 41px;
+
+    font-size: 11px !important;
+  }
+
+  .login-link {
+    margin-top: 17px;
+
+    font-size: 11px;
+  }
+}
+
+
+/* =========================
+   EXTRA SMALL MOBILE
+========================= */
+
+@media (max-width: 360px) {
+
+  .registration-brand-section {
+    padding: 21px 12px;
+  }
+
+  .brand-icon {
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 13px;
+  }
+
+  .brand-icon i {
+    font-size: 22px;
+  }
+
+  .brand-content h1 {
+    font-size: 20px;
+  }
+
+  .brand-content > p {
+    font-size: 11px;
+  }
+
+  .registration-section {
+    padding: 15px 7px 25px;
+  }
+
+  :host ::ng-deep .registration-card .p-card-body {
+    padding: 18px 13px !important;
+  }
+
+  .registration-header h2 {
+    font-size: 18px;
+  }
+
+  .registration-header p {
+    font-size: 11px;
+  }
+
+  .steps {
+    margin: 17px 0 21px;
+  }
+
+  .step {
+    min-width: 52px;
+  }
+
+  .step-circle {
+    width: 30px;
+    height: 30px;
+
+    font-size: 10px;
+  }
+
+  .step-circle i {
+    font-size: 11px;
+  }
+
+  .step-label {
+    font-size: 8px;
+  }
+
+  .step-line {
+    width: 16px;
+
+    margin-top: 14px;
+  }
+
+  .section-heading {
+    gap: 7px;
+  }
+
+  .section-heading > i {
+    width: 31px;
+    height: 31px;
+
+    font-size: 13px;
+  }
+
+  .section-heading h3 {
+    font-size: 14px;
+  }
+
+  .section-heading p {
+    font-size: 9px;
+  }
+
+  .form-group {
+    margin-bottom: 13px;
+  }
+
+  .form-group label {
+    font-size: 10px;
+  }
+
+  :host ::ng-deep .form-group .p-inputtext {
+    height: 38px;
+    font-size: 10px;
+  }
+
+  :host ::ng-deep .form-group .p-password .p-password-input {
+    height: 38px;
+    font-size: 10px;
+  }
+
+  .error {
+    font-size: 9px;
+  }
+
+  .button-group {
+    gap: 7px;
+  }
+
+  :host ::ng-deep .continue-btn,
+  :host ::ng-deep .back-btn {
+    min-height: 39px;
+
+    font-size: 10px !important;
+  }
+
+  .login-link {
+    font-size: 10px;
   }
 }

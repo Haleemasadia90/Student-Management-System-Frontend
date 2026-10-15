@@ -1,7 +1,13 @@
+
+
 :host {
   display: block;
+  width: 100%;
   font-family: 'Inter', Arial, sans-serif;
+  box-sizing: border-box;
 }
+
+
 
 .dashboard-header {
   margin-bottom: 25px;
@@ -11,15 +17,21 @@
   margin: 0;
   font-size: 24px;
   color: #1e293b;
+  line-height: 1.3;
 }
 
+
+
 .dashboard-cards {
+  width: 100%;
   margin-top: 50px;
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-}
 
+  box-sizing: border-box;
+}
 
 .dashboard-card {
   background: white;
@@ -34,6 +46,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
   min-width: 0;
+  box-sizing: border-box;
 }
 
 .card-icon {
@@ -51,6 +64,7 @@
 }
 
 
+
 .id-icon {
   color: #7c3aed;
   background: #ede9fe;
@@ -61,18 +75,15 @@
   background: #dbeafe;
 }
 
-
 .email-icon {
   color: #db2777;
   background: #fce7f3;
 }
 
-
 .department-icon {
   color: #ea580c;
   background: #ffedd5;
 }
-
 
 .batch-icon {
   color: #4f46e5;
@@ -84,18 +95,15 @@
   background: #dcfce7;
 }
 
-
 .available-icon {
   color: #0891b2;
   background: #cffafe;
 }
 
-
 .semester-icon {
   color: #d97706;
   background: #fef3c7;
 }
-
 
 .progress-icon {
   color: #9333ea;
@@ -103,23 +111,26 @@
 }
 
 
+
 .dashboard-card > div:last-child {
   min-width: 0;
+  flex: 1;
 }
-
 
 .dashboard-card p {
   margin: 0 0 5px;
   color: #64748b;
   font-size: 14px;
+  line-height: 1.4;
 }
 
 .dashboard-card h3 {
   margin: 0;
   font-size: 20px;
   color: #1e293b;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
 }
-
 
 .card-value-sm {
   font-size: 15px !important;
@@ -128,12 +139,15 @@
 }
 
 
+
 .loading-text {
   text-align: center;
   color: #94a3b8;
   font-size: 14px;
   margin-top: 40px;
 }
+
+
 
 .profile-upload-section {
   display: flex;
@@ -167,26 +181,32 @@
   background: #e0e7ff;
 }
 
-
-
 .chart-wrapper {
   display: flex;
   justify-content: center;
+  width: 100%;
   margin-top: 24px;
+  box-sizing: border-box;
 }
 
 .chart-card {
   width: 100%;
   max-width: 380px;
   padding-bottom: 28px;
+  box-sizing: border-box;
 }
 
 .edit-profile-card {
+  width: 100%;
   margin-top: 20px;
+
   background: white;
   border-radius: 14px;
   padding: 24px;
+
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  box-sizing: border-box;
 }
 
 .section-title {
@@ -196,7 +216,6 @@
   color: #1e293b;
   text-align: center;
 }
-
 
 .pie-chart-wrapper {
   display: flex;
@@ -221,6 +240,7 @@
 .pie-chart-center {
   width: 104px;
   height: 104px;
+
   background: white;
   border-radius: 50%;
 
@@ -240,6 +260,7 @@
   font-size: 12px;
   color: #94a3b8;
 }
+
 
 
 .pie-legend {
@@ -275,6 +296,7 @@
 .legend-item div {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .legend-label {
@@ -286,8 +308,8 @@
   font-size: 16px;
   font-weight: 700;
   color: #1e293b;
+  overflow-wrap: anywhere;
 }
-
 
 .empty-text {
   text-align: center;
@@ -295,59 +317,311 @@
   font-size: 14px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+
+  .dashboard-header {
+    margin-bottom: 22px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 22px;
+  }
 
   .dashboard-cards {
+    margin-top: 35px;
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
+  .dashboard-card {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .card-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 27px;
+    border-radius: 10px;
+  }
+
+  .dashboard-card p {
+    font-size: 13px;
+  }
+
+  .dashboard-card h3 {
+    font-size: 18px;
+  }
+
+  .card-value-sm {
+    font-size: 14px !important;
+  }
+
+  .profile-upload-section {
+    margin-bottom: 20px;
+  }
+
+  .profile-dp {
+    width: 90px;
+    height: 90px;
+  }
+
+  .chart-wrapper {
+    margin-top: 20px;
+  }
+
+  .edit-profile-card {
+    padding: 20px;
+  }
 }
 
 
-@media (max-width: 640px) {
 
-  .pie-chart {
-    width: 140px;
-    height: 140px;
-  }
+@media (max-width: 768px) {
 
-  .pie-chart-center {
-    width: 92px;
-    height: 92px;
-  }
-
-  .pie-chart-percent {
-    font-size: 20px;
-  }
-
-  .chart-card {
-    max-width: 320px;
-  }
-
-}
-
-
-@media (max-width: 560px) {
-
-  .dashboard-cards {
-    grid-template-columns: 1fr;
+  .dashboard-header {
+    margin-bottom: 18px;
   }
 
   .dashboard-header h2 {
     font-size: 20px;
   }
 
+  .dashboard-cards {
+    margin-top: 25px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .dashboard-card {
+    padding: 15px;
+    gap: 11px;
+    border-radius: 10px;
+  }
+
+  .card-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 24px;
+    border-radius: 9px;
+  }
+
+  .dashboard-card p {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
   .dashboard-card h3 {
+    font-size: 17px;
+  }
+
+  .card-value-sm {
+    font-size: 13px !important;
+  }
+
+  .loading-text {
+    font-size: 13px;
+    margin-top: 30px;
+  }
+
+  .profile-upload-section {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .profile-dp {
+    width: 85px;
+    height: 85px;
+  }
+
+  .upload-label {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  .chart-wrapper {
+    margin-top: 18px;
+  }
+
+  .chart-card {
+    max-width: 340px;
+    padding-bottom: 22px;
+  }
+
+  .edit-profile-card {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 11px;
+  }
+
+  .section-title {
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+
+  .pie-chart {
+    width: 145px;
+    height: 145px;
+  }
+
+  .pie-chart-center {
+    width: 94px;
+    height: 94px;
+  }
+
+  .pie-chart-percent {
+    font-size: 21px;
+  }
+
+  .pie-chart-label {
+    font-size: 11px;
+  }
+
+  .pie-legend {
+    gap: 12px;
+    max-width: 190px;
+  }
+
+  .legend-label {
+    font-size: 11px;
+  }
+
+  .legend-value {
+    font-size: 15px;
+  }
+
+  .empty-text {
+    font-size: 13px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .dashboard-header {
+    margin-bottom: 15px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 18px;
+  }
+
+  .dashboard-cards {
+    margin-top: 18px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .dashboard-card {
+    padding: 13px;
+    gap: 11px;
+    border-radius: 9px;
+  }
+
+  .card-icon {
+    width: 36px;
+    height: 36px;
     font-size: 22px;
+    border-radius: 8px;
+  }
+
+  .dashboard-card p {
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+
+  .dashboard-card h3 {
+    font-size: 16px;
+  }
+
+  .card-value-sm {
+    font-size: 12px !important;
+  }
+
+  .loading-text {
+    font-size: 12px;
+    margin-top: 25px;
+  }
+
+  .profile-upload-section {
+    gap: 7px;
+    margin-bottom: 16px;
+  }
+
+  .profile-dp {
+    width: 75px;
+    height: 75px;
+    border-width: 2px;
+  }
+
+  .upload-label {
+    padding: 5px 12px;
+    font-size: 11px;
+    border-radius: 7px;
+  }
+
+  .chart-wrapper {
+    margin-top: 15px;
   }
 
   .chart-card {
     max-width: 100%;
-    margin: 0 12px;
+    margin: 0;
+    padding-bottom: 18px;
   }
 
   .edit-profile-card {
-    padding: 18px;
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 10px;
   }
 
+  .section-title {
+    margin-bottom: 12px;
+    font-size: 12px;
+  }
+
+  .pie-chart-wrapper {
+    gap: 15px;
+  }
+
+  .pie-chart {
+    width: 130px;
+    height: 130px;
+  }
+
+  .pie-chart-center {
+    width: 84px;
+    height: 84px;
+  }
+
+  .pie-chart-percent {
+    font-size: 19px;
+  }
+
+  .pie-chart-label {
+    font-size: 10px;
+  }
+
+  .pie-legend {
+    gap: 10px;
+    max-width: 180px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .legend-label {
+    font-size: 10px;
+  }
+
+  .legend-value {
+    font-size: 14px;
+  }
+
+  .empty-text {
+    font-size: 12px;
+  }
 }
