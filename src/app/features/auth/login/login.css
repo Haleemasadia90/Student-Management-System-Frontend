@@ -1,7 +1,16 @@
 :host {
   display: block;
+  width: 100%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+
+/* =========================
+   LOGIN PAGE
+========================= */
 
 .login-page {
   min-height: 100vh;
@@ -13,9 +22,12 @@
 }
 
 
+/* =========================
+   BRAND SECTION
+========================= */
+
 .login-brand-section {
   width: 48%;
-
   min-height: 100vh;
 
   display: flex;
@@ -40,8 +52,9 @@
   position: relative;
 
   overflow: hidden;
-}
 
+  box-sizing: border-box;
+}
 
 .login-brand-section::before {
   content: '';
@@ -58,7 +71,6 @@
   top: -100px;
   right: -80px;
 }
-
 
 .login-brand-section::after {
   content: '';
@@ -77,6 +89,10 @@
 }
 
 
+/* =========================
+   BRAND CONTENT
+========================= */
+
 .brand-content {
   width: 100%;
   max-width: 450px;
@@ -85,7 +101,6 @@
 
   z-index: 2;
 }
-
 
 .brand-icon {
   width: 64px;
@@ -109,8 +124,9 @@
 
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.12);
-}
 
+  flex-shrink: 0;
+}
 
 .brand-content h1 {
   margin: 0;
@@ -126,13 +142,11 @@
   letter-spacing: -0.7px;
 }
 
-
 .brand-content h1 span {
   display: block;
 
   color: #c4b5fd;
 }
-
 
 .brand-content > p {
   max-width: 390px;
@@ -147,6 +161,10 @@
 }
 
 
+/* =========================
+   BRAND FEATURES
+========================= */
+
 .brand-features {
   margin-top: 35px;
 
@@ -156,7 +174,6 @@
 
   gap: 13px;
 }
-
 
 .feature-item {
   display: flex;
@@ -168,8 +185,9 @@
   color: rgba(255, 255, 255, 0.78);
 
   font-size: 13px;
-}
 
+  line-height: 1.4;
+}
 
 .feature-item i {
   width: 34px;
@@ -180,6 +198,8 @@
   align-items: center;
   justify-content: center;
 
+  flex-shrink: 0;
+
   border-radius: 9px;
 
   background: rgba(255, 255, 255, 0.09);
@@ -189,9 +209,15 @@
   font-size: 14px;
 }
 
+
+/* =========================
+   LOGIN SECTION
+========================= */
+
 .login-section {
   flex: 1;
 
+  width: 52%;
   min-height: 100vh;
 
   display: flex;
@@ -201,8 +227,14 @@
   justify-content: center;
 
   padding: 40px;
+
+  box-sizing: border-box;
 }
 
+
+/* =========================
+   LOGIN CARD
+========================= */
 
 :host ::ng-deep .login-card {
   width: 100%;
@@ -219,18 +251,22 @@
     0 15px 45px rgba(15, 23, 42, 0.10) !important;
 
   overflow: hidden;
-}
 
+  box-sizing: border-box;
+}
 
 :host ::ng-deep .login-card .p-card-body {
   padding: 30px 34px 32px !important;
 }
 
-
 :host ::ng-deep .login-card .p-card-content {
   padding: 0 !important;
 }
 
+
+/* =========================
+   LOGIN HEADER
+========================= */
 
 .login-header {
   padding: 30px 34px 22px;
@@ -239,7 +275,6 @@
 
   border-bottom: 1px solid #f1f5f9;
 }
-
 
 .login-icon {
   width: 52px;
@@ -261,7 +296,6 @@
   font-size: 20px;
 }
 
-
 .login-header h2 {
   margin: 0;
 
@@ -270,8 +304,9 @@
   font-size: 24px;
 
   font-weight: 700;
-}
 
+  line-height: 1.3;
+}
 
 .login-header p {
   margin: 7px 0 0;
@@ -279,18 +314,24 @@
   color: #64748b;
 
   font-size: 12px;
+
+  line-height: 1.5;
 }
 
+
+/* =========================
+   LOGIN FORM
+========================= */
 
 .login-form {
   width: 100%;
 }
 
-
 .form-group {
+  width: 100%;
+
   margin-bottom: 20px;
 }
-
 
 .form-group label {
   display: block;
@@ -302,8 +343,14 @@
   font-size: 13px;
 
   font-weight: 600;
+
+  line-height: 1.4;
 }
 
+
+/* =========================
+   FORM CONTROL
+========================= */
 
 :host ::ng-deep .form-control {
   width: 100% !important;
@@ -325,8 +372,9 @@
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease !important;
-}
 
+  box-sizing: border-box;
+}
 
 :host ::ng-deep .form-control:focus {
   border-color: #6d5ca8 !important;
@@ -336,19 +384,26 @@
 }
 
 
+/* =========================
+   ICON FIELD
+========================= */
+
 :host ::ng-deep .p-iconfield {
   width: 100%;
 }
-
 
 :host ::ng-deep .p-inputicon {
   color: #94a3b8 !important;
 }
 
+
+/* =========================
+   PASSWORD
+========================= */
+
 :host ::ng-deep .password-field {
   width: 100% !important;
 }
-
 
 :host ::ng-deep .password-field .p-password-input {
   width: 100% !important;
@@ -362,8 +417,9 @@
   font-size: 13px !important;
 
   box-shadow: none !important;
-}
 
+  box-sizing: border-box;
+}
 
 :host ::ng-deep .password-field .p-password-input:focus {
   border-color: #6d5ca8 !important;
@@ -372,10 +428,14 @@
     0 0 0 3px rgba(109, 92, 168, 0.12) !important;
 }
 
-
 :host ::ng-deep .password-field .p-password-toggle-mask-icon {
   color: #64748b !important;
 }
+
+
+/* =========================
+   ERROR
+========================= */
 
 .error {
   display: block;
@@ -385,7 +445,16 @@
   color: #dc3545;
 
   font-size: 11px;
+
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
 }
+
+
+/* =========================
+   FORGOT PASSWORD
+========================= */
 
 .forgot-container {
   display: flex;
@@ -396,7 +465,6 @@
 
   margin-bottom: 20px;
 }
-
 
 .forgot-link {
   color: #59468e;
@@ -410,13 +478,16 @@
   transition: color 0.2s ease;
 }
 
-
 .forgot-link:hover {
   color: #20163a;
 
   text-decoration: underline;
 }
 
+
+/* =========================
+   MESSAGE
+========================= */
 
 :host ::ng-deep .login-message {
   width: 100% !important;
@@ -426,8 +497,14 @@
   border-radius: 8px !important;
 
   font-size: 12px !important;
+
+  box-sizing: border-box;
 }
 
+
+/* =========================
+   LOGIN BUTTON
+========================= */
 
 :host ::ng-deep .login-button {
   width: 100% !important;
@@ -453,8 +530,9 @@
     background 0.2s ease,
     transform 0.2s ease,
     box-shadow 0.2s ease !important;
-}
 
+  box-sizing: border-box;
+}
 
 :host ::ng-deep .login-button:hover {
   background: #2b1d4d !important;
@@ -463,10 +541,14 @@
     0 7px 18px rgba(32, 22, 58, 0.25) !important;
 }
 
-
 :host ::ng-deep .login-button:active {
   transform: scale(0.98);
 }
+
+
+/* =========================
+   REGISTER TEXT
+========================= */
 
 .register-text {
   margin: 20px 0 0;
@@ -476,8 +558,9 @@
   color: #64748b;
 
   font-size: 12px;
-}
 
+  line-height: 1.5;
+}
 
 .register-text a {
   margin-left: 4px;
@@ -489,13 +572,56 @@
   text-decoration: none;
 }
 
-
 .register-text a:hover {
   color: #20163a;
 
   text-decoration: underline;
 }
 
+
+/* =========================
+   LARGE TABLET
+========================= */
+
+@media (max-width: 1100px) {
+
+  .login-brand-section {
+    width: 44%;
+
+    padding: 40px;
+  }
+
+  .login-section {
+    width: 56%;
+
+    padding: 30px;
+  }
+
+  .brand-content h1 {
+    font-size: 33px;
+  }
+
+  .brand-content > p {
+    font-size: 13px;
+  }
+
+  .brand-features {
+    margin-top: 30px;
+  }
+
+  .feature-item {
+    font-size: 12px;
+  }
+
+  .login-card {
+    max-width: 420px;
+  }
+}
+
+
+/* =========================
+   TABLET
+========================= */
 
 @media (max-width: 900px) {
 
@@ -505,15 +631,68 @@
     padding: 35px;
   }
 
+  .login-section {
+    width: 58%;
+
+    padding: 30px;
+  }
+
   .brand-content h1 {
     font-size: 30px;
   }
 
-  .login-section {
-    padding: 30px;
+  .brand-content > p {
+    font-size: 12px;
+    line-height: 1.6;
   }
 
+  .brand-icon {
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 21px;
+
+    font-size: 24px;
+  }
+
+  .brand-features {
+    gap: 11px;
+  }
+
+  .feature-item {
+    gap: 9px;
+
+    font-size: 11px;
+  }
+
+  .feature-item i {
+    width: 31px;
+    height: 31px;
+
+    font-size: 13px;
+  }
+
+  :host ::ng-deep .login-card {
+    max-width: 410px;
+  }
+
+  :host ::ng-deep .login-card .p-card-body {
+    padding: 27px 29px 30px !important;
+  }
+
+  .login-header {
+    padding: 27px 29px 20px;
+  }
+
+  .login-header h2 {
+    font-size: 22px;
+  }
 }
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 700px) {
 
@@ -523,7 +702,6 @@
     min-height: 100vh;
   }
 
-
   .login-brand-section {
     width: 100%;
 
@@ -532,13 +710,11 @@
     padding: 28px 24px 32px;
   }
 
-
   .brand-content {
     max-width: 500px;
 
     text-align: center;
   }
-
 
   .brand-icon {
     width: 52px;
@@ -549,26 +725,28 @@
     font-size: 21px;
   }
 
-
   .brand-content h1 {
     font-size: 27px;
+
+    letter-spacing: -0.4px;
   }
 
-
   .brand-content > p {
+    max-width: 450px;
+
     margin-left: auto;
     margin-right: auto;
 
     font-size: 12px;
   }
 
-
   .brand-features {
     display: none;
   }
 
-
   .login-section {
+    width: 100%;
+
     min-height: auto;
 
     padding: 25px 16px 35px;
@@ -576,13 +754,73 @@
     background: #f8fafc;
   }
 
-
   :host ::ng-deep .login-card {
     max-width: 460px;
+
+    border-radius: 15px !important;
   }
 
+  :host ::ng-deep .login-card .p-card-body {
+    padding: 27px 25px 29px !important;
+  }
+
+  .login-header {
+    padding: 26px 25px 20px;
+  }
+
+  .login-header h2 {
+    font-size: 22px;
+  }
+
+  .login-header p {
+    font-size: 11px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    font-size: 12px;
+  }
+
+  :host ::ng-deep .form-control {
+    height: 43px !important;
+
+    font-size: 12px !important;
+  }
+
+  :host ::ng-deep .password-field .p-password-input {
+    height: 43px !important;
+
+    font-size: 12px !important;
+  }
+
+  .forgot-container {
+    margin-bottom: 18px;
+  }
+
+  .login-message {
+    margin-bottom: 14px !important;
+  }
+
+  :host ::ng-deep .login-button {
+    height: 43px !important;
+
+    font-size: 12px !important;
+  }
+
+  .register-text {
+    margin-top: 18px;
+
+    font-size: 11px;
+  }
 }
 
+
+/* =========================
+   SMALL MOBILE
+========================= */
 
 @media (max-width: 480px) {
 
@@ -590,29 +828,241 @@
     padding: 24px 18px 28px;
   }
 
+  .login-brand-section::before {
+    width: 200px;
+    height: 200px;
 
-  .brand-content h1 {
-    font-size: 24px;
+    top: -80px;
+    right: -70px;
   }
 
+  .login-brand-section::after {
+    width: 160px;
+    height: 160px;
+
+    bottom: -60px;
+    left: -55px;
+  }
+
+  .brand-icon {
+    width: 48px;
+    height: 48px;
+
+    margin-bottom: 13px;
+
+    border-radius: 13px;
+
+    font-size: 20px;
+  }
+
+  .brand-content h1 {
+    font-size: 23px;
+  }
+
+  .brand-content > p {
+    margin-top: 14px;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+  }
 
   .login-section {
     padding: 20px 12px 30px;
   }
 
+  :host ::ng-deep .login-card {
+    border-radius: 13px !important;
+  }
 
   :host ::ng-deep .login-card .p-card-body {
-    padding: 25px 22px 27px !important;
+    padding: 23px 19px 25px !important;
   }
-
 
   .login-header {
-    padding: 25px 22px 20px;
+    padding: 23px 19px 18px;
   }
 
+  .login-icon {
+    width: 47px;
+    height: 47px;
+
+    margin-bottom: 11px;
+
+    border-radius: 12px;
+
+    font-size: 18px;
+  }
 
   .login-header h2 {
+    font-size: 20px;
+  }
+
+  .login-header p {
+    margin-top: 6px;
+
+    font-size: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    margin-bottom: 6px;
+
+    font-size: 11px;
+  }
+
+  :host ::ng-deep .form-control {
+    height: 41px !important;
+
+    font-size: 11px !important;
+
+    border-radius: 7px !important;
+  }
+
+  :host ::ng-deep .password-field .p-password-input {
+    height: 41px !important;
+
+    font-size: 11px !important;
+
+    border-radius: 7px !important;
+  }
+
+  .error {
+    margin-top: 4px;
+
+    font-size: 10px;
+  }
+
+  .forgot-container {
+    margin-top: -4px;
+
+    margin-bottom: 16px;
+  }
+
+  .forgot-link {
+    font-size: 11px;
+  }
+
+  :host ::ng-deep .login-message {
+    margin-bottom: 13px !important;
+
+    font-size: 10px !important;
+  }
+
+  :host ::ng-deep .login-button {
+    height: 41px !important;
+
+    border-radius: 7px !important;
+
+    font-size: 11px !important;
+  }
+
+  .register-text {
+    margin-top: 16px;
+
+    font-size: 10px;
+  }
+}
+
+
+/* =========================
+   EXTRA SMALL MOBILE
+========================= */
+
+@media (max-width: 360px) {
+
+  .login-brand-section {
+    padding: 20px 12px 24px;
+  }
+
+  .brand-icon {
+    width: 44px;
+    height: 44px;
+
+    margin-bottom: 11px;
+
+    border-radius: 11px;
+
+    font-size: 18px;
+  }
+
+  .brand-content h1 {
     font-size: 21px;
   }
 
+  .brand-content > p {
+    margin-top: 12px;
+
+    font-size: 10px;
+  }
+
+  .login-section {
+    padding: 16px 8px 25px;
+  }
+
+  :host ::ng-deep .login-card .p-card-body {
+    padding: 20px 14px 22px !important;
+  }
+
+  .login-header {
+    padding: 20px 14px 16px;
+  }
+
+  .login-icon {
+    width: 43px;
+    height: 43px;
+
+    margin-bottom: 9px;
+
+    font-size: 17px;
+  }
+
+  .login-header h2 {
+    font-size: 18px;
+  }
+
+  .login-header p {
+    font-size: 9px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-group label {
+    font-size: 10px;
+  }
+
+  :host ::ng-deep .form-control {
+    height: 39px !important;
+
+    font-size: 10px !important;
+  }
+
+  :host ::ng-deep .password-field .p-password-input {
+    height: 39px !important;
+
+    font-size: 10px !important;
+  }
+
+  .error {
+    font-size: 9px;
+  }
+
+  .forgot-link {
+    font-size: 10px;
+  }
+
+  :host ::ng-deep .login-button {
+    height: 39px !important;
+
+    font-size: 10px !important;
+  }
+
+  .register-text {
+    font-size: 9px;
+  }
 }

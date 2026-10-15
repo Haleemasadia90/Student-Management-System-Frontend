@@ -156,6 +156,7 @@
       @case ('course') {
         <app-course-enrollment
           [studentId]="s.id"
+           [departmentId]="s.departmentId"
           [admissionYear]="s.admissionYear ?? 0">
         </app-course-enrollment>
       }

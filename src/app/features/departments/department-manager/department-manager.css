@@ -1,10 +1,13 @@
+
 .dept-manager {
-  margin: 10px auto 0;
+  width: 100%;
   max-width: 500px;
+  margin: 10px auto 0;
   background: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
 }
 
 
@@ -12,6 +15,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 14px;
 }
 
@@ -21,17 +25,25 @@
   color: #1e293b;
   border-left: 4px solid #0d6efd;
   padding-left: 10px;
+  line-height: 1.4;
 }
+
 
 p-inputGroup {
   display: flex;
   width: 90%;
+  max-width: 100%;
   margin: 25px auto 28px;
+  box-sizing: border-box;
 }
 
 p-inputGroup input {
   flex: 1;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
+
 
 
 .dept-list {
@@ -44,23 +56,35 @@ p-inputGroup input {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+
   padding: 10px 12px;
+
   background: #f8fafc;
   border-radius: 8px;
+
   margin-bottom: 6px;
+
   font-size: 14px;
+
+  box-sizing: border-box;
 }
 
 .department-name {
   color: #1e293b;
   font-weight: 500;
+
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
+
 
 
 .department-actions {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 :host ::ng-deep .department-actions .p-button {
@@ -80,6 +104,7 @@ p-inputGroup input {
   display: inline-block !important;
   visibility: visible !important;
   opacity: 1 !important;
+
   font-size: 14px !important;
   margin: 0 !important;
 }
@@ -98,6 +123,8 @@ p-inputGroup input {
   opacity: 1 !important;
 }
 
+
+
 .empty-text {
   color: #94a3b8;
   font-size: 13px;
@@ -110,11 +137,14 @@ p-inputGroup input {
   color: #dc3545;
   font-size: 12px;
   margin: 6px 0;
+  line-height: 1.4;
 }
+
 
 .modal-overlay {
   position: fixed;
   inset: 0;
+
   background: rgba(0, 0, 0, 0.4);
 
   display: flex;
@@ -122,24 +152,33 @@ p-inputGroup input {
   align-items: center;
 
   z-index: 1000;
+
+  padding: 15px;
+  box-sizing: border-box;
 }
 
 .modal-box {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
   width: 340px;
+  max-width: 100%;
+
+  background: white;
+
+  padding: 24px;
+
+  border-radius: 12px;
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 
   text-align: center;
+
+  box-sizing: border-box;
 }
 
 .modal-box h4 {
   margin: 0 0 24px;
   color: #1e293b;
+  line-height: 1.4;
 }
-
 
 .modal-box p-floatLabel {
   display: block;
@@ -148,6 +187,7 @@ p-inputGroup input {
 
 .modal-box p-floatLabel input {
   width: 100%;
+  box-sizing: border-box;
 }
 
 .modal-actions {
@@ -156,12 +196,14 @@ p-inputGroup input {
   align-items: center;
   gap: 12px;
   margin-top: 24px;
+  flex-wrap: wrap;
 }
 
 
 :host ::ng-deep .department-scroll {
   width: 100%;
   height: 400px;
+  max-height: 400px;
 }
 
 :host ::ng-deep .department-scroll .p-scrollpanel-content {
@@ -178,26 +220,211 @@ p-inputGroup input {
   background: #8b5cf6;
 }
 
-@media (max-width: 600px) {
+
+
+@media (max-width: 1024px) {
+
   .dept-manager {
-    margin: 25px 15px 0;
-    max-width: none;
+    max-width: 480px;
+    padding: 18px;
   }
 
   .dept-header {
-    gap: 10px;
+    margin-bottom: 13px;
   }
 
   .dept-header h3 {
     font-size: 15px;
   }
 
+  p-inputGroup {
+    width: 92%;
+    margin: 22px auto 24px;
+  }
+
   .dept-list li {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .department-actions {
+    gap: 6px;
+  }
+
+  :host ::ng-deep .department-actions .p-button {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+  }
+
+  :host ::ng-deep .department-actions .p-button .p-button-icon {
+    font-size: 13px !important;
+  }
+
+  :host ::ng-deep .department-scroll {
+    height: 380px;
+    max-height: 380px;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+
+  .dept-manager {
+    width: calc(100% - 30px);
+    max-width: none;
+    margin: 20px auto 0;
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .dept-header {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .dept-header h3 {
+    font-size: 15px;
+    padding-left: 8px;
+  }
+
+  p-inputGroup {
+    width: 100%;
+    margin: 20px auto 22px;
+  }
+
+  .dept-list li {
+    padding: 10px;
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .department-name {
+    flex: 1;
+  }
+
+  .department-actions {
+    gap: 6px;
+  }
+
+  :host ::ng-deep .department-actions .p-button {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+  }
+
+  .empty-text {
+    font-size: 12px;
+  }
+
+  .modal-overlay {
+    padding: 15px;
+  }
+
+  .modal-box {
+    width: 100%;
+    max-width: 340px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .modal-box h4 {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .modal-actions {
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+  :host ::ng-deep .department-scroll {
+    height: 350px;
+    max-height: 350px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .dept-manager {
+    width: calc(100% - 20px);
+    margin: 15px auto 0;
+    padding: 12px;
+    border-radius: 9px;
+  }
+
+  .dept-header {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .dept-header h3 {
+    font-size: 14px;
+    border-left-width: 3px;
+    padding-left: 7px;
+  }
+
+  p-inputGroup {
+    width: 100%;
+    margin: 17px auto 19px;
+  }
+
+  .dept-list li {
+    padding: 9px;
+    gap: 8px;
+    font-size: 12px;
+    border-radius: 7px;
+  }
+
+  .department-actions {
+    gap: 5px;
+  }
+
+  :host ::ng-deep .department-actions .p-button {
+    width: 31px !important;
+    min-width: 31px !important;
+    height: 31px !important;
+    border-radius: 5px !important;
+  }
+
+  :host ::ng-deep .department-actions .p-button .p-button-icon {
+    font-size: 12px !important;
+  }
+
+  .empty-text {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  .error {
+    font-size: 11px;
+    margin: 5px 0;
+  }
+
+  .modal-overlay {
     padding: 10px;
   }
 
   .modal-box {
-    width: calc(100% - 30px);
-    max-width: 340px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 9px;
+  }
+
+  .modal-box h4 {
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+
+  .modal-actions {
+    margin-top: 18px;
+    gap: 8px;
+  }
+
+  :host ::ng-deep .department-scroll {
+    height: 300px;
+    max-height: 300px;
   }
 }
