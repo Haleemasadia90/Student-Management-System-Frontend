@@ -1,13 +1,22 @@
 
+:host {
+  display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .dept-manager {
   width: 100%;
   max-width: 500px;
   margin: 10px auto 0;
-  background: white;
-  padding: 20px;
+  padding: clamp(12px, 2vw, 20px);
+  background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  box-sizing: border-box;
 }
 
 
@@ -15,17 +24,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 14px;
 }
 
 .dept-header h3 {
   margin: 0;
-  font-size: 16px;
+  min-width: 0;
+  font-size: clamp(14px, 1.2vw + 10px, 16px);
   color: #1e293b;
   border-left: 4px solid #0d6efd;
   padding-left: 10px;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 
@@ -34,16 +46,13 @@ p-inputGroup {
   width: 90%;
   max-width: 100%;
   margin: 25px auto 28px;
-  box-sizing: border-box;
 }
 
 p-inputGroup input {
   flex: 1;
   min-width: 0;
   width: 100%;
-  box-sizing: border-box;
 }
-
 
 
 .dept-list {
@@ -57,28 +66,20 @@ p-inputGroup input {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-
   padding: 10px 12px;
-
+  margin-bottom: 6px;
   background: #f8fafc;
   border-radius: 8px;
-
-  margin-bottom: 6px;
-
   font-size: 14px;
-
-  box-sizing: border-box;
 }
 
 .department-name {
+  flex: 1;
+  min-width: 0;
   color: #1e293b;
   font-weight: 500;
-
-  min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: anywhere; 
 }
-
-
 
 .department-actions {
   display: flex;
@@ -92,11 +93,9 @@ p-inputGroup input {
   min-width: 36px !important;
   height: 36px !important;
   padding: 0 !important;
-
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-
   border-radius: 6px !important;
 }
 
@@ -104,15 +103,11 @@ p-inputGroup input {
   display: inline-block !important;
   visibility: visible !important;
   opacity: 1 !important;
-
   font-size: 14px !important;
   margin: 0 !important;
 }
 
-:host ::ng-deep .department-actions .p-button-info {
-  color: #ffffff !important;
-}
-
+:host ::ng-deep .department-actions .p-button-info,
 :host ::ng-deep .department-actions .p-button-danger {
   color: #ffffff !important;
 }
@@ -122,7 +117,6 @@ p-inputGroup input {
   visibility: visible !important;
   opacity: 1 !important;
 }
-
 
 
 .empty-text {
@@ -144,40 +138,32 @@ p-inputGroup input {
 .modal-overlay {
   position: fixed;
   inset: 0;
-
-  background: rgba(0, 0, 0, 0.4);
-
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  z-index: 1000;
-
   padding: 15px;
-  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.4);
+  overflow-y: auto; 
 }
 
 .modal-box {
   width: 340px;
   max-width: 100%;
-
-  background: white;
-
+  max-height: 100%;
+  overflow-y: auto;
   padding: 24px;
-
+  background: #ffffff;
   border-radius: 12px;
-
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-
   text-align: center;
-
-  box-sizing: border-box;
 }
 
 .modal-box h4 {
   margin: 0 0 24px;
   color: #1e293b;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .modal-box p-floatLabel {
@@ -187,23 +173,23 @@ p-inputGroup input {
 
 .modal-box p-floatLabel input {
   width: 100%;
-  box-sizing: border-box;
 }
 
 .modal-actions {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 24px;
-  flex-wrap: wrap;
 }
-
 
 :host ::ng-deep .department-scroll {
   width: 100%;
-  height: 400px;
+  height: min(400px, 60vh);
+  height: min(400px, 60dvh);
   max-height: 400px;
+  padding: 20px;
 }
 
 :host ::ng-deep .department-scroll .p-scrollpanel-content {
@@ -220,21 +206,16 @@ p-inputGroup input {
   background: #8b5cf6;
 }
 
+@media (min-width: 1600px) {
+  .dept-manager {
+    max-width: 560px;
+  }
+}
 
 
 @media (max-width: 1024px) {
-
   .dept-manager {
     max-width: 480px;
-    padding: 18px;
-  }
-
-  .dept-header {
-    margin-bottom: 13px;
-  }
-
-  .dept-header h3 {
-    font-size: 15px;
   }
 
   p-inputGroup {
@@ -260,22 +241,13 @@ p-inputGroup input {
   :host ::ng-deep .department-actions .p-button .p-button-icon {
     font-size: 13px !important;
   }
-
-  :host ::ng-deep .department-scroll {
-    height: 380px;
-    max-height: 380px;
-  }
 }
 
-
-
 @media (max-width: 768px) {
-
   .dept-manager {
     width: calc(100% - 30px);
     max-width: none;
     margin: 20px auto 0;
-    padding: 16px;
     border-radius: 10px;
   }
 
@@ -285,7 +257,6 @@ p-inputGroup input {
   }
 
   .dept-header h3 {
-    font-size: 15px;
     padding-left: 8px;
   }
 
@@ -295,31 +266,11 @@ p-inputGroup input {
   }
 
   .dept-list li {
-    padding: 10px;
     gap: 10px;
-    font-size: 13px;
-  }
-
-  .department-name {
-    flex: 1;
-  }
-
-  .department-actions {
-    gap: 6px;
-  }
-
-  :host ::ng-deep .department-actions .p-button {
-    width: 34px !important;
-    min-width: 34px !important;
-    height: 34px !important;
   }
 
   .empty-text {
     font-size: 12px;
-  }
-
-  .modal-overlay {
-    padding: 15px;
   }
 
   .modal-box {
@@ -340,14 +291,12 @@ p-inputGroup input {
   }
 
   :host ::ng-deep .department-scroll {
-    height: 350px;
-    max-height: 350px;
+    padding: 14px;
   }
 }
 
 
 @media (max-width: 480px) {
-
   .dept-manager {
     width: calc(100% - 20px);
     margin: 15px auto 0;
@@ -361,13 +310,11 @@ p-inputGroup input {
   }
 
   .dept-header h3 {
-    font-size: 14px;
     border-left-width: 3px;
     padding-left: 7px;
   }
 
   p-inputGroup {
-    width: 100%;
     margin: 17px auto 19px;
   }
 
@@ -383,9 +330,9 @@ p-inputGroup input {
   }
 
   :host ::ng-deep .department-actions .p-button {
-    width: 31px !important;
-    min-width: 31px !important;
-    height: 31px !important;
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px !important;
     border-radius: 5px !important;
   }
 
@@ -408,7 +355,7 @@ p-inputGroup input {
   }
 
   .modal-box {
-    width: 100%;
+    max-width: 100%;
     padding: 16px;
     border-radius: 9px;
   }
@@ -418,13 +365,71 @@ p-inputGroup input {
     margin-bottom: 18px;
   }
 
+ 
   .modal-actions {
     margin-top: 18px;
     gap: 8px;
   }
 
+  :host ::ng-deep .modal-actions .p-button {
+    flex: 1 1 120px;
+  }
+
   :host ::ng-deep .department-scroll {
-    height: 300px;
-    max-height: 300px;
+    padding: 10px;
+  }
+}
+
+
+@media (max-width: 360px) {
+  .dept-manager {
+    width: calc(100% - 12px);
+    padding: 10px;
+  }
+
+  .dept-list li {
+    font-size: 11.5px;
+  }
+
+  :host ::ng-deep .department-actions .p-button {
+    width: 30px !important;
+    min-width: 30px !important;
+    height: 30px !important;
+  }
+}
+
+
+@media (pointer: coarse) {
+  :host ::ng-deep .department-actions .p-button {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .dept-manager {
+    margin-top: 8px;
+  }
+
+  p-inputGroup {
+    margin: 12px auto;
+  }
+
+  .modal-box {
+    padding: 14px;
+  }
+
+  .modal-box h4 {
+    margin-bottom: 12px;
+  }
+
+  .modal-actions {
+    margin-top: 12px;
+  }
+
+  :host ::ng-deep .department-scroll {
+    height: 55vh;
   }
 }

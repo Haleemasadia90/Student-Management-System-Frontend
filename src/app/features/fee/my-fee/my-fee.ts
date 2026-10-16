@@ -6,18 +6,21 @@ import { FeeService } from '../fee-service';
 import { Fee, FeeSummary } from '../../../models/fee.model';
 
 import { CardModule } from 'primeng/card';
-import { TableModule } from 'primeng/table';
+import { TableModule, TableLazyLoadEvent } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { SelectModule } from 'primeng/select';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-my-fee',
   standalone: true,
-  imports: [ CommonModule, FormsModule, CardModule, TableModule, TagModule, SelectModule,
-     ProgressBarModule,ProgressSpinnerModule,MessageModule  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CardModule,
+    TableModule,
+    TagModule,
+    SelectModule,
+  ],
   templateUrl: './my-fee.html',
   styleUrl: './my-fee.css'
 })
@@ -29,78 +32,113 @@ export class MyFee implements OnInit {
   summary = signal<FeeSummary | null>(null);
   loading = signal(true);
 
-  semester = ''; 
+  // Server-side pagination
+  first = signal(0);
+  rows = signal(10);
+  totalRecords = signal(0);
+
+  semester = '';
+
   semesterOptions = signal<{ label: string; value: string }[]>([
-    { label: 'All semesters', value: 'ALL' }
+    { label: 'All semesters', value: '' }
   ]);
 
   get pieChartStyle(): string {
     const s = this.summary();
+
     if (!s) {
       return '';
     }
 
     const paidDeg = (s.paidPercentage / 100) * 360;
 
-    return `
-      conic-gradient(
-        #16a34a 0deg ${paidDeg}deg,
-        #dc2626 ${paidDeg}deg 360deg
-      )
-    `;
+    return `conic-gradient(
+      #16a34a 0deg ${paidDeg}deg,
+      #dc2626 ${paidDeg}deg 360deg
+    )`;
   }
 
-  getStatusSeverity(status: string): 'success' | 'warn' | 'danger' | 'info' {
+  getStatusSeverity(
+    status: string
+  ): 'success' | 'warn' | 'danger' | 'info' {
     switch (status.toLowerCase()) {
-      case 'paid': return 'success';
-      case 'pending': return 'warn';
-      case 'overdue': return 'danger';
-      default: return 'info';
+      case 'paid':
+        return 'success';
+      case 'pending':
+        return 'warn';
+      case 'overdue':
+        return 'danger';
+      default:
+        return 'info';
     }
   }
 
   ngOnInit(): void {
     this.feeService.getMyAvailableSemesters().subscribe({
-      next: (list) =>
+      next: (list) => {
         this.semesterOptions.set([
-          { label: 'All semesters', value: 'ALL' },
+          { label: 'All semesters', value: '' },
           ...list.map(s => ({ label: s, value: s }))
-        ]),
+        ]);
+      },
       error: (err) => console.error('Error fetching semesters:', err)
     });
 
-    this.loadFees();
+    // Summary is loaded once here and again only when the semester changes.
+    // The fee records are loaded by the table's own onLazyLoad event.
+    this.loadSummary();
   }
 
   onSemesterChange(): void {
-    this.loadFees();
+    // Reset pagination when semester changes
+    this.first.set(0);
+
+    this.loadSummary();
+    this.loadFees(0, this.rows());
   }
 
-  private loadFees(): void {
-    this.loading.set(true);
+  onLazyLoad(event: TableLazyLoadEvent): void {
+    const first = event.first ?? 0;
+    const rows = event.rows ?? 10;
 
-    const fees$ = this.semester
-      ? this.feeService.getMyFeesBySemester(this.semester)
-      : this.feeService.getMyFees();
+    this.first.set(first);
+    this.rows.set(rows);
 
+    const page = Math.floor(first / rows);
+
+    this.loadFees(page, rows);
+  }
+
+  private loadSummary(): void {
     const summary$ = this.semester
       ? this.feeService.getMyFeeSummaryBySemester(this.semester)
       : this.feeService.getMyFeeSummary();
-
-    fees$.subscribe({
-      next: (data) => {
-        this.myFees.set(data);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        console.error('Error fetching fees:', err);
-        this.loading.set(false);
-      }
-    });
 
     summary$.subscribe({
       next: (data) => this.summary.set(data),
       error: (err) => console.error('Error fetching fee summary:', err)
     });
   }
+
+ private loadFees(page: number = 0, size: number = 10): void {
+  this.loading.set(true);
+
+  const fees$ = this.semester
+    ? this.feeService.getMyFeesBySemesterPaged(this.semester, page, size)
+    : this.feeService.getMyFeesPaged(page, size);
+
+  fees$.subscribe({
+    next: (response) => {
+      this.myFees.set([...response.content]);
+      this.totalRecords.set(response.totalElements);
+      this.loading.set(false);
+    },
+    error: (err) => {
+      console.error('Error fetching fees:', err);
+      this.myFees.set([]);
+      this.totalRecords.set(0);
+      this.loading.set(false);
+    }
+  });
+}
 }

@@ -54,5 +54,22 @@ export class CourseService {
   );
 }
   
-  
+  getAvailableCoursesPaged(
+  departmentId: number,
+  page: number,
+  size: number,
+  sort = 'title,asc'
+) {
+  const params = new HttpParams()
+    .set('departmentId', departmentId)
+    .set('page', page)
+    .set('size', size)
+    .set('sort', sort);
+
+  return this.http.get<ApiResponse<PageResponse<Course>>>(
+    this.baseUrl + ENDPOINTS.courses.getAvailableCoursesPaged,
+    { params }
+  );
+}
+
 }

@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ENDPOINTS } from '../../../environments/endpoints';
 import { Fee, FeeRequest, FeeSummary } from '../../models/fee.model';
 import { environment } from '../../../environments/environment';
+import { PageResponse } from '../../models/Paginator';
 
 @Injectable({
   providedIn: 'root'
@@ -136,4 +137,27 @@ getMyFeeSummaryBySemester(semester: string) {
     { params }
   );
 }
+
+
+getMyFeesPaged(page: number, size: number) {
+  const params = new HttpParams()
+    .set('page', page)
+    .set('size', size);
+
+  return this.http.get<PageResponse<Fee>>(
+    `${this.baseUrl}${ENDPOINTS.fee.getMyFeesPaged}`,
+    { params }
+  );
 }
+
+getMyFeesBySemesterPaged(semester: string, page: number, size: number) {
+  const params = new HttpParams()
+    .set('semester', semester)
+    .set('page', page)
+    .set('size', size);
+
+  return this.http.get<PageResponse<Fee>>(
+    `${this.baseUrl}${ENDPOINTS.fee.getMyFeesBySemesterPaged}`,
+    { params }
+  );
+}}

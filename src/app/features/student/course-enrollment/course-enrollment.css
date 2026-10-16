@@ -1,27 +1,44 @@
 
+:host {
+  display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .enrollment-panel {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   background: var(--p-content-background, #fff);
   border-radius: 10px;
-  width: 100%;
-  box-sizing: border-box;
 }
+
 
 .enrollment-heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.enrollment-heading > div:first-child {
+  flex: 1 1 260px;
+  min-width: 0;
 }
 
 .enrollment-heading h3 {
   margin: 0 0 0.4rem;
   color: #2c3e50;
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
   line-height: 1.3;
 }
 
@@ -45,10 +62,10 @@
   color: #334155;
 }
 
-
 :host ::ng-deep .semester-picker .p-select {
   width: 100%;
 }
+
 
 .credit-summary {
   display: flex;
@@ -56,14 +73,15 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 0.75rem;
-
   padding: 0.9rem 1rem;
-
   background: #f4f1fb;
   border-radius: 8px;
-
   color: #20163a;
-  box-sizing: border-box;
+}
+
+.credit-summary > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .enrollment-panel h4 {
@@ -72,17 +90,58 @@
   font-size: 1rem;
 }
 
-:host ::ng-deep .enrollment-panel .p-datatable-wrapper {
+
+:host ::ng-deep .enrollment-panel .p-datatable-wrapper,
+:host ::ng-deep .enrollment-panel .p-datatable-table-container {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+:host ::ng-deep .enrollment-panel .p-datatable-wrapper::-webkit-scrollbar,
+:host ::ng-deep .enrollment-panel .p-datatable-table-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+:host ::ng-deep .enrollment-panel .p-datatable-wrapper::-webkit-scrollbar-track,
+:host ::ng-deep .enrollment-panel .p-datatable-table-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+:host ::ng-deep .enrollment-panel .p-datatable-wrapper::-webkit-scrollbar-thumb,
+:host ::ng-deep .enrollment-panel .p-datatable-table-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
 }
 
 :host ::ng-deep .enrollment-panel .p-datatable-table {
   min-width: 650px;
 }
 
-@media (max-width: 1024px) {
+:host ::ng-deep .enrollment-panel .p-datatable-thead > tr > th {
+  white-space: nowrap;
+}
 
+:host ::ng-deep .enrollment-panel .p-datatable-tbody > tr > td {
+  white-space: nowrap;
+}
+
+
+:host ::ng-deep .enrollment-panel .p-paginator {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+:host ::ng-deep .enrollment-panel .p-paginator-current {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+
+@media (max-width: 1024px) {
   .enrollment-panel {
     padding: 0.9rem;
     gap: 0.9rem;
@@ -113,8 +172,8 @@
   }
 }
 
-@media (max-width: 768px) {
 
+@media (max-width: 768px) {
   .enrollment-panel {
     padding: 0.8rem;
     gap: 0.85rem;
@@ -124,6 +183,10 @@
     flex-direction: column;
     align-items: stretch;
     gap: 0.8rem;
+  }
+
+  .enrollment-heading > div:first-child {
+    flex: 0 0 auto;
   }
 
   .enrollment-heading h3 {
@@ -139,10 +202,6 @@
     min-width: 0;
   }
 
-  :host ::ng-deep .semester-picker .p-select {
-    width: 100%;
-  }
-
   .credit-summary {
     flex-direction: column;
     align-items: flex-start;
@@ -154,18 +213,37 @@
     font-size: 0.95rem;
   }
 
-  :host ::ng-deep .enrollment-panel .p-datatable-wrapper {
-    overflow-x: auto;
-  }
-
   :host ::ng-deep .enrollment-panel .p-datatable-table {
     min-width: 600px;
+  }
+
+  :host ::ng-deep .enrollment-panel .p-datatable-thead > tr > th,
+  :host ::ng-deep .enrollment-panel .p-datatable-tbody > tr > td {
+    padding: 0.7rem 0.75rem;
+  }
+}
+
+
+@media (max-width: 576px) {
+  :host ::ng-deep .enrollment-panel .p-paginator-current {
+    flex: 1 0 100%;
+    text-align: center;
+    order: -1;
+    font-size: 0.8rem;
+  }
+
+  :host ::ng-deep .enrollment-panel .p-paginator-first,
+  :host ::ng-deep .enrollment-panel .p-paginator-prev,
+  :host ::ng-deep .enrollment-panel .p-paginator-next,
+  :host ::ng-deep .enrollment-panel .p-paginator-last,
+  :host ::ng-deep .enrollment-panel .p-paginator-page {
+    min-width: 2.25rem;
+    height: 2.25rem;
   }
 }
 
 
 @media (max-width: 480px) {
-
   .enrollment-panel {
     padding: 0.65rem;
     gap: 0.75rem;
@@ -200,6 +278,29 @@
   }
 
   :host ::ng-deep .enrollment-panel .p-datatable-table {
-    min-width: 560px;
+    min-width: 540px;
+  }
+}
+
+
+@media (max-width: 360px) {
+  .enrollment-panel {
+    padding: 0.5rem;
+  }
+
+  :host ::ng-deep .enrollment-panel .p-datatable-table {
+    min-width: 500px;
+  }
+
+
+  :host ::ng-deep .enrollment-panel .p-paginator .p-select {
+    display: none;
+  }
+}
+
+
+@media (min-width: 1600px) {
+  .enrollment-panel {
+    max-width: 1500px;
   }
 }

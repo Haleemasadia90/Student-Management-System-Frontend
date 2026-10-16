@@ -22,6 +22,7 @@ import { Course } from '../../../models/course.model';
 import { Enrollment } from '../../../models/enrollment.model';
 import { CourseService } from '../../courses/course-service';
 import { EnrollmentService } from '../../../core/httpServices/enrollment-service';
+import { DepartmentService } from '../../departments/department-service'; 
 
 @Component({
   selector: 'app-course-enrollment',
@@ -49,6 +50,7 @@ export class CourseEnrollment implements OnChanges {
 
   private readonly courseService = inject(CourseService);
   private readonly enrollmentService = inject(EnrollmentService);
+  private readonly departmentService = inject(DepartmentService); // <-- new
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
 
@@ -56,11 +58,14 @@ export class CourseEnrollment implements OnChanges {
   activeCourses = signal<Course[]>([]);
   enrollments = signal<Enrollment[]>([]);
   creditHours = signal(0);
+  departmentName = signal('');
+
   loading = signal(false);
 
   semester = '';
 
   semesters: { label: string; value: string }[] = [];
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['studentId'] || changes['departmentId'] || changes['admissionYear']) {
@@ -70,6 +75,7 @@ export class CourseEnrollment implements OnChanges {
         this.semester = this.semesters[0]?.value ?? '';
       }
 
+      this.loadDepartment();   // <-- new
       this.loadCourses();
       this.loadSemesterData();
     }
@@ -95,6 +101,25 @@ export class CourseEnrollment implements OnChanges {
     this.semesters = result;
   }
 
+  // <-- new: department ka naam load karta hai
+  private loadDepartment(): void {
+    if (!this.departmentId) {
+      this.departmentName.set('');
+      return;
+    }
+
+    this.departmentService.getAllDepartments().subscribe({
+      next: (list) => {
+      const dept = list.find(d => d.id === this.departmentId);
+      this.departmentName.set(dept?.name ?? '');
+    },
+    error: (error) => {
+      console.error('Failed to load department:', error);
+      this.departmentName.set('');
+    }
+  });
+  }
+
   loadCourses(): void {
 
     if (!this.departmentId) {
@@ -112,8 +137,8 @@ export class CourseEnrollment implements OnChanges {
       },
       error: (error) => {
         console.error('Failed to load courses:', error);
-         this.courses.set([]);
-          this.activeCourses.set([]);
+        this.courses.set([]);
+        this.activeCourses.set([]);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -232,4 +257,3 @@ export class CourseEnrollment implements OnChanges {
     });
   }
 }
-

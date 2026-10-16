@@ -68,7 +68,7 @@
       </div>
     </p-card>
 
-    <p-card styleClass="course-card available-card">
+        <p-card styleClass="course-card available-card">
       <ng-template pTemplate="header">
         <div class="card-header">
           <div class="header-icon available-icon">
@@ -81,75 +81,87 @@
         </div>
       </ng-template>
 
-      <div class="scrollable-card-content">
+      <div class="table-card-content">
 
-        @if (availableCourses().length > 0) {
+        <p-table
+          [value]="availableCourses()"
+          [lazy]="true"
+          (onLazyLoad)="onLazyLoad($event)"
+          [loading]="loadingCourses()"
+          [totalRecords]="totalRecords()"
+          [first]="first()"
+          [paginator]="true"
+          [rows]="rows()"
+          [rowsPerPageOptions]="[10, 25, 50]"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} courses"
+          [tableStyle]="{ 'min-width': '40rem' }"
+          styleClass="courses-table">
 
-          <p-table
-            [value]="availableCourses()"
-            styleClass="courses-table"
-            responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Course</th>
+              <th>Code</th>
+              <th>Credit Hours</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </ng-template>
 
-            <ng-template pTemplate="header">
-              <tr>
-                <th>Course</th>
-                <th>Code</th>
-                <th>Credit Hours</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </ng-template>
+          <ng-template pTemplate="body" let-course>
+            <tr>
+              <td>
+                <div class="course-title">
+                  <div class="small-course-icon"><i class="pi pi-file"></i></div>
+                  <span>{{ course.title }}</span>
+                </div>
+              </td>
 
-            <ng-template pTemplate="body" let-course>
-              <tr>
-                <td>
-                  <div class="course-title">
-                    <div class="small-course-icon"><i class="pi pi-file"></i></div>
-                    <span>{{ course.title }}</span>
-                  </div>
-                </td>
+              <td><span class="course-code">{{ course.courseCode }}</span></td>
 
-                <td><span class="course-code">{{ course.courseCode }}</span></td>
+              <td><span class="credit-hours">{{ course.creditHours }} CH</span></td>
 
-                <td><span class="credit-hours">{{ course.creditHours }} CH</span></td>
+              <td>
+                @if (isEnrolled(course.id)) {
+                  <p-tag value="Enrolled" severity="success" icon="pi pi-check"></p-tag>
+                } @else if (wouldExceedLimit(course)) {
+                  <p-tag value="Limit Exceeded" severity="danger"
+                         icon="pi pi-exclamation-triangle"></p-tag>
+                } @else {
+                  <p-tag value="Available" severity="info"></p-tag>
+                }
+              </td>
 
-                <td>
-                  @if (isEnrolled(course.id)) {
-                    <p-tag value="Enrolled" severity="success" icon="pi pi-check"></p-tag>
-                  } @else if (wouldExceedLimit(course)) {
-                    <p-tag value="Limit Exceeded" severity="danger"
-                           icon="pi pi-exclamation-triangle"></p-tag>
-                  } @else {
-                    <p-tag value="Available" severity="info"></p-tag>
-                  }
-                </td>
+              <td>
+                @if (isEnrolled(course.id) || wouldExceedLimit(course)) {
+                  <span class="action-placeholder">—</span>
+                } @else {
+                  <p-button
+                    label="Enroll"
+                    icon="pi pi-plus"
+                    severity="primary"
+                    size="small"
+                    [raised]="true"
+                    [disabled]="!semester"
+                    (onClick)="enroll(course)">
+                  </p-button>
+                }
+              </td>
+            </tr>
+          </ng-template>
 
-                <td>
-                  @if (isEnrolled(course.id) || wouldExceedLimit(course)) {
-                    <span class="action-placeholder">—</span>
-                  } @else {
-                    <p-button
-                      label="Enroll"
-                      icon="pi pi-plus"
-                      severity="primary"
-                      size="small"
-                      [raised]="true"
-                      [disabled]="!semester"
-                      (onClick)="enroll(course)">
-                    </p-button>
-                  }
-                </td>
-              </tr>
-            </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5">
+                <div class="empty-state">
+                  <i class="pi pi-inbox"></i>
+                  <p>No courses available in your department yet.</p>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
 
-          </p-table>
-
-        } @else {
-          <div class="empty-state">
-            <i class="pi pi-inbox"></i>
-            <p>No courses available in your department yet.</p>
-          </div>
-        }
+        </p-table>
 
         @if (errorMessage()) {
           <p-message

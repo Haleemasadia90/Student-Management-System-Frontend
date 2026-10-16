@@ -1,7 +1,6 @@
 <div class="my-fee-page">
 
   <div class="page-header">
-
     <div class="page-title-icon">
       <i class="pi pi-wallet"></i>
     </div>
@@ -10,385 +9,224 @@
       <h2>My Fee</h2>
       <p>View your fee records and payment status.</p>
     </div>
-
   </div>
 
+
+  <!-- Semester Selection -->
   <div class="semester-selection">
+
     <label for="feeSemester">Semester</label>
+
     <p-select
       inputId="feeSemester"
-    [options]="semesterOptions()"
-    optionLabel="label"
-    optionValue="value"
-    [(ngModel)]="semester"
-    placeholder="All semesters"
-    [showClear]="false"
-    styleClass="semester-select"
-    (onChange)="onSemesterChange()">
+      [options]="semesterOptions()"
+      optionLabel="label"
+      optionValue="value"
+      [(ngModel)]="semester"
+      placeholder="All semesters"
+      [showClear]="false"
+      styleClass="semester-select"
+      (onChange)="onSemesterChange()">
     </p-select>
+
   </div>
- 
-  @if (loading()) {
 
-    <div class="loading-state">
 
-      <p-progressSpinner
-        styleClass="loading-spinner"
-        strokeWidth="4">
-      </p-progressSpinner>
+  <!-- Fee Summary -->
+  @if (summary()) {
 
-      <span>
-        Loading your fee records...
-      </span>
+    <p-card styleClass="fee-card summary-card">
+
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <div class="header-icon summary-icon">
+            <i class="pi pi-chart-pie"></i>
+          </div>
+          <div>
+            <h4>Fee Summary</h4>
+            <span>Overview of your fee payments</span>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="summary-content">
+
+        <!-- Pie Chart -->
+        <div class="pie-section">
+
+          <div class="pie-chart" [style.background]="pieChartStyle">
+            <div class="pie-center">
+              <strong>{{ summary()?.paidPercentage }}%</strong>
+              <span>Paid</span>
+            </div>
+          </div>
+
+          <div class="pie-legend">
+            <div class="legend-item">
+              <span class="legend-dot paid-dot"></span>
+              <span>Paid</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot due-dot"></span>
+              <span>Due</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="summary-stats">
+
+          <div class="summary-stat">
+            <div class="stat-icon total-icon">
+              <i class="pi pi-money-bill"></i>
+            </div>
+            <div>
+              <span>Total Fee</span>
+              <strong>{{ summary()?.totalOverall }}</strong>
+            </div>
+          </div>
+
+          <div class="summary-stat">
+            <div class="stat-icon paid-icon">
+              <i class="pi pi-check-circle"></i>
+            </div>
+            <div>
+              <span>Paid Amount</span>
+              <strong>{{ summary()?.totalPaid }}</strong>
+            </div>
+          </div>
+
+          <div class="summary-stat">
+            <div class="stat-icon due-icon">
+              <i class="pi pi-exclamation-circle"></i>
+            </div>
+            <div>
+              <span>Due Amount</span>
+              <strong>{{ summary()?.totalDue }}</strong>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </p-card>
+
+  }
+
+
+  <!-- Fee Records (always rendered so the paginator stays mounted) -->
+  <p-card styleClass="fee-card records-card">
+
+    <ng-template pTemplate="header">
+      <div class="card-header">
+        <div class="header-icon records-icon">
+          <i class="pi pi-file"></i>
+        </div>
+        <div>
+          <h4>Fee Records</h4>
+          <span>Your semester-wise fee details</span>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Keep this wrapper for horizontal table scrolling -->
+    <div class="fee-table-wrapper">
+
+      <p-table
+        [value]="myFees()"
+        [lazy]="true"
+        (onLazyLoad)="onLazyLoad($event)"
+        [loading]="loading()"
+        [totalRecords]="totalRecords()"
+        [first]="first()"
+        [paginator]="true"
+        [rows]="rows()"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} fee records"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="fee-table">
+
+        <!-- Table Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th>S.No</th>
+            <th>Semester</th>
+            <th>Total Fee</th>
+            <th>Paid</th>
+            <th>Due</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+
+        <!-- Table Body -->
+        <ng-template pTemplate="body" let-fee let-i="rowIndex">
+          <tr>
+
+            <td>{{ first() + i + 1 }}</td>
+
+            <td>
+              <div class="semester-cell">
+                <div class="semester-icon">
+                  <i class="pi pi-calendar"></i>
+                </div>
+                <span>{{ fee.semester }}</span>
+              </div>
+            </td>
+
+            <td>
+              <span class="total-amount">{{ fee.totalFee }}</span>
+            </td>
+
+            <td>
+              <div class="paid-amount">
+                <i class="pi pi-check"></i>
+                <span>{{ fee.paidFee }}</span>
+              </div>
+            </td>
+
+            <td>
+              <div class="due-amount">
+                <i class="pi pi-exclamation-circle"></i>
+                <span>{{ fee.dueAmount }}</span>
+              </div>
+            </td>
+
+            <td>
+              @switch (fee.status.toLowerCase()) {
+                @case ('paid') {
+                  <p-tag value="Paid" severity="success" icon="pi pi-check"></p-tag>
+                }
+                @case ('pending') {
+                  <p-tag value="Pending" severity="warn" icon="pi pi-clock"></p-tag>
+                }
+                @case ('overdue') {
+                  <p-tag value="Overdue" severity="danger" icon="pi pi-exclamation-triangle"></p-tag>
+                }
+                @default {
+                  <p-tag [value]="fee.status" severity="info"></p-tag>
+                }
+              }
+            </td>
+
+          </tr>
+        </ng-template>
+
+        <!-- Empty State -->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="empty-row">
+              No fee records were found for your account.
+            </td>
+          </tr>
+        </ng-template>
+
+      </p-table>
 
     </div>
 
-  }
-
-  @else {
-
-
-    @if (summary()) {
-
-      <p-card styleClass="fee-card summary-card">
-
-        <ng-template pTemplate="header">
-
-          <div class="card-header">
-
-            <div class="header-icon summary-icon">
-              <i class="pi pi-chart-pie"></i>
-            </div>
-
-            <div>
-
-              <h4>Fee Summary</h4>
-
-              <span>
-                Overview of your fee payments
-              </span>
-
-            </div>
-
-          </div>
-
-        </ng-template>
-
-        <div class="summary-content">
-
-
-          <div class="pie-section">
-
-            <div
-              class="pie-chart"
-              [style.background]="pieChartStyle">
-
-              <div class="pie-center">
-
-                <strong>
-                  {{ summary()?.paidPercentage }}%
-                </strong>
-
-                <span>
-                  Paid
-                </span>
-
-              </div>
-
-            </div>
-
-            <div class="pie-legend">
-
-              <div class="legend-item">
-
-                <span class="legend-dot paid-dot"></span>
-
-                <span>Paid</span>
-
-              </div>
-
-
-              <div class="legend-item">
-
-                <span class="legend-dot due-dot"></span>
-
-                <span>Due</span>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="summary-stats">
-
-
-            <div class="summary-stat">
-
-              <div class="stat-icon total-icon">
-                <i class="pi pi-money-bill"></i>
-              </div>
-
-              <div>
-
-                <span>Total Fee</span>
-
-                <strong>
-                  {{ summary()?.totalOverall }}
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <div class="summary-stat">
-
-              <div class="stat-icon paid-icon">
-                <i class="pi pi-check-circle"></i>
-              </div>
-
-              <div>
-
-                <span>Paid Amount</span>
-
-                <strong>
-                  {{ summary()?.totalPaid }}
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <div class="summary-stat">
-
-              <div class="stat-icon due-icon">
-                <i class="pi pi-exclamation-circle"></i>
-              </div>
-
-              <div>
-
-                <span>Due Amount</span>
-
-                <strong>
-                  {{ summary()?.totalDue }}
-                </strong>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </p-card>
-
-    }
-
-    @if (myFees().length > 0) {
-
-      <p-card styleClass="fee-card records-card">
-
-        <ng-template pTemplate="header">
-
-          <div class="card-header">
-
-            <div class="header-icon records-icon">
-              <i class="pi pi-file"></i>
-            </div>
-
-            <div>
-
-              <h4>Fee Records</h4>
-
-              <span>
-                Your semester-wise fee details
-              </span>
-
-            </div>
-
-          </div>
-
-        </ng-template>
-
-
-
-        <div class="fee-table-wrapper">
-
-          <p-table
-            [value]="myFees()"
-            styleClass="fee-table"
-            responsiveLayout="scroll">
-
-
-
-            <ng-template pTemplate="header">
-
-              <tr>
-
-                <th>Semester</th>
-
-                <th>Total Fee</th>
-
-                <th>Paid</th>
-
-                <th>Due</th>
-
-                <th>Status</th>
-
-              </tr>
-
-            </ng-template>
-
-
-
-            <ng-template
-              pTemplate="body"
-              let-fee>
-
-              <tr>
-
-
-
-                <td>
-
-                  <div class="semester-cell">
-
-                    <div class="semester-icon">
-                      <i class="pi pi-calendar"></i>
-                    </div>
-
-                    <span>
-                      {{ fee.semester }}
-                    </span>
-
-                  </div>
-
-                </td>
-
-
-                <td>
-
-                  <span class="total-amount">
-                    {{ fee.totalFee }}
-                  </span>
-
-                </td>
-
-                <td>
-
-                  <div class="paid-amount">
-
-                    <i class="pi pi-check"></i>
-
-                    <span>
-                      {{ fee.paidFee }}
-                    </span>
-
-                  </div>
-
-                </td>
-
-
-                <td>
-
-                  <div class="due-amount">
-
-                    <i class="pi pi-exclamation-circle"></i>
-
-                    <span>
-                      {{ fee.dueAmount }}
-                    </span>
-
-                  </div>
-
-                </td>
-
-
-                <td>
-
-                  @if (fee.status.toLowerCase() === 'paid') {
-
-                    <p-tag
-                      value="Paid"
-                      severity="success"
-                      icon="pi pi-check">
-                    </p-tag>
-
-                  }
-
-                  @else if (
-                    fee.status.toLowerCase() === 'pending'
-                  ) {
-
-                    <p-tag
-                      value="Pending"
-                      severity="warn"
-                      icon="pi pi-clock">
-                    </p-tag>
-
-                  }
-
-                  @else if (
-                    fee.status.toLowerCase() === 'overdue'
-                  ) {
-
-                    <p-tag
-                      value="Overdue"
-                      severity="danger"
-                      icon="pi pi-exclamation-triangle">
-                    </p-tag>
-
-                  }
-
-                  @else {
-
-                    <p-tag
-                      [value]="fee.status"
-                      severity="info">
-                    </p-tag>
-
-                  }
-
-                </td>
-
-              </tr>
-
-            </ng-template>
-
-          </p-table>
-
-        </div>
-
-      </p-card>
-
-    }
-
-    @if (myFees().length === 0) {
-
-      <p-card styleClass="fee-card empty-card">
-
-        <div class="empty-state">
-
-          <div class="empty-icon">
-            <i class="pi pi-file"></i>
-          </div>
-
-          <h4>No Fee Records</h4>
-
-          <p>
-            No fee records were found for your account.
-          </p>
-
-        </div>
-
-      </p-card>
-
-    }
-
-  }
+  </p-card>
 
 </div>
