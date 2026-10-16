@@ -1,109 +1,113 @@
-/* =========================================================
-   STUDENT LIST
-   ========================================================= */
+
+:host {
+  display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 .list-section {
   margin-top: 10px;
   width: 100%;
 }
 
+
 .list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  flex-wrap: wrap;
+  gap: 12px;
   width: 90%;
+  max-width: 1400px;
   margin: 20px auto;
 }
 
 .list-title {
-  margin-top: 45px;
-  margin-bottom: 15px;
-
+  margin: 45px 0 15px;
   color: #2c3e50;
-  font-size: 20px;
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
   font-weight: 600;
-
   border-left: 4px solid #34495e;
   padding-left: 10px;
 }
 
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
 .search-container {
   width: 90%;
+  max-width: 1400px;
   margin: 20px auto;
-
   display: flex;
   justify-content: flex-end;
   align-items: center;
-
+  flex-wrap: wrap;
   gap: 12px;
 }
 
-/* PrimeNG Input */
 :host ::ng-deep .search-input {
   width: 250px !important;
+  max-width: 100%;
   font-size: 15px !important;
 }
 
 
-/* =========================================================
-   TABLE
-   ========================================================= */
-
 .table-scroll {
   width: 90%;
+  max-width: 1400px;
   margin: auto;
-
   overflow-x: auto;
-  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
 }
+
+.table-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
 
 :host ::ng-deep .student-table {
   width: 100%;
-  min-width: 850px;
-
   background: #e8e8e8;
   border-radius: 8px;
   overflow: hidden;
-
   border: 1px solid #161617;
-
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 :host ::ng-deep .student-table .p-datatable-thead > tr > th {
   background-color: #f8fafc !important;
   color: #64748b !important;
-
   font-weight: 600 !important;
   text-transform: uppercase;
-
   font-size: 13px !important;
   letter-spacing: 0.5px;
-
   padding: 14px 18px !important;
-
   border: none !important;
   border-bottom: 2px solid #edf2f7 !important;
-
   white-space: nowrap;
 }
 
 :host ::ng-deep .student-table .p-datatable-tbody > tr > td {
   padding: 14px 18px !important;
-
   border: none !important;
   border-bottom: 1px solid #edf2f7 !important;
-
   color: #334155 !important;
   font-size: 14px !important;
-
   background: #ffffff !important;
+  white-space: nowrap;
 }
 
 :host ::ng-deep .student-table .p-datatable-tbody > tr:hover > td {
@@ -112,53 +116,46 @@
 }
 
 
-/* =========================================================
-   ACTION BUTTONS
-   ========================================================= */
-
-.button-group {
+.button-group,
+.action-buttons {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-:host ::ng-deep .button-group .p-button {
+:host ::ng-deep .button-group .p-button,
+:host ::ng-deep .action-buttons .p-button {
   white-space: nowrap;
 }
 
-:host ::ng-deep .button-group .p-button-danger {
+:host ::ng-deep .button-group .p-button-danger,
+:host ::ng-deep .action-buttons .p-button-danger {
   min-width: 38px;
 }
 
 
-/* =========================================================
-   EMPTY ROW
-   ========================================================= */
-
 .empty-row {
   text-align: center;
-
   color: #94a3b8;
-
   font-style: italic;
-
   padding: 20px !important;
+  white-space: normal !important;
 }
 
-
-/* =========================================================
-   PAGINATOR
-   ========================================================= */
 
 :host ::ng-deep .p-paginator {
   margin-top: 15px;
   border-radius: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
 }
 
+:host ::ng-deep .p-paginator-current {
+  font-size: 13px;
+  color: #64748b;
+}
 
-/* =========================================================
-   DRAWER HEADER
-   ========================================================= */
 
 .drawer-header {
   display: flex;
@@ -169,17 +166,17 @@
 .drawer-header > i {
   font-size: 22px;
   color: #4338ca;
-
   background: #eef2ff;
-
   padding: 10px;
   border-radius: 10px;
+  flex-shrink: 0;
 }
 
 .drawer-title-wrap {
   display: flex;
   flex-direction: column;
   line-height: 1.3;
+  min-width: 0;
 }
 
 .drawer-title {
@@ -194,229 +191,152 @@
 }
 
 
-/* =========================================================
-   TABLET
-   768px - 1024px
-   ========================================================= */
 
-@media (max-width: 1024px) {
+@media (min-width: 1600px) {
+  .list-header,
+  .search-container,
+  .table-scroll {
+    max-width: 1500px;
+  }
+}
 
+
+@media (max-width: 1200px) {
   .list-header,
   .search-container,
   .table-scroll {
     width: 94%;
   }
+}
 
+
+@media (max-width: 900px) {
   .search-container {
     justify-content: flex-start;
-    flex-wrap: wrap;
   }
 
   :host ::ng-deep .search-input {
     width: 220px !important;
   }
 
-  :host ::ng-deep .student-table {
-    min-width: 800px;
+  :host ::ng-deep .student-table .p-datatable-table {
+    min-width: 44rem !important; 
   }
 
-  :host ::ng-deep .student-table .p-datatable-thead > tr > th {
-    padding: 12px 14px !important;
-  }
-
+  :host ::ng-deep .student-table .p-datatable-thead > tr > th,
   :host ::ng-deep .student-table .p-datatable-tbody > tr > td {
     padding: 12px 14px !important;
   }
-
 }
 
 
-/* =========================================================
-   MOBILE
-   Below 768px
-   ========================================================= */
-
-@media (max-width: 768px) {
-
+@media (max-width: 600px) {
   .list-header,
-  .search-container,
-  .table-scroll {
-    width: 95%;
-  }
-
-
-  /* ---------- Header ---------- */
-
-  .list-header {
-    margin-top: 15px;
-    margin-bottom: 15px;
+  .table-scroll,
+  .search-container {
+    width: 96%;
   }
 
   .list-title {
-    margin-top: 30px;
-    margin-bottom: 12px;
-
-    font-size: 18px;
+    margin-top: 28px;
+    margin-bottom: 8px;
   }
 
-
-  /* ---------- Search ---------- */
 
   .search-container {
-    flex-direction: column;
-    align-items: stretch;
-
-    justify-content: flex-start;
-
-    gap: 10px;
+    justify-content: stretch;
   }
 
+  :host ::ng-deep .search-container .p-inputtext,
   :host ::ng-deep .search-input {
     width: 100% !important;
-    max-width: 100% !important;
   }
 
-  .search-container p-button {
-    width: 100%;
-  }
-
-  :host ::ng-deep .search-container .p-button {
-    width: 100%;
-  }
-
-
-  /* ---------- Table ---------- */
-
-  .table-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  :host ::ng-deep .student-table {
-    min-width: 760px;
+  :host ::ng-deep .student-table .p-datatable-table {
+    min-width: 38rem !important;
   }
 
   :host ::ng-deep .student-table .p-datatable-thead > tr > th {
-    padding: 11px 12px !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.3px;
   }
 
   :host ::ng-deep .student-table .p-datatable-tbody > tr > td {
-    padding: 11px 12px !important;
     font-size: 13px !important;
   }
 
 
-  /* ---------- Action buttons ---------- */
-
-  .button-group {
-    flex-direction: column;
-    align-items: stretch;
+  .button-group,
+  .action-buttons {
     gap: 6px;
   }
 
-  :host ::ng-deep .button-group .p-button {
+  :host ::ng-deep .button-group .p-button,
+  :host ::ng-deep .action-buttons .p-button {
+    padding: 0.45rem 0.65rem;
+  }
+
+ 
+  :host ::ng-deep .p-paginator-current {
+    flex: 1 0 100%;
+    text-align: center;
+    order: -1;
+    font-size: 12px;
+  }
+
+  :host ::ng-deep .p-paginator-first,
+  :host ::ng-deep .p-paginator-prev,
+  :host ::ng-deep .p-paginator-next,
+  :host ::ng-deep .p-paginator-last,
+  :host ::ng-deep .p-paginator-page {
+    min-width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .drawer-title {
+    font-size: 16px;
+  }
+
+  .drawer-subtitle {
+    font-size: 12px;
+  }
+}
+
+
+@media (max-width: 400px) {
+  .list-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+
+  :host ::ng-deep .list-header .p-button {
     width: 100%;
-    justify-content: center;
   }
 
-  :host ::ng-deep .button-group .p-button-danger {
-    min-width: unset;
+  :host ::ng-deep .student-table .p-datatable-table {
+    min-width: 34rem !important;
   }
 
-
-  /* ---------- Paginator ---------- */
-
-  :host ::ng-deep .p-paginator {
-    width: 95%;
-    margin: 15px auto 0;
-
-    padding: 8px 4px;
+  :host ::ng-deep .student-table .p-datatable-thead > tr > th,
+  :host ::ng-deep .student-table .p-datatable-tbody > tr > td {
+    padding: 10px !important;
   }
 
-
-  /* ---------- Drawer ---------- */
-
-  .drawer-header {
-    gap: 10px;
+  
+  :host ::ng-deep .p-paginator .p-select {
+    display: none;
   }
 
   .drawer-header > i {
     font-size: 18px;
     padding: 8px;
   }
-
-  .drawer-title {
-    font-size: 16px;
-  }
-
-  .drawer-subtitle {
-    font-size: 12px;
-    word-break: break-word;
-  }
-
 }
 
 
-/* =========================================================
-   SMALL MOBILE
-   Below 480px
-   ========================================================= */
-
-@media (max-width: 480px) {
-
-  .list-header,
-  .search-container,
-  .table-scroll {
-    width: 96%;
-  }
-
-
-  /* ---------- Header ---------- */
-
+@media (max-height: 500px) and (orientation: landscape) {
   .list-title {
-    font-size: 17px;
-    padding-left: 8px;
-
-    border-left-width: 3px;
+    margin-top: 16px;
   }
-
-
-  /* ---------- Search ---------- */
-
-  .search-container {
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-
-
-  /* ---------- Table ---------- */
-
-  :host ::ng-deep .student-table {
-    min-width: 700px;
-  }
-
-
-  /* ---------- Paginator ---------- */
-
-  :host ::ng-deep .p-paginator {
-    font-size: 12px;
-  }
-
-
-  /* ---------- Drawer Header ---------- */
-
-  .drawer-header > i {
-    font-size: 16px;
-    padding: 7px;
-  }
-
-  .drawer-title {
-    font-size: 15px;
-  }
-
-  .drawer-subtitle {
-    font-size: 11px;
-  }
-
 }

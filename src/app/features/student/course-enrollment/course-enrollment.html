@@ -5,7 +5,7 @@
 <div class="enrollment-panel">
   <div class="enrollment-heading">
     <div>
-      <h3>Manage Courses</h3>
+      <h3>Manage Courses of {{ departmentName() }}</h3>
       <p>Select a semester to manage this student's enrollments.</p>
     </div>
 
@@ -73,7 +73,7 @@
     </ng-template>
   </p-table>
 
-  <h4>Available Active Courses</h4>
+  <h4>Available Active Courses </h4>
 
   <p-table
     [value]="activeCourses()"

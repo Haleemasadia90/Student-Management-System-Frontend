@@ -24,6 +24,7 @@ profilePictureUrl: '/uploads/profile-pictures/'
       deleteCourse:'/api/courses/:id',
        getTotalCourses: '/api/courses/count', 
       getCoursesPaged: '/api/courses/paged', 
+      getAvailableCoursesPaged: '/api/courses/available/paged',
 
    },
 
@@ -39,7 +40,8 @@ profilePictureUrl: '/uploads/profile-pictures/'
       getAvailableSemesters:'/api/fee/student/:studentId/available-semesters',
        getOverallFeeSummary: '/api/fee/summary',
        getStudentCreditHours: '/api/fee/student/:studentId/credit-hours',
-
+getMyFeesPaged: '/api/fee/me/paged',
+getMyFeesBySemesterPaged: '/api/fee/me/semester/paged',
 calculateStudentFee: '/api/fee/student/:studentId/calculate',
    },
       

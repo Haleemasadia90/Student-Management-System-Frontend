@@ -14,7 +14,7 @@ import { CardModule } from 'primeng/card';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
-import { TableModule } from 'primeng/table';
+import { TableModule, TableLazyLoadEvent } from 'primeng/table';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -37,11 +37,17 @@ export class MyCourses implements OnInit {
   private readonly enrollmentService = inject(EnrollmentService);
 
   myRecord = signal<Student | null>(null);
-  availableCourses = signal<Course[]>([]);
   enrollments = signal<Enrollment[]>([]);
   creditHours = signal(0);
   errorMessage = signal('');
   loadingEnrollments = signal(false);
+
+  // Available courses (server-side pagination)
+  availableCourses = signal<Course[]>([]);
+  loadingCourses = signal(false);
+  first = signal(0);
+  rows = signal(10);
+  totalRecords = signal(0);
 
   readonly maxCreditHours = MAX_CREDIT_HOURS;
 
@@ -59,9 +65,7 @@ export class MyCourses implements OnInit {
           ? current
           : this.semesters[0]?.value ?? '';
 
-        if (data.departmentId) {
-          this.loadAvailableCourses(data.departmentId);
-        }
+        // Available courses are loaded by the table's own onLazyLoad event.
         this.loadEnrollments();
       },
       error: (err) => console.error('Error fetching record:', err)
@@ -84,14 +88,42 @@ export class MyCourses implements OnInit {
     this.semesters = result;
   }
 
-  loadAvailableCourses(departmentId: number): void {
-    this.courseService.getAllCourses(departmentId).subscribe({
-      next: (data) =>
-        this.availableCourses.set(
-          data.filter(c => c.status?.trim().toUpperCase() === 'ACTIVE')
-        ),
-      error: (err) => console.error('Error loading courses:', err)
-    });
+  onLazyLoad(event: TableLazyLoadEvent): void {
+    const first = event.first ?? 0;
+    const rows = event.rows ?? 10;
+
+    this.first.set(first);
+    this.rows.set(rows);
+
+    this.loadAvailableCourses(Math.floor(first / rows), rows);
+  }
+
+  private loadAvailableCourses(page: number = 0, size: number = 10): void {
+    const departmentId = this.myRecord()?.departmentId;
+
+    if (!departmentId) {
+      this.availableCourses.set([]);
+      this.totalRecords.set(0);
+      return;
+    }
+
+    this.loadingCourses.set(true);
+
+    this.courseService
+      .getAvailableCoursesPaged(departmentId, page, size)
+      .subscribe({
+        next: (response) => {
+          this.availableCourses.set([...response.data.content]);
+          this.totalRecords.set(response.data.totalElements);
+          this.loadingCourses.set(false);
+        },
+        error: (err) => {
+          console.error('Error loading courses:', err);
+          this.availableCourses.set([]);
+          this.totalRecords.set(0);
+          this.loadingCourses.set(false);
+        }
+      });
   }
 
   onSemesterChange(): void {
