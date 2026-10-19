@@ -34,26 +34,14 @@ export class FeeDetail implements OnInit {
   student = signal<Student | null>(null);
   fees = signal<Fee[]>([]);
   summary = signal<FeeSummary | null>(null);
-   profilePic = signal<string | null>(null);
-   showProfilePicture = signal(false);
-   imageLoadFailed = signal(false);
-   
+
   studentId!: number;
 
 
-//   avatarUrl = computed(() => {
-//   const pic = this.student()?.profilePicture;
-//   return pic ? this.studentService.getProfilePictureUrl(pic) : '';
-// });
-
-get avatarUrl(): string {
-
-    const pic = this.profilePic();
-
-    return pic
-      ? this.studentService.getProfilePictureUrl(pic)
-      : '';
-  }
+  avatarUrl = computed(() => {
+  const pic = this.student()?.profilePicture;
+  return pic ? this.studentService.getProfilePictureUrl(pic) : '';
+});
 
   ngOnInit(): void {
     this.studentId = Number(
@@ -63,19 +51,6 @@ get avatarUrl(): string {
     this.loadStudent();
     this.loadFees();
     this.loadSummary();
-  }
-
-
-  onImageError(): void {
-
-    this.imageLoadFailed.set(true);
-
-  }
-
-  openProfilePicture(): void {
-
-    this.showProfilePicture.set(true);
-
   }
 
   loadStudent(): void {
@@ -161,7 +136,4 @@ get avatarUrl(): string {
         return 'danger';
     }
   }
-
-
-
 }
