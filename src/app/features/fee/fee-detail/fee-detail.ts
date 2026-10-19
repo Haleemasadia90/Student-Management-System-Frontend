@@ -1,4 +1,4 @@
-import {Component,inject,OnInit,signal} from '@angular/core';
+import {Component,computed,inject,OnInit,signal} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import {ActivatedRoute,Router} from '@angular/router';
@@ -36,6 +36,12 @@ export class FeeDetail implements OnInit {
   summary = signal<FeeSummary | null>(null);
 
   studentId!: number;
+
+
+  avatarUrl = computed(() => {
+  const pic = this.student()?.profilePicture;
+  return pic ? this.studentService.getProfilePictureUrl(pic) : '';
+});
 
   ngOnInit(): void {
     this.studentId = Number(
