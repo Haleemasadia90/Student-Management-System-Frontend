@@ -21,11 +21,14 @@
     <div class="student-info-card">
 @if (student()?.profilePicture) {
 
-      <img
-        [src]="avatarUrl()"
-        alt="Student Profile"
-        class="student-avatar"
-      />
+      
+        <img
+          [src]="avatarUrl"
+          (error)="onImageError()"
+          (click)="openProfilePicture()"
+          class="profile-dp"
+          alt="Profile picture">
+      
 
     } @else {
 
