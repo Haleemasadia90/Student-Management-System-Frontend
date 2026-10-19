@@ -22,7 +22,7 @@
 @if (student()?.profilePicture) {
 
       <img
-        [src]="'http://localhost:8080/uploads/profile-pictures/' + student()!.profilePicture"
+        [src]="avatarUrl()"
         alt="Student Profile"
         class="student-avatar"
       />
