@@ -80,7 +80,7 @@ export class EditProfile implements OnInit {
     const pic = this.profilePic();
 
     return pic
-      ? 'http://localhost:8080/uploads/profile-pictures/' + pic
+      ? this.studentService.getProfilePictureUrl(pic)
       : '';
   }
 
