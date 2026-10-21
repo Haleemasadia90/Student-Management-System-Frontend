@@ -58,10 +58,11 @@ export class DepartmentManager implements OnInit {
   }
 
 openAddModal(): void {
-    this.errorMessage.set('');
-    this.departmentForm.reset();
-    this.showAddModal.set(true);
-  }
+  this.errorMessage.set('');
+  this.editingDepartmentId.set(null);
+  this.departmentForm.reset();
+  this.showAddModal.set(true);
+}
 
 
   openEditModal(department: Department): void {
@@ -74,11 +75,14 @@ openAddModal(): void {
   }
 
   closeAddModal(): void {
-    this.showAddModal.set(false);
-  }
+  this.showAddModal.set(false);
+  this.editingDepartmentId.set(null);
+  this.departmentForm.reset();
+  this.errorMessage.set('');
+}
 
 
-  save(): void {
+ save(): void {
   if (this.departmentForm.invalid) {
     this.departmentForm.markAllAsTouched();
     return;
@@ -87,7 +91,44 @@ openAddModal(): void {
   this.errorMessage.set('');
 
   const deptData = this.departmentForm.getRawValue();
+  const editingId = this.editingDepartmentId();
 
+  // EDIT MODE
+  if (editingId !== null) {
+    this.departmentService.updateDepartment(editingId, deptData).subscribe({
+      next: () => {
+        this.departmentForm.reset();
+        this.showAddModal.set(false);
+        this.editingDepartmentId.set(null);
+        this.loadDepartments();
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Department updated successfully.'
+        });
+      },
+
+      error: (err) => {
+        const errorMessage =
+          err.error?.message ||
+          err.error ||
+          'Failed to update department.';
+
+        this.errorMessage.set(errorMessage);
+
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: errorMessage
+        });
+      }
+    });
+
+    return;
+  }
+
+  // ADD MODE
   this.departmentService.createDepartment(deptData).subscribe({
     next: () => {
       this.departmentForm.reset();
@@ -100,15 +141,19 @@ openAddModal(): void {
         detail: 'Department added successfully.'
       });
     },
+
     error: (err) => {
-      this.errorMessage.set(
-        err.error || 'Failed to add department.'
-      );
+      const errorMessage =
+        err.error?.message ||
+        err.error ||
+        'Failed to add department.';
+
+      this.errorMessage.set(errorMessage);
 
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: err.error || 'Failed to add department.'
+        detail: errorMessage
       });
     }
   });
