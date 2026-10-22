@@ -1,38 +1,41 @@
 :host {
   display: block;
+  height: 100%;
 }
 
+/* ================= SHELL: fits the viewport, page itself never scrolls ================= */
 
 .app-layout {
   display: flex;
-  min-height: 100vh;
   width: 100%;
+  height: 100vh;
+  height: 100dvh;           /* correct height on mobile browsers (address bar) */
+  overflow: hidden;         /* no body/page scroll */
   background: #f8fafc;
 }
 
+/* ================= SIDEBAR (fixed) ================= */
 
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
   width: 250px;
   min-width: 250px;
   height: 100vh;
-
-  position: fixed;
-  left: 0;
-  top: 0;
+  height: 100dvh;
 
   display: flex;
   flex-direction: column;
 
   background: #20163a;
   color: #ffffff;
-
   z-index: 1000;
+  overflow: hidden;
 
-  transition:
-    width 0.25s ease,
-    min-width 0.25s ease,
-    transform 0.25s ease;
-
+  transition: width 0.25s ease, min-width 0.25s ease, transform 0.25s ease;
   box-shadow: 4px 0 20px rgba(15, 23, 42, 0.08);
 }
 
@@ -43,652 +46,461 @@
 
 .sidebar-header {
   height: 72px;
-
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 0 14px;
-
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-
 
 .brand-section {
   display: flex;
   align-items: center;
   gap: 10px;
-
   min-width: 0;
 }
-
 
 .brand-icon {
   width: 40px;
   height: 40px;
-
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 10px;
-
   background: rgba(255, 255, 255, 0.12);
-
   color: #ffffff;
-
   font-size: 18px;
 }
-
 
 .brand-text {
   min-width: 0;
 }
 
-
 .brand-text h3 {
   margin: 0;
-
   font-size: 15px;
   font-weight: 700;
-
   color: #ffffff;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-
 .brand-text span {
   display: block;
-
   margin-top: 2px;
-
   font-size: 10px;
-
   color: rgba(255, 255, 255, 0.55);
-
   white-space: nowrap;
 }
-
 
 .collapse-button {
   width: 34px;
   height: 34px;
-
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border: none;
   border-radius: 8px;
-
   background: rgba(255, 255, 255, 0.08);
-
   color: #ffffff;
-
   cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
-
 
 .collapse-button:hover {
   background: rgba(255, 255, 255, 0.16);
 }
 
+/* ================= USER CARD ================= */
 
 .user-card {
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   padding: 18px 12px 16px;
-
   margin: 4px 10px 10px;
-
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-
-
-/* Profile Image */
 
 .user-avatar {
   width: 58px;
   height: 58px;
-
   flex-shrink: 0;
-
   object-fit: cover;
-
   border-radius: 50%;
-
   border: 2px solid rgba(255, 255, 255, 0.25);
-
   cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-
-/* PrimeNG fallback avatar */
 
 :host ::ng-deep .user-avatar-fallback {
   width: 58px !important;
   height: 58px !important;
-
   flex-shrink: 0;
-
   background: #4f46e5 !important;
-
   color: #ffffff !important;
-
   font-size: 20px !important;
-
   font-weight: 700 !important;
-
   cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 
 .user-avatar:hover,
 :host ::ng-deep .user-avatar-fallback:hover {
   transform: scale(1.05);
-
-  box-shadow:
-    0 4px 15px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.35);
 }
-
 
 .user-info {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   gap: 5px;
-
   margin-top: 8px;
-
   max-width: 100%;
 }
 
-
 .user-name {
   color: #ffffff;
-
   font-size: 13px;
-
   font-weight: 600;
-
   text-align: center;
-
   max-width: 150px;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
-
 :host ::ng-deep .user-role {
   font-size: 9px !important;
-
   font-weight: 700 !important;
-
   padding: 2px 8px !important;
-
   border-radius: 999px !important;
-
   text-transform: uppercase;
 }
 
 .user-card-collapsed {
   padding: 14px 4px;
-
   margin-left: 4px;
   margin-right: 4px;
 }
 
+/* ================= NAV (scrolls only inside the sidebar if too tall) ================= */
 
 .sidebar-nav {
-  flex: 1;
-
+  flex: 1 1 auto;
+  min-height: 0;            /* required so flex child can shrink and scroll */
   padding: 14px 10px;
-
   overflow-y: auto;
-
   overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
 }
 
-
-.sidebar-nav::-webkit-scrollbar {
-  width: 4px;
-}
-
-
-.sidebar-nav::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
-
-  border-radius: 10px;
-}
-
-
-.sidebar-nav::-webkit-scrollbar-track {
-  background: transparent;
-}
-
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 10px; }
+.sidebar-nav::-webkit-scrollbar-track { background: transparent; }
 
 .nav-item {
   width: 100%;
-
   min-height: 44px;
-
   display: flex;
   align-items: center;
-
   gap: 12px;
-
   padding: 0 13px;
-
   margin-bottom: 5px;
-
   border: none;
-
   border-radius: 9px;
-
   background: transparent;
-
   color: rgba(255, 255, 255, 0.72);
-
   text-decoration: none;
-
   font-size: 13px;
-
   cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
-
 
 .nav-item i {
   width: 20px;
-
   flex-shrink: 0;
-
   font-size: 16px;
-
   text-align: center;
 }
-
 
 .nav-label {
   flex: 1;
-
   text-align: left;
-
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-
-.nav-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-
-  color: #ffffff;
-}
-
-
-.nav-item.active {
-  background: rgba(255, 255, 255, 0.13);
-
-  color: #ffffff;
-
-  font-weight: 600;
-}
-
-
-.nav-item.active-parent {
-  background: rgba(255, 255, 255, 0.08);
-
-  color: #ffffff;
-}
-
+.nav-item:hover { background: rgba(255, 255, 255, 0.08); color: #ffffff; }
+.nav-item.active { background: rgba(255, 255, 255, 0.13); color: #ffffff; font-weight: 600; }
+.nav-item.active-parent { background: rgba(255, 255, 255, 0.08); color: #ffffff; }
 
 .submenu {
   padding-left: 20px;
-
   margin: 2px 0 7px;
 }
 
-
 .submenu-item {
   min-height: 38px;
-
   display: flex;
   align-items: center;
-
   gap: 10px;
-
   padding: 0 12px;
-
   border-radius: 8px;
-
   color: rgba(255, 255, 255, 0.58);
-
   text-decoration: none;
-
   font-size: 12px;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
-
 
 .submenu-item i {
   width: 18px;
-
   text-align: center;
-
   font-size: 14px;
 }
 
-
-.submenu-item:hover {
-  background: rgba(255, 255, 255, 0.07);
-
-  color: #ffffff;
-}
-
-
-.submenu-item.active-submenu {
-  background: rgba(255, 255, 255, 0.10);
-
-  color: #ffffff;
-
-  font-weight: 600;
-}
-
-
-/* Arrow */
+.submenu-item:hover { background: rgba(255, 255, 255, 0.07); color: #ffffff; }
+.submenu-item.active-submenu { background: rgba(255, 255, 255, 0.10); color: #ffffff; font-weight: 600; }
 
 .submenu-arrow {
   margin-left: auto;
-
   font-size: 11px !important;
 }
 
+/* ================= FOOTER (always pinned to bottom) ================= */
 
 .sidebar-footer {
+  flex-shrink: 0;
   padding: 12px 10px 16px;
-
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-
 .logout-button {
   width: 100%;
-
   height: 42px;
-
   display: flex;
   align-items: center;
-
   gap: 12px;
-
   padding: 0 13px;
-
   border: none;
-
   border-radius: 9px;
-
   background: rgba(255, 255, 255, 0.06);
-
   color: rgba(255, 255, 255, 0.72);
-
   font-size: 13px;
-
   cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
-
 
 .logout-button i {
   width: 20px;
-
   text-align: center;
-
   font-size: 16px;
 }
 
-
 .logout-button:hover {
   background: rgba(239, 68, 68, 0.15);
-
   color: #ffffff;
 }
 
+/* ================= MAIN: header fixed on top, only content scrolls ================= */
 
 .main-content {
   flex: 1;
-
   min-width: 0;
-
   margin-left: 250px;
 
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;         /* main area itself doesn't scroll */
 
   transition: margin-left 0.25s ease;
 }
-
 
 .sidebar-collapsed .main-content {
   margin-left: 78px;
 }
 
-
 .top-header {
+  flex-shrink: 0;           /* header never shrinks or scrolls away */
   height: 72px;
-
   display: flex;
   align-items: center;
-
   padding: 0 28px;
 
-  background: rgba(32, 22, 58, 0.08);
-   backdrop-filter: blur(12px);
+  background: rgba(248, 250, 252, 0.85);
+  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-
-   border-bottom: 1px solid rgba(32, 22, 58, 0.1);
+  border-bottom: 1px solid rgba(32, 22, 58, 0.1);
 
   color: #20163a;
   position: sticky;
-
   top: 0;
-
   z-index: 100;
 }
 
-
 .header-content {
   display: flex;
-
   align-items: center;
-
   width: 100%;
+  min-width: 0;
 }
-
 
 .header-content h2 {
   margin: 0;
-
   color: #1e293b;
-
   font-size: 19px;
-
   font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
 
 .header-content p {
   margin: 3px 0 0;
-
   color: #64748b;
-
   font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
 
 .page-content {
+  flex: 1 1 auto;
+  min-height: 0;            /* lets it scroll inside the flex column */
   padding: 25px 28px;
-
-  min-height: calc(100vh - 72px);
+  overflow-y: auto;         /* the ONLY scrolling area */
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
-
 
 .mobile-menu-button {
   display: none;
-
   width: 38px;
   height: 38px;
-
+  flex-shrink: 0;
   margin-right: 14px;
-
   align-items: center;
   justify-content: center;
-
   border: none;
-
   border-radius: 8px;
-
   background: #f1f5f9;
-
   color: #334155;
-
   cursor: pointer;
-
   font-size: 17px;
 }
 
+/* ================= PROFILE DIALOG ================= */
 
 :host ::ng-deep .sidebar-profile-dialog {
   width: 400px !important;
-
-  max-width: 90vw;
-
+  max-width: 92vw;
   border-radius: 14px !important;
-
   overflow: hidden;
 }
 
-
 :host ::ng-deep .sidebar-profile-dialog .p-dialog-content {
   padding: 24px !important;
-
   background: #ffffff;
+  max-height: 80vh;
+  max-height: 80dvh;
+  overflow-y: auto;
 }
-
 
 .profile-popup {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   justify-content: center;
-
   gap: 14px;
-
   min-height: 350px;
 }
 
-
 .large-profile-picture {
   width: 280px;
-
   height: 280px;
-
   max-width: 70vw;
-
   max-height: 60vh;
-
   object-fit: cover;
-
   display: block;
-
   border-radius: 50%;
-
-  box-shadow:
-    0 8px 30px rgba(15, 23, 42, 0.15);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.15);
 }
-
 
 :host ::ng-deep .large-profile-avatar {
   width: 280px !important;
-
   height: 280px !important;
-
+  max-width: 70vw;
+  max-height: 70vw;
   background: #4f46e5 !important;
-
   color: #ffffff !important;
-
   font-size: 85px !important;
-
   font-weight: 700 !important;
-
-  box-shadow:
-    0 8px 30px rgba(15, 23, 42, 0.15);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.15);
 }
-
 
 .popup-user-info {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   gap: 7px;
 }
 
-
 .popup-username {
   color: #1e293b;
-
   font-size: 16px;
-
   font-weight: 700;
 }
 
+/* =====================================================================
+   RESPONSIVE BREAKPOINTS
+   ===================================================================== */
 
+/* ---------- Extra large screens (TV / 4K / ultrawide) ---------- */
+@media (min-width: 1600px) {
+  .sidebar { width: 280px; min-width: 280px; }
+  .sidebar-collapsed .sidebar { width: 78px; min-width: 78px; }
+  .main-content { margin-left: 280px; }
+  .sidebar-collapsed .main-content { margin-left: 78px; }
+  .page-content { padding: 32px 40px; }
+  .top-header { padding: 0 40px; }
+}
+
+@media (min-width: 2200px) {
+  .page-content { padding: 40px 56px; }
+}
+
+/* ---------- Laptops / small desktops ---------- */
+@media (max-width: 1200px) {
+  .sidebar { width: 230px; min-width: 230px; }
+  .main-content { margin-left: 230px; }
+  .sidebar-collapsed .sidebar { width: 78px; min-width: 78px; }
+  .sidebar-collapsed .main-content { margin-left: 78px; }
+  .page-content { padding: 22px 22px; }
+  .top-header { padding: 0 22px; }
+}
+
+/* ---------- Tablets & below: sidebar becomes an off-canvas drawer ---------- */
 @media (max-width: 900px) {
-
   .sidebar {
+    width: 270px;
+    min-width: 270px;
+    max-width: 85vw;
     transform: translateX(-100%);
   }
 
@@ -697,14 +509,14 @@
   }
 
   .sidebar-collapsed .sidebar {
-    width: 250px;
-
-    min-width: 250px;
+    width: 270px;
+    min-width: 270px;
   }
 
   .main-content,
   .sidebar-collapsed .main-content {
     margin-left: 0;
+    width: 100%;
   }
 
   .mobile-menu-button {
@@ -713,11 +525,8 @@
 
   .sidebar-overlay {
     position: fixed;
-
     inset: 0;
-
     background: rgba(15, 23, 42, 0.45);
-
     z-index: 999;
   }
 
@@ -727,49 +536,110 @@
 
   .page-content {
     padding: 20px 18px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   }
-
 }
 
-
+/* ---------- Large phones ---------- */
 @media (max-width: 600px) {
+  .top-header { height: 64px; }
+  .sidebar-header { height: 64px; }
 
-  .top-header {
-    height: 64px;
-  }
-
-  .header-content h2 {
-    font-size: 17px;
-  }
-
-  .header-content p {
-    font-size: 11px;
-  }
+  .header-content h2 { font-size: 17px; }
+  .header-content p { font-size: 11px; }
 
   .page-content {
     padding: 16px 12px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   }
 
-  :host ::ng-deep .sidebar-profile-dialog {
-    width: 92vw !important;
-  }
+  :host ::ng-deep .sidebar-profile-dialog { width: 92vw !important; }
+  :host ::ng-deep .sidebar-profile-dialog .p-dialog-content { padding: 18px !important; }
 
-  .profile-popup {
-    min-height: 300px;
-  }
+  .profile-popup { min-height: 300px; }
 
   .large-profile-picture {
     width: 220px;
-
     height: 220px;
   }
 
   :host ::ng-deep .large-profile-avatar {
     width: 220px !important;
-
     height: 220px !important;
-
     font-size: 65px !important;
   }
+}
 
+/* ---------- Small phones (iPhone SE, Galaxy Fold, etc.) ---------- */
+@media (max-width: 400px) {
+  .sidebar { width: 250px; min-width: 250px; }
+  .sidebar-collapsed .sidebar { width: 250px; min-width: 250px; }
+
+  .top-header { padding: 0 12px; height: 60px; }
+  .mobile-menu-button { width: 34px; height: 34px; margin-right: 10px; }
+
+  .header-content h2 { font-size: 15px; }
+  .header-content p { display: none; }
+
+  .page-content { padding: 12px 10px; }
+
+  .large-profile-picture { width: 180px; height: 180px; }
+
+  :host ::ng-deep .large-profile-avatar {
+    width: 180px !important;
+    height: 180px !important;
+    font-size: 54px !important;
+  }
+}
+
+/* ---------- Short screens / phones in landscape ---------- */
+@media (max-height: 520px) {
+  .sidebar-header { height: 54px; }
+  .top-header { height: 54px; }
+
+  .user-card {
+    flex-direction: row;
+    gap: 10px;
+    padding: 8px 10px;
+    margin: 2px 8px 6px;
+  }
+
+  .user-avatar,
+  :host ::ng-deep .user-avatar-fallback {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+  }
+
+  .user-info { margin-top: 0; align-items: flex-start; }
+
+  .nav-item { min-height: 38px; }
+  .submenu-item { min-height: 34px; }
+  .sidebar-nav { padding: 8px 8px; }
+  .sidebar-footer { padding: 8px 8px 10px; }
+  .logout-button { height: 36px; }
+
+  .page-content { padding: 12px 16px; }
+
+  .profile-popup { min-height: 0; }
+  .large-profile-picture { width: 120px; height: 120px; max-height: 40vh; }
+
+  :host ::ng-deep .large-profile-avatar {
+    width: 120px !important;
+    height: 120px !important;
+    font-size: 40px !important;
+  }
+}
+
+/* ---------- Respect reduced-motion preference ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .main-content,
+  .nav-item,
+  .submenu-item,
+  .collapse-button,
+  .logout-button,
+  .user-avatar {
+    transition: none !important;
+  }
 }
